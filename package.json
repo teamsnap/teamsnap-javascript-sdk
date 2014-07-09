@@ -9,11 +9,15 @@
     "type": "git",
     "url": "git@github.com:teamsnap/teamsnap-javascript-sdk.git"
   },
+  "scripts": {
+    "build": "coffee -bc -o lib/ src/ && brunch build && brunch build --production"
+  },
   "devDependencies": {
     "brunch": "latest",
     "library-brunch": "latest",
     "javascript-brunch": "latest",
     "coffee-script-brunch": "latest",
+    "uglify-js-brunch": "latest",
     "coffeelint-brunch": "latest"
   }
 }

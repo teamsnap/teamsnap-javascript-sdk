@@ -96,10 +96,10 @@ var require = global.require;
 global = this;
 if (global.window) window = this;
 require.register("teamsnap", function(exports, require, module) {
-
-
+console.log('here');
 });
 
 ;
 global['teamsnap'] = require('teamsnap');
 })();
+//# sourceMappingURL=teamsnap.js.map

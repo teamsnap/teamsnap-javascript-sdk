@@ -1,17 +1,25 @@
-
 exports.config =
   paths:
     public: 'dist'
-    watched: ['api']
+    watched: ['src']
   files:
     javascripts:
       joinTo:
-        'teamsnap.js': /^api\//
+        'teamsnap.js': /^src\//
   modules:
     nameCleaner: (path) ->
-      path.replace(/^api\//, '')
+      path.replace(/^src\//, '')
+  
+  overrides:
+    production:
+      files:
+        javascripts:
+          joinTo:
+            'teamsnap.min.js': /^src\//
+
 
   plugins:
+    on: ['library-brunch']
     library:
       main: 'teamsnap'
       global: true
@@ -21,7 +29,7 @@ exports.config =
         except: ['window', 'global']
 
     coffeelint:
-      pattern: /^api\/.*\.coffee$/
+      pattern: /^src\/.*\.coffee$/
       options:
         coffeescript_error:
           level: "error"
