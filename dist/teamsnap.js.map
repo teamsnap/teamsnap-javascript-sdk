@@ -1,0 +1,1 @@
+{"version":3,"file":"dist/teamsnap.js","sources":["api/teamsnap.coffee"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA,OAAO,CAAC,GAAR,CAAY,MAAZ","sourcesContent":["console.log 'here'"]}
