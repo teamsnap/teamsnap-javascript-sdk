@@ -10,7 +10,12 @@
     "url": "git@github.com:teamsnap/teamsnap-javascript-sdk.git"
   },
   "scripts": {
-    "build": "coffee -bc -o lib/ src/ && brunch build && brunch build --production"
+    "build": "coffee -bc -o lib/ src/ && brunch build && brunch build --production",
+    "test": "open 'http://localhost:8000/' && brunch watch -s"
+  },
+  "main": "lib/teamsnap",
+  "dependencies": {
+    "xmlhttprequest": "latest"
   },
   "devDependencies": {
     "brunch": "latest",

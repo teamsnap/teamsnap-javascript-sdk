@@ -1,15 +1,17 @@
 exports.config =
   paths:
-    public: 'dist'
-    watched: ['src']
+    public: 'lib'
+    watched: ['src', 'test']
   files:
     javascripts:
       joinTo:
         'teamsnap.js': /^src\//
+        'test/js/test.js': /^test\//
+
   modules:
     nameCleaner: (path) ->
       path.replace(/^src\//, '')
-  
+
   overrides:
     production:
       files:
@@ -17,13 +19,16 @@ exports.config =
           joinTo:
             'teamsnap.min.js': /^src\//
 
+  server:
+    indexPath: 'lib/test/index.html'
+    port: 8000
 
   plugins:
     on: ['library-brunch']
     library:
       main: 'teamsnap'
       global: true
-    
+
     uglify:
       mangle:
         except: ['window', 'global']

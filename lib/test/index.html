@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeamSnap.js Testing</title>
+<link rel="icon" href="http://www.teamsnap.com/favicon.ico">
+<link rel="stylesheet" href="/test/css/mocha.css">
+<style>
+#auth p, #auth button {
+	font-size: 14px;
+}
+#auth-button {
+	background: #eee;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 8px 20px;
+	cursor: pointer;
+}
+#auth-button:hover {
+	background: rgb(217, 241, 217);
+}
+</style>
+</head>
+<body>
+
+<div id="mocha">
+	<div id="auth">
+		<h1>Authorize First</h1>
+		<p>You must authorize a TeamSnap user to test with.</p>
+		<button id="auth-button" type="button">Authorize</button>
+	</div>
+</div>
+
+<script src="/test/js/should.js"></script>
+<script src="/test/js/mocha.js"></script>
+<script src="/teamsnap.js"></script>
+<script src="/test/js/test.js"></script>
+<script>require('test/init')</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+# Loads all teams the current user has access to
+exports.loadTeams = (params = {}, callback) ->
+  if typeof params is 'function'
+    callback = params
+    params = {}
+  params.userId = @me.id
+  @loadItems 'team', params, callback
+
+
+# Load a single team
+exports.loadTeam = (teamId, callback) ->
+  unless @isId teamId
+    throw new TSArgsError 'teamsnap.loadTeam', 'teamId must be provided'
+  @loadItem 'team', teamId: teamId, callback
+
+
+# Loads all items associated with a team, optionally limited by the types array
+exports.loadTeamItems = (teamId, types, callback) ->
+  unless @isId teamId
+    throw new TSArgsError 'teamsnap.loadTeamItems', 'teamId must be provided'
+
+  if typeof types is 'function'
+    callback = types
+    types = null
+
+  unless Array.isArray types
+    types = teamsnap.getTeamTypes()
+
+  params = teamId: teamId, types: types.map(@underscoreType).join(',')
+  @collections.root.queryItems 'bulkLoad', params, callback
+
+
+exports.createTeam = (data) ->
+  @createItem data,
+    type: 'team'
+    name: ''
+
+
+exports.saveTeam = (team, callback) ->
+  unless team
+    throw new TSArgsError 'teamsnap.saveTeam', "`team` must be provided"
+  unless @isItem team, 'team'
+    throw new TSArgsError 'teamsnap.saveTeam', "`type` must be 'team'"
+  unless team.name?.trim()
+    return @reject 'You must provide a name for the team.', 'name', callback
+
+  @saveItem team, callback
+
+
+exports.deleteTeam = (team) ->
+  unless team
+    throw new TSArgsError 'teamsnap.deleteTeam',
+      '`team` must be provided'
+
+  @deleteItem team
