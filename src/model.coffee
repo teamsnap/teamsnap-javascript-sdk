@@ -9,6 +9,7 @@ class Collection
     @queries = new MetaList(data?.queries)
     @commands = new MetaList(data?.commands)
     @template = data?.template or []
+    @items = data.items if data?.items
 
   # Deserialize the data from the server into this collection object
   deserialize: (data) ->
@@ -94,11 +95,14 @@ class Item
       array
 
   @fromData: (request, data) ->
-    new Item(request).deserialize(data)
+    if data.collection or data.data
+      new Item(request).deserialize(data)
+    else
+      new Item(request, data)
 
   constructor: (@request, data) ->
-    @links = new MetaList()
     copy data, this if data
+    @links = new MetaList(data?.links)
 
   # Deserialize the data from the server into this item object
   deserialize: (data) ->

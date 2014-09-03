@@ -121,6 +121,17 @@ module.exports = (clientId, secret) ->
         callback = cachedCollections
         cachedCollections = token
         token = null
+      if typeof cachedCollections is 'function'
+        callback = cachedCollections
+        cachedCollections = null
+
+      # Shortcut for local testing
+      if teamsnap.apiUrl.indexOf(':3000') isnt -1
+        authedRequest = sdkRequest.clone()
+        authedRequest.hook (xhr) ->
+          xhr.setRequestHeader 'X-Teamsnap-User-ID', 1
+        return sdk authedRequest, cachedCollections, callback
+
       token = browserStore() unless token
       unless token
         throw new TSArgsError 'teamsnap.auth', 'A token is required to auth

@@ -77,7 +77,7 @@ createSDKObject = (request, collections) ->
 
     getCollectionForItem: (item) ->
       type = if typeof item is 'string' then item else item.type
-      collectionName = @getPluralRel type
+      collectionName = @getPluralType type
       @collections[collectionName]
 
     # Helpers

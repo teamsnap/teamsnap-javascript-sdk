@@ -48,8 +48,8 @@ exports.loadPreferences = (params, callback) ->
       teamId or query parameters'
 
   promises.when(
-    exports.loadMemberPreferences(params)
-    exports.loadTeamPreferences(params)
+    @loadMemberPreferences(params)
+    @loadTeamPreferences(params)
   ).callback callback
 
 

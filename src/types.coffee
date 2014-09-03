@@ -28,8 +28,8 @@ typeLookup = {}
 singularLookup = {}
 # pre-define exceptions
 pluralLookup =
-  MemberPreferences: 'membersPreferences'
-  TeamPreferences: 'teamsPreferences'
+  memberPreferences: 'membersPreferences'
+  teamPreferences: 'teamsPreferences'
 
 for type in types
   singular = type
@@ -55,7 +55,7 @@ teamsnap.getTypes = -> types.slice()
 teamsnap.getTeamTypes = -> teamTypes.slice()
 teamsnap.getPluralType = (name) -> pluralLookup[name]
 teamsnap.getSingularType = (name) -> singularLookup[name]
-teamsnap.getRelType = (name) -> typeLookup[name]
+teamsnap.getType = (name) -> typeLookup[name]
 teamsnap.camelcaseType = (type) ->
   type.replace /[-_]+(\w)/g, (_, char) ->
     char.toUpperCase()

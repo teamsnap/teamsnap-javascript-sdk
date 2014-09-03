@@ -6,7 +6,7 @@ exports.loadContacts = (params, callback) ->
     throw new TSArgsError 'teamsnap.loadContacts', 'must provide a teamId or
       query parameters'
 
-  @loadItems 'contacts', params, callback
+  @loadItems 'contact', params, callback
 
 
 exports.createContact = (data) ->

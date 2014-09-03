@@ -18,7 +18,7 @@ exports.loadAvailabilities = (params, callback) ->
     throw new TSArgsError 'teamsnap.loadAvailabilities', 'must provide a teamId
       or query parameters'
 
-  @loadItems 'availabilities', params, callback
+  @loadItems 'availability', params, callback
 
 
 exports.createAvailability = (data) ->

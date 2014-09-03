@@ -1,11 +1,11 @@
-mocha.setup('bdd')
-window.require.list().filter((_) -> /^test/.test(_)).forEach(require)
-mocha.checkLeaks()
+chai.should()
+window.expect = chai.expect
 
 authSection = document.getElementById('auth')
 authButton = document.getElementById('auth-button')
 clientId = '1d228d706ce170d61f9368b5967bd7a1641e6ecf742434dc198047f1a36a930a'
-redirect = 'http://localhost:8000/test/'
+teamsnap.apiUrl = 'http://localhost:3000/'
+redirect = 'http://localhost:8000/'
 scopes = [
   'read'
   'write_contacts'
@@ -26,7 +26,11 @@ scopes = [
 
 whenAuthed = (sdk) ->
   authSection.parentNode.removeChild authSection
-  teamsnap = sdk
+  sessionStorage.setItem 'collections', JSON.stringify(sdk.collections)
+  window.teamsnap = sdk
+  mocha.setup('bdd')
+  window.require.list().filter((_) -> /^test/.test(_)).forEach(require)
+  mocha.checkLeaks()
   mocha.run()
 whenAuthFailed = (sdk) ->
   authSection.style.display = ''
@@ -40,10 +44,6 @@ teamsnap.init clientId
 
 if teamsnap.isAuthed()
   authSection.style.display = 'none'
-  teamsnap.auth().then whenAuthed, whenAuthFailed
-else
-  authButton.addEventListener 'click', ->
-    teamsnap.startBrowserAuth(redirect, scopes).then (sdk) ->
-    authSection.parentNode.removeChild authSection
-    teamsnap = sdk
-    mocha.run()
+  try
+    collections = JSON.parse sessionStorage.getItem 'collections'
+  teamsnap.auth(collections).then whenAuthed, whenAuthFailed
