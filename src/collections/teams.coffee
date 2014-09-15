@@ -14,22 +14,6 @@ exports.loadTeam = (teamId, callback) ->
   @loadItem 'team', teamId: teamId, callback
 
 
-# Loads all items associated with a team, optionally limited by the types array
-exports.loadTeamItems = (teamId, types, callback) ->
-  unless @isId teamId
-    throw new TSArgsError 'teamsnap.loadTeamItems', 'teamId must be provided'
-
-  if typeof types is 'function'
-    callback = types
-    types = null
-
-  unless Array.isArray types
-    types = teamsnap.getTeamTypes()
-
-  params = teamId: teamId, types: types.map(@underscoreType).join(',')
-  @collections.root.queryItems 'bulkLoad', params, callback
-
-
 exports.createTeam = (data) ->
   @createItem data,
     type: 'team'
@@ -47,9 +31,31 @@ exports.saveTeam = (team, callback) ->
   @saveItem team, callback
 
 
-exports.deleteTeam = (team) ->
+exports.deleteTeam = (team, callback) ->
   unless team
     throw new TSArgsError 'teamsnap.deleteTeam',
       '`team` must be provided'
 
-  @deleteItem team
+  @deleteItem team, callback
+
+
+
+# Loads all items associated with a team, optionally limited by the types array
+exports.bulkLoad = (teamId, types, callback) ->
+  unless @isId teamId
+    throw new TSArgsError 'teamsnap.bulkLoad', 'teamId must be provided'
+
+  if typeof types is 'function'
+    callback = types
+    types = null
+
+  unless Array.isArray types
+    types = @getTeamTypes()
+
+  # TODO uncomment this and remove the following two lines after switching type
+  # params = teamId: teamId, types: types.map(@underscoreType).join(',')
+  capitalize = (str) ->
+    str = 'refreshment' if str is 'assignment'
+    str[0].toUpperCase() + str.slice(1)
+  params = teamId: teamId, types: types.map(capitalize).join(',')
+  @collections.root.queryItems 'bulkLoad', params, callback

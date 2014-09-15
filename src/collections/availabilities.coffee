@@ -1,15 +1,13 @@
-exports.STATUS_NO = 0
-exports.STATUS_YES = 1
-exports.STATUS_MAYBE = 2
-exports.AVAILABILITY_STATUSES =
-  no: exports.STATUS_NO
-  yes: exports.STATUS_YES
-  maybe: exports.STATUS_MAYBE
+exports.AVAILABILITIES =
+  NONE: null
+  NO: 0
+  YES: 1
+  MAYBE: 2
 
 statuses = {}
-for key, value of exports.AVAILABILITY_STATUSES
+for key, value of exports.AVAILABILITIES
   statuses[value] = true
-  exports.AVAILABILITY_STATUSES[value] = key
+
 
 exports.loadAvailabilities = (params, callback) ->
   if @isId params
@@ -21,11 +19,6 @@ exports.loadAvailabilities = (params, callback) ->
   @loadItems 'availability', params, callback
 
 
-exports.createAvailability = (data) ->
-  @createItem data,
-    type: 'availability'
-
-
 exports.saveAvailability = (availability, callback) ->
   unless availability
     throw new TSArgsError 'teamsnap.saveAvailability', "`availability` must be
@@ -33,19 +26,9 @@ exports.saveAvailability = (availability, callback) ->
   unless @isItem availability, 'availability'
     throw new TSArgsError 'teamsnap.saveAvailability', "`type` must be
       'availability'"
-  unless trackedItemStatus.memberId
-    return @reject 'You must choose a member.', 'memberId', callback
-  unless trackedItemStatus.eventId
-    return @reject 'You must choose an event.', 'eventId', callback
-  unless statuses[trackedItemStatus.statusCode]
-    return @reject 'You must select a valid status', 'statusCode', callback
+  if trackedItemStatus.statusCode isnt null and
+      not statuses[trackedItemStatus.statusCode]
+    return @reject 'You must select a valid status or null', 'statusCode',
+      callback
 
   @saveItem availability, callback
-
-
-exports.deleteAvailability = (availability) ->
-  unless availability
-    throw new TSArgsError 'teamsnap.deleteAvailability',
-      '`availability` must be provided'
-
-  @deleteItem availability

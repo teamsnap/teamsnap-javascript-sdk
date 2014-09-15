@@ -4,12 +4,13 @@ class Collection
   @fromData: (data) ->
     new Collection().deserialize(data)
 
-  constructor: (data) ->
-    @links = new MetaList(data?.links)
-    @queries = new MetaList(data?.queries)
-    @commands = new MetaList(data?.commands)
-    @template = data?.template or []
-    @items = data.items if data?.items
+  constructor: (data = {}) ->
+    @href = data.href
+    @links = new MetaList(data.links)
+    @queries = new MetaList(data.queries)
+    @commands = new MetaList(data.commands)
+    @template = data.template or []
+    @items = data.items if data.items
 
   # Deserialize the data from the server into this collection object
   deserialize: (data) ->
@@ -31,61 +32,55 @@ class ScopedCollection extends Collection
   @fromData: (request, data) ->
     new ScopedCollection request, new Collection().deserialize(data)
 
-  constructor: (@request, collection) ->
+  constructor: (@_request, collection) ->
     @href = collection.href
     @links = collection.links
     @queries = collection.queries
     @commands = collection.commands
     @template = collection.template
     if collection.items
-      @items = Item.fromArray @request, collection.items
+      @items = Item.fromArray @_request, collection.items
 
   # Save an item to the collection
   save: (item, callback) ->
-    item = new Item(item) unless item instanceof Item
+    item = Item.create(@_request, item) unless item instanceof Item
     method = if item.href then 'put' else 'post'
     data = item.serialize @template
-    @request(method, item.href or @href, data).then (xhr) ->
+    @_request(method, item.href or @href, data).then((xhr) ->
       if (items = xhr.response?.collection?.items)
         if items.length > 1
           Item.fromArray items
         else if items.length
           item.deserialize xhr.response
-    item
-
-  # Load a link as a collection
-  loadCollection: (linkName, callback) ->
-    @links.loadCollection @request, linkName, callback
+    ).callback callback
 
   # Load a link as an array of items
   loadItems: (linkName, callback) ->
-    @links.loadItems @request, linkName, callback
+    @links.loadItems @_request, linkName, callback
 
   # Load a link as a single item
   loadItem: (linkName, callback) ->
-    @links.loadItem @request, linkName, callback
+    @links.loadItem @_request, linkName, callback
 
   # Query the collection with a given query and parameters
   queryItems: (queryName, params, callback) ->
-    @queries.loadItems @request, queryName, params, callback
+    @queries.loadItems @_request, queryName, params, callback
 
   # Query the collection with a given query and parameters
   queryItem: (queryName, params, callback) ->
-    @queries.loadItem @request, queryName, params, callback
+    @queries.loadItem @_request, queryName, params, callback
 
   # Execute a command on the collection with the given parameters
   exec: (commandName, params, callback) ->
-    @commands.exec @request, commandName, params, callback
-
-  toJSON: ->
-    obj = copy this, {}
-    delete obj.request
-    obj
+    @commands.exec @_request, commandName, params, callback
 
 
 
 # A representation of a Collection+JSON item
 class Item
+
+  @create: (request, data) ->
+    new Item(request, data)
 
   @fromArray: (request, array) ->
     if Array.isArray array
@@ -96,12 +91,15 @@ class Item
 
   @fromData: (request, data) ->
     if data.collection or data.data
-      new Item(request).deserialize(data)
+      @create(request).deserialize(data)
     else
-      new Item(request, data)
+      @create(request, data)
 
-  constructor: (@request, data) ->
-    copy data, this if data
+  constructor: (@_request, data) ->
+    if typeof data is 'string'
+      @href = data
+    else if data and typeof data is 'object'
+      copy data, this
     @links = new MetaList(data?.links)
 
   # Deserialize the data from the server into this item object
@@ -112,7 +110,10 @@ class Item
     @links.deserialize data.links
     for prop in data.data
       value = prop.value
-      value = camelize(value) if prop.name == 'type'
+      if prop.name is 'type'
+        value = camelize(value)
+        # TODO remove this line once type is switched to snake case
+        value = value[0].toLowerCase() + value.slice(1)
       value = new Date(prop.value) if prop.type is 'Date'
       @[camelize prop.name] = value
     this
@@ -130,26 +131,26 @@ class Item
         fields.push name: prop.name, value: value
     template: data: fields
 
-  # Load a link as a collection
-  loadCollection: (linkName, callback) ->
-    @links.loadCollection @request, linkName, callback
-
   # Load a link as an array of items
   loadItems: (linkName, callback) ->
-    @links.loadItems @request, linkName, callback
+    @links.loadItems @_request, linkName, callback
 
   # Load a link as a single item
   loadItem: (linkName, callback) ->
-    @links.loadItem @request, linkName, callback
+    @links.loadItem @_request, linkName, callback
 
   # Delete this item
   delete: (params, callback) ->
+    if typeof params is 'function'
+      callback = params
+      params = null
+    
     if params
       fields = []
       for own key, value of params
         fields.push name: underscore(key), value: value
       data = template: data: fields
-    @request.delete(@href, data).callback callback
+    @_request.delete(@href, data).callback callback
 
 
 
@@ -160,10 +161,6 @@ class MetaList
 
   # Deserialize the data from the server into this list object
   deserialize: (data) ->
-    # Remove old entries if any
-    for key, value of this
-      delete @[key]
-
     return unless Array.isArray data
 
     for entry in data
@@ -171,6 +168,9 @@ class MetaList
       if Array.isArray entry.data
         for param in entry.data
           params[camelize param.name] = param.value
+
+      # TODO remove this once refreshments has been renamed
+      entry.rel = 'assignments' if entry.rel is 'refreshments'
       @[camelize entry.rel] = href: entry.href, params: params
 
   # Checks whether a given link, query, or command exists
@@ -187,13 +187,6 @@ class MetaList
   each: (iterator) ->
     for own rel, entry of this
       iterator rel, entry.href, entry.params
-
-  # Load a link or query as an array of items
-  loadCollection: (request, rel, params, callback) ->
-    if typeof params is 'function'
-      callback = params
-      params = undefined
-    @_request(request, 'get', rel, params, 'collection').callback callback
 
   # Load a link or query as an array of items
   loadItems: (request, rel, params, callback) ->
@@ -228,18 +221,15 @@ class MetaList
           data[underscore key] = value
 
     request(method, entry.href, data).then (xhr) ->
-      if type is 'collection'
-        ScopedCollection.fromData request, xhr.response
-      else
-        items = Item.fromArray(request, xhr.response.collection?.items) or []
-        if type is 'item' then items.pop() else items
+      items = Item.fromArray(request, xhr.response.collection?.items) or []
+      if type is 'item' then items.pop() else items
 
 
 # Utility functions
 copy = (from, to) ->
-  for own key, value of from
-    unless typeof value is 'function' or key.charAt(0) is '_'
-      to[key] = value
+  Object.keys(from).forEach (key) ->
+    return if typeof value is 'function' or key.charAt(0) is '_'
+    to[key] = from[key]
   to
 
 camelize = (str) ->

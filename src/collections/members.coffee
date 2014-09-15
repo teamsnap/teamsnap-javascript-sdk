@@ -39,45 +39,50 @@ exports.deleteMemberPhoto = (memberId) ->
   unless memberId
     throw new TSArgsError 'teamsnap.deleteMemberPhoto', "`memberId` must be
       provided"
-  if @isItem memberId, 'Member'
+  if @isItem memberId, 'member'
     memberId = memberId.id
   unless @isId memberId
     throw new TSArgsError 'teamsnap.deleteMemberPhoto', "`memberId` must be
       a valid id"
 
-  teamsnap.load().then ->
-    params = memberId: memberId
-    teamsnap.collections.members.exec('removeOriginalPhoto', params)
-      .pop().callback callback
+  params = memberId: memberId
+  @collections.members.exec('removeOriginalPhoto', params)
+    .pop().callback callback
 
 
-exports.deleteThumbnail = (memberId) ->
+exports.deleteMemberThumbnail = (memberId) ->
   unless memberId
     throw new TSArgsError 'teamsnap.deleteThumbnail', "`memberId` must be
       provided"
-  if @isItem memberId, 'Member'
+  if @isItem memberId, 'member'
     memberId = memberId.id
   unless @isId memberId
     throw new TSArgsError 'teamsnap.deleteThumbnail', "`memberId` must be
       a valid id"
 
-  teamsnap.load().then ->
-    params = memberId: memberId
-    teamsnap.collections.members.exec('removeThumbnailPhoto', params)
-      .pop().callback callback
+  params = memberId: memberId
+  @collections.members.exec('removeThumbnailPhoto', params)
+    .pop().callback callback
 
 
-# TODO
-exports.generateThumbnail = (member, x, y, width, height) ->
-  teamsnap.loadCollection('members').then (collection) ->
-    params =
-      memberId: member.id
-      cropX: x
-      cropY: y
-      cropWidth: width
-      cropHeight: height
-    collection.exec('generateThumbnailPhoto', params)
-      .then(teamsnap.toItem).then(teamsnap.add)
+exports.generateThumbnail = (memberId, x, y, width, height) ->
+  unless member? and x? and y? and width? and height?
+    throw new TSArgsError 'teamsnap.generateThumbnail', "`memberId`, `x`, `y`,
+      `width`, and `height` are all required"
+  if @isItem memberId, 'member'
+    memberId = memberId.id
+  unless @isId memberId
+    throw new TSArgsError 'teamsnap.generateThumbnail', "`memberId` must be
+      a valid id"
+
+  params =
+    memberId: member.id
+    cropX: x
+    cropY: y
+    cropWidth: width
+    cropHeight: height
+  @collections.members.exec('generateThumbnailPhoto', params)
+    .pop().callback callback
 
 
 
@@ -109,6 +114,14 @@ exports.saveMemberEmailAddress = (emailAddress, callback) ->
   @saveItem emailAddress, callback
 
 
+exports.deleteMemberEmailAddress = (emailAddress, callback) ->
+  unless emailAddress
+    throw new TSArgsError 'teamsnap.deleteMemberEmailAddress',
+      '`emailAddress` must be provided'
+
+  @deleteItem emailAddress, callback
+
+
 exports.loadMemberPhoneNumbers = (params, callback) ->
   if @isId params
     params = teamId: params
@@ -133,6 +146,14 @@ exports.saveMemberPhoneNumber = (phoneNumber, callback) ->
       "`phoneNumber.type` must be 'memberPhoneNumber'"
 
   @saveItem phoneNumber, callback
+
+
+exports.deleteMemberPhoneNumber = (phoneNumber, callback) ->
+  unless phoneNumber
+    throw new TSArgsError 'teamsnap.deleteMemberPhoneNumber',
+      '`phoneNumber` must be provided'
+
+  @deleteItem phoneNumber, callback
 
 
 # Helper to output a member's name, forward or reverse (reverse will use comma)

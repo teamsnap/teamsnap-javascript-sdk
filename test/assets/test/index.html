@@ -5,7 +5,7 @@
 <link rel="icon" href="http://www.teamsnap.com/favicon.ico">
 <link rel="stylesheet" href="/test/css/mocha.css">
 <style>
-#auth p, #auth button {
+#auth p, #auth-button, input {
 	font-size: 14px;
 }
 #auth-button {
@@ -18,15 +18,23 @@
 #auth-button:hover {
 	background: rgb(217, 241, 217);
 }
+input {
+	width: 240px;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	padding: 8px;
+}
 </style>
 </head>
 <body>
 
 <div id="mocha">
 	<div id="auth">
-		<h1>Authorize First</h1>
+		<h1>Authorize To Begin Tests</h1>
 		<p>You must authorize a TeamSnap user to test with.</p>
-		<button id="auth-button" type="button">Authorize</button>
+		<p><input id="api-url" type="text" value="https://apiv3.teamsnap.com"></p>
+		<p><input id="auth-url" type="text" value="https://auth.teamsnap.com"></p>
+		<p><button id="auth-button" type="button">Authorize</button></p>
 	</div>
 </div>
 

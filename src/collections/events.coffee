@@ -1,13 +1,10 @@
-exports.INCLUDE_NONE = 'none'
-exports.INCLUDE_FUTURE = 'future'
-exports.INCLUDE_ALL = 'all'
-exports.EVENT_INCLUDE = [
-  exports.INCLUDE_NONE
-  exports.INCLUDE_FUTURE
-  exports.INCLUDE_ALL
-]
+exports.EVENTS =
+  NONE: 'none'
+  FUTURE: 'future'
+  ALL: 'all'
+
 includes = {}
-includes[i] = true for i in exports.EVENT_INCLUDE
+includes[value] = true for key, value of exports.EVENTS
 
 
 # Load events by teamId or query parameters
@@ -47,16 +44,24 @@ exports.saveEvent = (event, callback) ->
   @saveItem event, callback
 
 
-exports.deleteEvent = (event, include) ->
+exports.deleteEvent = (event, include, callback) ->
   unless event
     throw new TSArgsError 'teamsnap.deleteEvent', '`event` must be provided'
+  
+  if typeof include is 'function'
+    callback = include
+    include = null
+
+  if not include and event.repeatingUuid
+    include = @EVENTS.NONE
+
   if include
     unless includes[include]
-      throw new TSArgsError 'teamsnap.deleteEvent', "`include` must be one
-        #{exports.EVENT_INCLUDE.join(', ')}"
+      throw new TSArgsError 'teamsnap.deleteEvent', "`include` must be one of
+        #{Object.keys(includes).join(', ')}"
     params = repeatingInclude: include
 
-  @deleteItem event, params
+  @deleteItem event, params, callback
 
 
 # Returns a sorting function for the default event sort

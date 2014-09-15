@@ -29,12 +29,12 @@ exports.saveContact = (contact, callback) ->
   @saveItem contact, callback
 
 
-exports.deleteContact = (contact) ->
+exports.deleteContact = (contact, callback) ->
   unless contact
     throw new TSArgsError 'teamsnap.deleteContact',
       '`contact` must be provided'
 
-  @deleteItem contact
+  @deleteItem contact, callback
 
 
 # Contact Emails
@@ -65,6 +65,14 @@ exports.saveContactEmailAddress = (emailAddress, callback) ->
   @saveItem emailAddress, callback
 
 
+exports.deleteContactEmailAddress = (emailAddress, callback) ->
+  unless emailAddress
+    throw new TSArgsError 'teamsnap.deleteContactEmailAddress',
+      '`emailAddress` must be provided'
+
+  @deleteItem emailAddress, callback
+
+
 exports.loadContactPhoneNumbers = (params, callback) ->
   if @isId params
     params = teamId: params
@@ -89,3 +97,11 @@ exports.saveContactPhoneNumber = (phoneNumber, callback) ->
       "`phoneNumber.type` must be 'contactPhoneNumber'"
 
   @saveItem phoneNumber, callback
+
+
+exports.deleteContactPhoneNumber = (phoneNumber, callback) ->
+  unless phoneNumber
+    throw new TSArgsError 'teamsnap.deleteContactPhoneNumber',
+      '`phoneNumber` must be provided'
+
+  @deleteItem phoneNumber, callback

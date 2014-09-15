@@ -1,5 +1,5 @@
 teamsnap = require './teamsnap'
-promises = require '../promises'
+promises = require './promises'
 loadCollections = require './loadCollections'
 { Item, ScopedCollection } = require './model'
 urlExp = /^https?:\/\//
@@ -54,7 +54,7 @@ createSDKObject = (request, collections) ->
         properties = mergeDefaults(properties, defaults)
       unless @isItem properties
         throw new TSArgsError 'teamsnap.create*', 'must include a valid `type`'
-      new Item @request, properties
+      Item.create @request, properties
 
 
     saveItem: (item, callback) ->
@@ -71,7 +71,7 @@ createSDKObject = (request, collections) ->
         throw new TSArgsError 'teamsnap.delete*', 'item must have a valid href
           to delete'
 
-      item = new Item(@request, item) unless item instanceof Item
+      item = Item.create(@request, item) unless item instanceof Item
       item.delete params, callback
 
 
@@ -96,7 +96,10 @@ createSDKObject = (request, collections) ->
       sdk[key] = value
 
   add require './types'
+  add require './linkItems'
+  add require './persistance'
   add require './collections/teams'
+  add require './collections/assignments'
   add require './collections/availabilities'
   add require './collections/contacts'
   add require './collections/events'
@@ -105,7 +108,6 @@ createSDKObject = (request, collections) ->
   add require './collections/opponents'
   add require './collections/preferences'
   add require './collections/plans'
-  add require './collections/refreshments'
   add require './collections/sports'
   add require './collections/teamPublicSites'
   add require './collections/tracking'

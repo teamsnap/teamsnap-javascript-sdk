@@ -3,8 +3,9 @@ window.expect = chai.expect
 
 authSection = document.getElementById('auth')
 authButton = document.getElementById('auth-button')
+apiInput = document.getElementById('api-url')
+authInput = document.getElementById('auth-url')
 clientId = '1d228d706ce170d61f9368b5967bd7a1641e6ecf742434dc198047f1a36a930a'
-teamsnap.apiUrl = 'http://localhost:3000/'
 redirect = 'http://localhost:8000/'
 scopes = [
   'read'
@@ -24,13 +25,33 @@ scopes = [
   'write_tracked_item_statuses'
 ]
 
+if typeof localStorage isnt 'undefined' and
+    (url = localStorage.getItem 'teamsnap.apiUrl')
+  apiInput.value = url if url
+
+if typeof localStorage isnt 'undefined' and
+    (url = localStorage.getItem 'teamsnap.authUrl')
+  authInput.value = url if url
+
+teamsnap.apiUrl = apiInput.value
+teamsnap.authUrl = authInput.value
+
+apiInput.addEventListener 'change', ->
+  teamsnap.apiUrl = apiInput.value
+  if typeof localStorage isnt 'undefined'
+    localStorage.setItem 'teamsnap.apiUrl', apiInput.value
+
+authInput.addEventListener 'change', ->
+  teamsnap.authUrl = authInput.value
+  if typeof localStorage isnt 'undefined'
+    localStorage.setItem 'teamsnap.authUrl', authInput.value
+
 whenAuthed = (sdk) ->
   authSection.parentNode.removeChild authSection
   sessionStorage.setItem 'collections', JSON.stringify(sdk.collections)
   window.teamsnap = sdk
   mocha.setup('bdd')
   window.require.list().filter((_) -> /^test/.test(_)).forEach(require)
-  mocha.checkLeaks()
   mocha.run()
 whenAuthFailed = (sdk) ->
   authSection.style.display = ''

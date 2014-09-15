@@ -2,8 +2,11 @@ teamsnap = exports
 
 types = [
   'user'
+  'assignment'
   'availability'
   'contact'
+  'contactEmailAddress'
+  'contactPhoneNumber'
   'event'
   'location'
   'member'
@@ -12,7 +15,6 @@ types = [
   'memberPreferences'
   'opponent'
   'plan'
-  'refreshment'
   'sport'
   'team'
   'teamPreferences'

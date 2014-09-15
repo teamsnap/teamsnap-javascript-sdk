@@ -1,10 +1,20 @@
 describe 'plans', ->
 
   it 'should be able to load all plans', ->
+    console.log(teamsnap.plans)
+    console.table(teamsnap.plans)
     expect(teamsnap.plans).to.be.an('array')
 
-  it.skip 'should be able to load plan for team', (done) ->
-    teamsnap.loadPlan 1, (err, result) ->
+  it 'should be able to query plan for team', (done) ->
+    teamsnap.loadPlans teamId: team.id, (err, result) ->
+      expect(err).to.be.null
+      result.should.be.an('array')
+      result.should.have.property('length', 1)
+      result[0].should.have.property('type', 'plan')
+      done()
+
+  it 'should be able to load plan for team', (done) ->
+    teamsnap.loadPlan team.id, (err, result) ->
       expect(err).to.be.null
       result.should.have.property('type', 'plan')
       done()

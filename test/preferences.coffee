@@ -1,19 +1,19 @@
 describe 'preferences', ->
 
-  it.skip 'should be able to load preferences for member', (done) ->
-    teamsnap.loadMemberPreferences 1, (err, results) ->
+  it 'should be able to load preferences for member', (done) ->
+    teamsnap.loadMemberPreferences team.id, (err, results) ->
       expect(err).to.be.null
       results.should.have.property('type', 'memberPreferences')
       done()
 
   it 'should be able to load preferences for team', (done) ->
-    teamsnap.loadTeamPreferences 1, (err, results) ->
+    teamsnap.loadTeamPreferences team.id, (err, results) ->
       expect(err).to.be.null
-      results.should.have.property('type', 'TeamPreferences')
+      results.should.have.property('type', 'teamPreferences')
       done()
 
-  it.skip 'should be able to load all preferences', (done) ->
-    teamsnap.loadPreferences 1, (err, memberPrefs, teamPrefs) ->
+  it 'should be able to load all preferences', (done) ->
+    teamsnap.loadPreferences team.id, (err, memberPrefs, teamPrefs) ->
       expect(err).to.be.null
       memberPrefs.should.have.property('type', 'memberPreferences')
       teamPrefs.should.have.property('type', 'teamPreferences')

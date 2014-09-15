@@ -1,13 +1,11 @@
-exports.STATUS_CHECK = 1
-exports.STATUS_X = 2
-exports.TRACKING_STATUSES =
-  check: exports.STATUS_CHECK
-  x: exports.STATUS_X
+exports.TRACKING =
+  NONE: null
+  CHECK: 1
+  X: 2
 
 statuses = {}
-for key, value of exports.TRACKING_STATUSES
+for key, value of exports.TRACKING
   statuses[value] = true
-  exports.TRACKING_STATUSES[value] = key
 
 # Tracked Items
 exports.loadTrackedItems = (params, callback) ->
@@ -61,12 +59,6 @@ exports.loadTrackedItemStatuses = (params, callback) ->
   @loadItems 'trackedItemStatus', params, callback
 
 
-exports.createTrackedItemStatus = (data) ->
-  @createItem data,
-    type: 'trackedItemStatus'
-    name: ''
-
-
 exports.saveTrackedItemStatus = (trackedItemStatus, callback) ->
   unless trackedItemStatus
     throw new TSArgsError 'teamsnap.saveTrackedItemStatus',
@@ -82,14 +74,6 @@ exports.saveTrackedItemStatus = (trackedItemStatus, callback) ->
     return @reject 'You must select a valid status', 'statusCode', callback
 
   @saveItem trackedItemStatus, callback
-
-
-exports.deleteTrackedItemStatus = (trackedItemStatus, callback) ->
-  unless trackedItemStatus
-    throw new TSArgsError 'teamsnap.deleteTrackedItemStatus',
-      '`trackedItemStatus` must be provided'
-
-  @deleteItem trackedItemStatus, callback
     
 
 exports.trackedItemSort = ->
