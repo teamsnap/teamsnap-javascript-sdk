@@ -1,8 +1,6 @@
 describe 'plans', ->
 
   it 'should be able to load all plans', ->
-    console.log(teamsnap.plans)
-    console.table(teamsnap.plans)
     expect(teamsnap.plans).to.be.an('array')
 
   it 'should be able to query plan for team', (done) ->

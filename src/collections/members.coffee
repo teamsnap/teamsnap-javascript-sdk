@@ -35,6 +35,7 @@ exports.deleteMember = (member, callback) ->
   @deleteItem member, callback
 
 
+# Member photo
 exports.deleteMemberPhoto = (memberId) ->
   unless memberId
     throw new TSArgsError 'teamsnap.deleteMemberPhoto', "`memberId` must be
@@ -85,8 +86,7 @@ exports.generateThumbnail = (memberId, x, y, width, height) ->
     .pop().callback callback
 
 
-
-# Member Emails
+# Member emails
 exports.loadMemberEmailAddresses = (params, callback) ->
   if @isId params
     params = teamId: params
@@ -122,6 +122,7 @@ exports.deleteMemberEmailAddress = (emailAddress, callback) ->
   @deleteItem emailAddress, callback
 
 
+# Member phone numbers
 exports.loadMemberPhoneNumbers = (params, callback) ->
   if @isId params
     params = teamId: params
@@ -154,6 +155,42 @@ exports.deleteMemberPhoneNumber = (phoneNumber, callback) ->
       '`phoneNumber` must be provided'
 
   @deleteItem phoneNumber, callback
+
+
+# Member links
+exports.loadMemberLinks = (params, callback) ->
+  if @isId params
+    params = teamId: params
+  else unless params and typeof params is 'object'
+    throw new TSArgsError 'teamsnap.loadMemberLinks', 'must provide a teamId or
+      query parameters'
+
+  @loadItems 'memberLink', params, callback
+
+
+exports.createMemberLink = (data) ->
+  @createItem data,
+    type: 'memberLink'
+
+
+exports.saveMemberLink = (memberLink, callback) ->
+  unless memberLink
+    throw new TSArgsError 'teamsnap.saveMemberLink', '`memberLink`
+      must be provided'
+  unless @isItem memberLink, 'memberLink'
+    throw new TSArgsError 'teamsnap.saveMemberLink',
+      "`memberLink.type` must be 'memberLink'"
+
+  @saveItem memberLink, callback
+
+
+exports.deleteMemberLink = (memberLink, callback) ->
+  unless memberLink
+    throw new TSArgsError 'teamsnap.deleteMemberLink',
+      '`memberLink` must be provided'
+
+  @deleteItem memberLink, callback
+
 
 
 # Helper to output a member's name, forward or reverse (reverse will use comma)

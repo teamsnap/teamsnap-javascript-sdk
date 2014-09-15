@@ -11,6 +11,7 @@ types = [
   'location'
   'member'
   'memberEmailAddress'
+  'memberLink'
   'memberPhoneNumber'
   'memberPreferences'
   'opponent'
