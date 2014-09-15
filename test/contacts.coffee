@@ -1,4 +1,4 @@
-describe 'contacts', ->
+describe 'Contacts', ->
 
   it 'should be able to load all contacts for team', (done) ->
     teamsnap.loadContacts team.id, (err, result) ->

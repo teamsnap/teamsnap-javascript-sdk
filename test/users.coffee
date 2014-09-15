@@ -1,4 +1,4 @@
-describe 'users', ->
+describe 'Users', ->
 
   it 'should be able to load all users for team', (done) ->
     teamsnap.loadUsers team.id, (err, result) ->

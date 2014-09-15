@@ -1,4 +1,4 @@
-describe 'teams', ->
+describe 'Teams', ->
   newTeam = null
 
   it 'should be able to load all teams', (done) ->

@@ -1,4 +1,4 @@
-describe 'sports', ->
+describe 'Sports', ->
 
   it 'should be able to load all sports', ->
     expect(teamsnap.sports).to.be.an('array')

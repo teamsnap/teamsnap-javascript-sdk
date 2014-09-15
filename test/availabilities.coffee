@@ -1,4 +1,4 @@
-describe 'availabilities', ->
+describe 'Availabilities', ->
 
   it 'should be able to load all availabilities for team', (done) ->
     teamsnap.loadAvailabilities team.id, (err, result) ->

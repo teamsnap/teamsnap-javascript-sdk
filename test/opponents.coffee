@@ -1,4 +1,4 @@
-describe 'opponents', ->
+describe 'Opponents', ->
 
   it 'should be able to load all opponents for team', (done) ->
     teamsnap.loadOpponents team.id, (err, result) ->

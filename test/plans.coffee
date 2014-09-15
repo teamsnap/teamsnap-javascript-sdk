@@ -1,4 +1,4 @@
-describe 'plans', ->
+describe 'Plans', ->
 
   it 'should be able to load all plans', ->
     expect(teamsnap.plans).to.be.an('array')

@@ -114,6 +114,7 @@ modifySDK = (sdk) ->
     promises.when(
       sdk.loadAvailabilities memberId: member.id
       sdk.loadTrackedItemStatuses memberId: member.id
+      sdk.loadCustomData memberId: member.id
     )
 
   # Remove related records when a member is deleted

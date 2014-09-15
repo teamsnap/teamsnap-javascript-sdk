@@ -7,6 +7,8 @@ types = [
   'contact'
   'contactEmailAddress'
   'contactPhoneNumber'
+  'customDatum'
+  'customField'
   'event'
   'location'
   'member'
@@ -33,6 +35,7 @@ singularLookup = {}
 pluralLookup =
   memberPreferences: 'membersPreferences'
   teamPreferences: 'teamsPreferences'
+  customDatum: 'customData'
 
 for type in types
   singular = type
