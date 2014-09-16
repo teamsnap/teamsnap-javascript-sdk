@@ -111,9 +111,7 @@ class Item
     for prop in data.data
       value = prop.value
       if prop.type is 'DateTime' and value
-        [year, month, day, hour, minute, second] =
-          value.split(/-|T|:|\+|Z/).slice(0, 6)
-        value = new Date(year, month - 1, day, hour, minute, second)
+        value = new Date(value)
 
       if prop.name is 'type'
         value = camelize(value)
