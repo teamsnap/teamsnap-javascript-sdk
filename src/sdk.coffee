@@ -28,6 +28,7 @@ createSDKObject = (request, collections) ->
     scopedCollections[name] = new ScopedCollection request, collection
   
   sdk =
+    when: promises.when
     request: request
     collections: scopedCollections
 
@@ -97,7 +98,7 @@ createSDKObject = (request, collections) ->
 
   add require './types'
   add require './linkItems'
-  add require './persistance'
+  add require './persistence'
   add require './collections/teams'
   add require './collections/assignments'
   add require './collections/availabilities'

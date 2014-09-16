@@ -39,7 +39,7 @@ exports.deleteTrackedItem = (trackedItem, callback) ->
   @deleteItem trackedItem, callback
     
 
-exports.trackedItemSort = ->
+exports.getTrackedItemSort = ->
   (itemA, itemB) =>
     if !@isItem(itemA, 'trackedItem') or !@isItem(itemB, 'trackedItem')
       valueA = itemA.type

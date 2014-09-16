@@ -38,17 +38,14 @@ pluralLookup =
   customDatum: 'customData'
 
 for type in types
-  singular = type
-  plural = pluralLookup[type] or switch singular.slice -1
-    when 'y' then singular.slice(0, -1) + 'ies'
-    when 's' then singular + 'es'
-    else singular + 's'
-  typeLookup[singular] = type
+  plural = pluralLookup[type] or switch type.slice -1
+    when 'y' then type.slice(0, -1) + 'ies'
+    when 's' then type + 'es'
+    else type + 's'
+  typeLookup[type] = type
   typeLookup[plural] = type
-  singularLookup[type] = singular
-  singularLookup[plural] = singular
+  singularLookup[plural] = type
   pluralLookup[type] = plural
-  pluralLookup[singular] = plural
 
 
 # check if the name is the plural version or singular version (singularLookup

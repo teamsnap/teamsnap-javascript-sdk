@@ -59,3 +59,31 @@ exports.bulkLoad = (teamId, types, callback) ->
     str[0].toUpperCase() + str.slice(1)
   params = teamId: teamId, types: types.map(capitalize).join(',')
   @collections.root.queryItems 'bulkLoad', params, callback
+
+
+exports.invite = (options = {}) ->
+  cleanArray options, 'memberId'
+  cleanArray options, 'contactId'
+
+  unless options.memberId or options.contactId
+    throw new TSArgsError 'teamsnap.invite', 'options.memberId or
+      options.contactId is required.'
+
+  unless options.teamId
+    throw new TSArgsError 'teamsnap.invite', 'options.teamId is required.'
+
+  unless options.notifyAsMemberId
+    throw new TSArgsError 'teamsnap.invite', 'options.notifyAsMemberId is
+      required.'
+
+  @collections.teams.exec('invite', options)
+
+# Converts memberId or memberIds into an array
+cleanArray = (obj, prop) ->
+  plural = prop + 's'
+  if obj[plural]
+    obj[prop] = obj[plural]
+    delete obj[plural]
+  if Array.isArray obj[prop]
+    obj[prop] = obj[prop].join(',')
+  obj

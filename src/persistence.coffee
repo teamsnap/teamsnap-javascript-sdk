@@ -1,7 +1,7 @@
-# Provides a method for enabling persistance which will associate all items
+# Provides a method for enabling persistence which will associate all items
 # loaded and keep only one copy of each item in memory even if it may be loaded
 # multiple times. This makes working with a team's data in-memory very easy. To
-# "unload" an item or list of items from memory after enabling persistance, use
+# "unload" an item or list of items from memory after enabling persistence, use
 # disassociateItems and they'll be removed.
 promises = require './promises'
 linking = require './linking'
@@ -11,34 +11,51 @@ types = require './types'
 lookup = null
 
 
-# Enables persistance: storing all loaded items and associating them, keeping
+# Enables persistence: storing all loaded items and associating them, keeping
 # only one copy of each item in memory, automatically disassociating items when
 # deleted, and allowing items to be reset to their saved state on demand.
-exports.enablePersistance = ->
+exports.enablePersistence = ->
   return if lookup # already enabled
-  sdk = this
-  @persistanceEnabled = true
+  @persistenceEnabled = true
+  lookup = {}
   modifyModel()
   modifySDK(this)
 
 
-# Turns off persistance and disassociates all items currently persisted to allow
+# Turns off persistence and disassociates all items currently persisted to allow
 # for garbage collection
-exports.disablePersistance = ->
+exports.disablePersistence = ->
   return unless lookup
-  @persistanceEnabled = false
+  @persistenceEnabled = false
   lookup = null
   linking.unlinkItems (Object.keys(lookup).map (href) -> lookup[href]), lookup
   revertModel()
   revertSDK(this)
 
 
+exports.findItem = (href) ->
+  lookup?[href]
+
+
 
 modifyModel = ->
+  # Hook into link loading to link items
+  wrapMethod MetaList.prototype, '_request', (_request) ->
+    (request, method, rel, params, type) ->
+      _request.call(this, request, method, rel, params, type).then (items) ->
+        if Array.isArray items
+          linking.linkItems(items, lookup)
+          items.forEach (item) -> item.saveState()
+          items
+
   # Hook into ScopedCollection.save to register/update saved items
   wrapMethod ScopedCollection.prototype, 'save', (save) ->
     (item, callback) ->
-      save.call(this, item).then(saveState).callback callback
+      # TODO only save changed fields
+      save.call(this, item).then((item) ->
+        linking.linkItem(item, lookup)
+        item.saveState()
+      ).callback callback
 
   # Hook into Item.delete to unregister deleted items or remove if not saved
   wrapMethod Item.prototype, 'delete', (deleteItem) ->
@@ -54,36 +71,42 @@ modifyModel = ->
       linking.linkItem(item, lookup) if item.href
       item
 
-  # Hook into item.deserialize to save state and associate on load and save
+  # Hook into item.deserialize to only ever return one copy of an item
   wrapMethod Item.prototype, 'deserialize', (deserialize) ->
     (data) ->
       data = data.collection.items?[0] if data?.collection
       item = lookup[data.href] or this
       deserialize.call(item, data)
-      linking.linkItem(item, lookup)
-      item.saveState()
 
   # Save an item's current state, probably shouldn't be used explicitly
   Item::saveState = ->
-    @_state = copy this, {}
-    @_state._undos = [ => copy(@_state, this) ]
-    @_state.undo = linking.groupUndos(@_state._undos)
+    @_state = copy this, { _undos: [] }
     this
 
   # Rolls an item back to its last saved state, use if a user "cancels" changes
   Item::rollback = ->
-    @_state?.undo()
-    @_state._undos.length = 1
-    this
+    @_state._undos.reverse().forEach (undo) -> undo()
+    @_state._undos.length = 0
+    copy(@_state, this)
 
   # Links an item with another before save, including setting the foreign id on
   # the item. `item.rollback()` will undo links made before a save.
   Item::link = (rel, item) ->
     @saveState() unless @_state
     undos = @_state._undos
-    undos.push linking.undoableAdd(this, rel, item)
-    undos.push linking.undoableAdd(this, rel + 'Id', item.id) if item.id
-    undos.push linking.linkItemWith(this, item)
+    if @[rel]
+      related = @[rel]
+      linking.unlinkItemFrom(this, @[rel])
+      undos.push =>
+        @[rel + 'Id'] = related.id
+        linking.linkItemWith(this, related)
+    @[rel] = item
+    if item
+      @[rel + 'Id'] = item.id
+      linking.linkItemWith(this, item)
+      undos.push =>
+        delete @[rel + 'Id']
+        linking.unlinkItemFrom(this, item)
     this
 
 
@@ -245,7 +268,7 @@ wrapSaveForNew = (sdk, saveMethodName, onSave) ->
         save.call(this, item, callback)
       else
         savedItem = null
-        save.call(item)
+        save.call(this, item)
           .then((item) -> savedItem = item)
           .then(onSave)
           .then(-> savedItem)

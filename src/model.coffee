@@ -110,11 +110,16 @@ class Item
     @links.deserialize data.links
     for prop in data.data
       value = prop.value
+      if prop.type is 'DateTime' and value
+        [year, month, day, hour, minute, second] =
+          value.split(/-|T|:|\+|Z/).slice(0, 6)
+        value = new Date(year, month - 1, day, hour, minute, second)
+
       if prop.name is 'type'
         value = camelize(value)
         # TODO remove this line once type is switched to snake case
         value = value[0].toLowerCase() + value.slice(1)
-      value = new Date(prop.value) if prop.type is 'Date'
+
       @[camelize prop.name] = value
     this
 

@@ -128,8 +128,10 @@ module.exports = (clientId, secret) ->
       # Shortcut for local testing
       if teamsnap.apiUrl.indexOf(':3000') isnt -1
         authedRequest = sdkRequest.clone()
+        id = 1
+        id = token if typeof token is 'number'
         authedRequest.hook (xhr) ->
-          xhr.setRequestHeader 'X-Teamsnap-User-ID', 1
+          xhr.setRequestHeader 'X-Teamsnap-User-ID', id
         return sdk authedRequest, cachedCollections, callback
 
       token = browserStore() unless token

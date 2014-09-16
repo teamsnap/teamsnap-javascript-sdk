@@ -42,7 +42,7 @@ exports.deleteAssignment = (assignment, callback) ->
 
 # Sorts assignments by their member, must have assignment.member set to
 # correctly sort
-exports.assignmentSort = (reverse) ->
+exports.getAssignmentSort = (reverse) ->
   (itemA, itemB) =>
     if !@isItem(itemA, 'assignment') or !@isItem(itemB, 'assignment')
       valueA = itemA.type

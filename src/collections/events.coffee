@@ -3,6 +3,10 @@ exports.EVENTS =
   FUTURE: 'future'
   ALL: 'all'
 
+exports.REMINDERS =
+  ALL: 'all'
+  UNSET: 'unset'
+
 includes = {}
 includes[value] = true for key, value of exports.EVENTS
 
@@ -62,6 +66,29 @@ exports.deleteEvent = (event, include, callback) ->
     params = repeatingInclude: include
 
   @deleteItem event, params, callback
+
+
+exports.sendAvailabilityReminders = (eventId, sendingMemberId, include = 'unset') ->
+  if @isItem eventId, 'event'
+    eventId = eventId.id
+  if @isItem sendingMemberId, 'member'
+    sendingMemberId = sendingMemberId.id
+  unless @isId eventId
+    throw new TSArgsError 'teamsnap.sendAvailabilityReminders', 'must include id
+      `eventId`'
+  unless @isId sendingMemberId
+    throw new TSArgsError 'teamsnap.sendAvailabilityReminders', 'must include id
+      `sendingMemberId`'
+  unless include is 'all' or include is 'unset'
+    throw new TSArgsError 'teamsnap.sendAvailabilityReminders', "`include` must
+      be 'all' or 'unset'"
+
+  options =
+    id: eventId
+    membersToNotify: include
+    notifyTeamAsMemberId: sendingMemberId
+  
+  @collections.events.exec('sendAvailabilityReminders', options)
 
 
 # Returns a sorting function for the default event sort
