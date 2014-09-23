@@ -1,3 +1,5 @@
+promises = require './promises'
+
 # A representation of a Collection+JSON collection
 class Collection
 
@@ -46,6 +48,11 @@ class ScopedCollection extends Collection
     item = Item.create(@_request, item) unless item instanceof Item
     method = if item.href then 'put' else 'post'
     data = item.serialize @template
+
+    # Don't send a request if there is nothing to save
+    if data.template.data.length is 0
+      return promises.resolve(item).callback callback
+
     @_request(method, item.href or @href, data).then((xhr) ->
       if (items = xhr.response?.collection?.items)
         if items.length > 1
@@ -115,8 +122,6 @@ class Item
 
       if prop.name is 'type'
         value = camelize(value)
-        # TODO remove this line once type is switched to snake case
-        value = value[0].toLowerCase() + value.slice(1)
 
       @[camelize prop.name] = value
     this
@@ -126,11 +131,12 @@ class Item
     unless template?.length
       throw new TSError 'You must provide the collection\'s template'
     fields = []
-    template.forEach (prop) =>
-      value = @[camelize prop.name]
+    item = this
+    template.forEach (prop) ->
+      value = item[camelize prop.name]
       if prop.name is 'type'
         value = underscore value
-      if value
+      if value isnt undefined
         fields.push name: prop.name, value: value
     template: data: fields
 
@@ -172,8 +178,6 @@ class MetaList
         for param in entry.data
           params[camelize param.name] = param.value
 
-      # TODO remove this once refreshments has been renamed
-      entry.rel = 'assignments' if entry.rel is 'refreshments'
       @[camelize entry.rel] = href: entry.href, params: params
 
   # Checks whether a given link, query, or command exists

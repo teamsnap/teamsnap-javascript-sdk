@@ -52,12 +52,7 @@ exports.bulkLoad = (teamId, types, callback) ->
   unless Array.isArray types
     types = @getTeamTypes()
 
-  # TODO uncomment this and remove the following two lines after switching type
-  # params = teamId: teamId, types: types.map(@underscoreType).join(',')
-  capitalize = (str) ->
-    str = 'refreshment' if str is 'assignment'
-    str[0].toUpperCase() + str.slice(1)
-  params = teamId: teamId, types: types.map(capitalize).join(',')
+  params = teamId: teamId, types: types.map(@underscoreType).join(',')
   @collections.root.queryItems 'bulkLoad', params, callback
 
 

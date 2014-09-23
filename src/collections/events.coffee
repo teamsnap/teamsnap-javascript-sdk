@@ -68,7 +68,8 @@ exports.deleteEvent = (event, include, callback) ->
   @deleteItem event, params, callback
 
 
-exports.sendAvailabilityReminders = (eventId, sendingMemberId, include = 'unset') ->
+exports.sendAvailabilityReminders = (eventId, sendingMemberId, include) ->
+  include = 'unset' unless include
   if @isItem eventId, 'event'
     eventId = eventId.id
   if @isItem sendingMemberId, 'member'
