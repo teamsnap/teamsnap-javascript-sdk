@@ -97,7 +97,12 @@ createSDKObject = (request, collections) ->
       sdk[key] = value
 
   add require './types'
-  add require './linkItems'
+  
+  # Only add these two methods from linking
+  linking = require './linking'
+  sdk.linkItems = linking.linkItems
+  sdk.unlinkItems = linking.unlinkItems
+
   add require './persistence'
   add require './collections/teams'
   add require './collections/assignments'

@@ -1,10 +1,12 @@
 # Provides functionality for associating items together (looking at their links
 # and setting references to each other on the items, such as setting the member
-# on an availability or all members in an array on a team).
+# on an availability or all members in an array on a team). Most of this
+# functionality is non-public, only linkItems and unlinkItems should be exposed
+# on the SDK.
 types = require './types'
 
 # associates a list of items with each other by their links
-exports.linkItems = (items, lookup = {}) ->
+linkItems = (items, lookup = {}) ->
   return (->) unless items
   if Array.isArray items
     items.forEach (item) -> lookup[item.href] = item if item.href
@@ -15,7 +17,7 @@ exports.linkItems = (items, lookup = {}) ->
 
 
 # disassociates a list of items with each that were associated
-exports.unlinkItems = (items, lookup = {}) ->
+unlinkItems = (items, lookup = {}) ->
   return (->) unless items
   if Array.isArray items
     items.forEach (item) -> unlinkItem(item, lookup)
@@ -83,6 +85,8 @@ unlinkItemsFrom = (items, fromHref) ->
         delete item[rel]
 
 
+exports.linkItems = linkItems
+exports.unlinkItems = unlinkItems
 exports.linkItem = linkItem
 exports.linkItemWith = linkItemWith
 exports.unlinkItem = unlinkItem
