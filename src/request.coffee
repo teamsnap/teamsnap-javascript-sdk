@@ -33,7 +33,7 @@ sendRequest = (method, url, data, hooks, callback) ->
             xhr.response = null
 
         if xhr.status >= 400
-          errorMsg = xhr.response?.error?.message or ''
+          errorMsg = xhr.response?.collection?.error?.message or ''
 
         if xhr.status is 0
           return promises.defer().promise if unloading
@@ -47,8 +47,8 @@ sendRequest = (method, url, data, hooks, callback) ->
           deferred.reject new RequestError(RequestError.CLIENT_ERROR, 'There
             was an error with the request'), xhr, errorMsg
         else if xhr.status is 400
-          deferred.reject new RequestError(RequestError.VALIDATION_ERROR, 'The
-            data was invalid'), xhr, errorMsg
+          deferred.reject new RequestError(RequestError.VALIDATION_ERROR,
+            errorMsg or 'The data was invalid'), xhr
         else
           deferred.resolve xhr
 

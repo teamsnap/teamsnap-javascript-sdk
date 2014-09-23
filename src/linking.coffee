@@ -7,7 +7,7 @@ types = require './types'
 
 # associates a list of items with each other by their links
 linkItems = (items, lookup = {}) ->
-  return (->) unless items
+  return unless items
   if Array.isArray items
     items.forEach (item) -> lookup[item.href] = item if item.href
     items.forEach (item) -> linkItem(item, lookup)
@@ -18,11 +18,11 @@ linkItems = (items, lookup = {}) ->
 
 # disassociates a list of items with each that were associated
 unlinkItems = (items, lookup = {}) ->
-  return (->) unless items
+  return unless items
   if Array.isArray items
-    items.forEach (item) -> unlinkItem(item, lookup)
+    items.forEach (item) -> unlinkItem item, lookup
   else
-    unlinkItem items
+    unlinkItem items, lookup
 
 
 linkItem = (item, lookup) ->
@@ -52,7 +52,7 @@ linkItemWith = (item, other) ->
 
 unlinkItem = (item, lookup) ->
   return unless item.href
-  if lookup?[item.href] is item
+  if lookup[item.href] is item
     delete lookup[item.href]
 
   item.links.each (rel, href) ->
@@ -62,8 +62,9 @@ unlinkItem = (item, lookup) ->
         delete item[rel]
     else
       related = item[rel]
-      delete item[rel]
-      unlinkItemFrom(item, related)
+      if related?
+        delete item[rel]
+        unlinkItemFrom(item, related)
 
 
 unlinkItemFrom = (item, other) ->
@@ -73,7 +74,7 @@ unlinkItemFrom = (item, other) ->
     other[plural].splice(index, 1) if index isnt -1
   else
     other.links.each (rel, href) ->
-      if href is item.href and other[rel] is item
+      if other[rel] is item
         delete other[rel]
 
 

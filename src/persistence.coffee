@@ -51,18 +51,25 @@ modifyModel = ->
   # Hook into ScopedCollection.save to register/update saved items
   wrapMethod ScopedCollection.prototype, 'save', (save) ->
     (item, callback) ->
-      # TODO only save changed fields
       save.call(this, item).then((item) ->
-        linking.linkItem(item, lookup)
-        item.saveState()
+        if Array.isArray item
+          item.map (item) ->
+            linking.linkItem(item, lookup)
+            item.saveState()
+        else
+          linking.linkItem(item, lookup)
+          item.saveState()
       ).callback callback
 
   # Hook into Item.delete to unregister deleted items or remove if not saved
   wrapMethod Item.prototype, 'delete', (deleteItem) ->
     (params, callback) ->
       item = this
-      undo = linking.unlinkItem item, lookup
-      deleteItem.call(this, params).fail(undo).callback callback
+      linking.unlinkItem item, lookup
+      deleteItem.call(this, params).fail((err) ->
+        linking.linkItem item, lookup
+        err
+      ).callback callback
 
   # Hook into Item.create to register items being serialized from a cache.
   wrapMethod Item, 'create', (create) ->
@@ -94,7 +101,8 @@ modifyModel = ->
 
   # Save an item's current state, probably shouldn't be used explicitly
   Item::saveState = ->
-    @_state = copy this, { _undos: [] }
+    @_state = { _undos: [] }
+    copy(this, @_state) if @href
     this
 
   # Rolls an item back to its last saved state, use if a user "cancels" changes
@@ -216,9 +224,10 @@ modifySDK = (sdk) ->
         toRemove.push event.assignments...
         toRemove.push event.availabilities...
 
-      deleteEvent.call(this, event, include, callback).then((result) ->
-        linking.unlinkItems toRemove, lookup
-        result
+      linking.unlinkItems toRemove, lookup
+      deleteEvent.call(this, event, include, callback).fail((err) ->
+        linking.linkItems toRemove, lookup
+        err
       ).callback callback
 
   # Load the tracked item statuses for the new tracked item

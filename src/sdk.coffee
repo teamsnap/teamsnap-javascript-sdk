@@ -24,7 +24,8 @@ module.exports = (request, cachedCollections, callback) ->
 
 createSDKObject = (request, collections) ->
   scopedCollections = {}
-  for name, collection of collections
+  Object.keys(collections).forEach (name) ->
+    collection = collections[name]
     scopedCollections[name] = new ScopedCollection request, collection
   
   sdk =

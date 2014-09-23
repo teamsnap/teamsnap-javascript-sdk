@@ -249,6 +249,10 @@ class Deferred
 
   # handle a promise whether it was resolved, rejected, and/or its progress
   then: (resolvedHandler, rejectedHandler, progressHandler, canceledHandler) =>
+    for handler in arguments
+      if handler? and typeof handler isnt 'function'
+        throw new Error('Promise handlers must be functions')
+
     @progressHandlers.push(progressHandler) if progressHandler
     nextDeferred = promises.defer()
     nextDeferred.promise.prev = @.promise

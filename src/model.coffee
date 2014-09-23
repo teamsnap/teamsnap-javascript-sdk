@@ -53,10 +53,10 @@ class ScopedCollection extends Collection
     if data.template.data.length is 0
       return promises.resolve(item).callback callback
 
-    @_request(method, item.href or @href, data).then((xhr) ->
+    @_request(method, item.href or @href, data).then((xhr) =>
       if (items = xhr.response?.collection?.items)
         if items.length > 1
-          Item.fromArray items
+          Item.fromArray @_request, items
         else if items.length
           item.deserialize xhr.response
     ).callback callback
