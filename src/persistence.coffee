@@ -78,6 +78,20 @@ modifyModel = ->
       item = lookup[data.href] or this
       deserialize.call(item, data)
 
+  # Hook into item.serialize to only save changed fields when updating
+  wrapMethod Item.prototype, 'serialize', (serialize) ->
+    (template) ->
+      body = serialize.call(this, template)
+      if (state = @_state)
+        body.template.data = body.template.data.filter (field) ->
+          oldValue = state[camelize field.name]
+          value = field.value
+          isSame =
+            value is oldValue or
+            (value and oldValue and value.valueOf() is oldValue.valueOf())
+          not isSame
+      body
+
   # Save an item's current state, probably shouldn't be used explicitly
   Item::saveState = ->
     @_state = copy this, { _undos: [] }
@@ -111,9 +125,12 @@ modifyModel = ->
 
 
 revertModel = ->
+  revertWrapMethod MetaList.prototype, '_request'
   revertWrapMethod ScopedCollection.prototype, 'save'
   revertWrapMethod Item.prototype, 'delete'
   revertWrapMethod Item, 'create'
+  revertWrapMethod Item.prototype, 'deserialize'
+  revertWrapMethod Item.prototype, 'serialize'
   delete Item::saveState
   delete Item::rollback
   delete Item::link
@@ -280,3 +297,7 @@ copy = (from, to) ->
     return if typeof value is 'function' or key.charAt(0) is '_'
     to[key] = from[key]
   to
+
+camelize = (str) ->
+  str.replace /[-_]+(\w)/g, (_, char) ->
+    char.toUpperCase()
