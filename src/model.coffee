@@ -56,7 +56,10 @@ class ScopedCollection extends Collection
     @_request(method, item.href or @href, data).then((xhr) =>
       if (items = xhr.response?.collection?.items)
         if items.length > 1
-          Item.fromArray @_request, items
+          item.deserialize items.shift()
+          all = Item.fromArray @_request, items
+          all.unshift(item)
+          all
         else if items.length
           item.deserialize xhr.response
     ).callback callback

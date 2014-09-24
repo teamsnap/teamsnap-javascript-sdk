@@ -120,6 +120,7 @@ modifyModel = ->
       related = @[rel]
       linking.unlinkItemFrom(this, @[rel])
       undos.push =>
+        @[rel] = related
         @[rel + 'Id'] = related.id
         linking.linkItemWith(this, related)
     @[rel] = item
@@ -127,6 +128,7 @@ modifyModel = ->
       @[rel + 'Id'] = item.id
       linking.linkItemWith(this, item)
       undos.push =>
+        delete @[rel]
         delete @[rel + 'Id']
         linking.unlinkItemFrom(this, item)
     this
@@ -177,9 +179,10 @@ modifySDK = (sdk) ->
         toRemove.push contact
       toRemove.push member.trackedItemStatuses...
 
-      deleteMember.call(this, member, callback).then((result) ->
-        linking.unlinkItems toRemove, lookup
-        result
+      linking.unlinkItems toRemove, lookup
+      deleteMember.call(this, member, callback).fail((err) ->
+        linking.linkItems toRemove, lookup
+        err
       ).callback callback
 
   # Remove related records when a contact is deleted
@@ -189,14 +192,19 @@ modifySDK = (sdk) ->
       toRemove.push contact.contactEmailAddresses...
       toRemove.push contact.contactPhoneNumbers...
 
-      deleteContact.call(this, contact, callback).then((result) ->
-        linking.unlinkItems toRemove, lookup
-        result
+      linking.unlinkItems toRemove, lookup
+      deleteContact.call(this, contact, callback).fail((err) ->
+        linking.linkItems toRemove, lookup
+        err
       ).callback callback
 
   # Load availabilities for the new event
   wrapSaveForNew sdk, 'saveEvent', (event) ->
-    sdk.loadAvailabilities eventId: event.id
+    ids = if Array.isArray(event)
+      (event.map (event) -> event.id).join(',')
+    else
+      event.id
+    sdk.loadAvailabilities eventId: ids
 
   # Remove related records (including repeating events) when an event(s) are
   # deleted
@@ -238,9 +246,11 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'deleteTrackedItem', (deleteTrackedItem) ->
     (trackedItem, callback) ->
       toRemove = trackedItem.trackedItemStatuses.slice()
-      deleteTrackedItem.call(this, trackedItem).then((result) ->
-        linking.unlinkItems toRemove, lookup
-        result
+
+      linking.unlinkItems toRemove, lookup
+      deleteTrackedItem.call(this, trackedItem).fail((err) ->
+        linking.linkItems toRemove, lookup
+        err
       ).callback callback
 
   # Remove all records belonging to a team when it is deleted

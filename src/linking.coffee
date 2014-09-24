@@ -56,15 +56,12 @@ unlinkItem = (item, lookup) ->
     delete lookup[item.href]
 
   item.links.each (rel, href) ->
+    return unless item[rel]
     if types.isPluralType rel
-      if item[rel]
-        unlinkItemsFrom(item[rel], item.href)
-        delete item[rel]
+      unlinkItemsFrom(item[rel], item.href)
     else
-      related = item[rel]
-      if related?
-        delete item[rel]
-        unlinkItemFrom(item, related)
+      unlinkItemFrom(item, item[rel])
+    delete item[rel]
 
 
 unlinkItemFrom = (item, other) ->

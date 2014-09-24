@@ -1,5 +1,5 @@
 exports.TRACKING =
-  NONE: null
+  NONE: 0
   CHECK: 1
   X: 2
 
@@ -24,10 +24,6 @@ exports.saveTrackedItemStatus = (trackedItemStatus, callback) ->
   unless @isItem trackedItemStatus, 'trackedItemStatus'
     throw new TSArgsError 'teamsnap.saveTrackedItemStatus',
       "`trackedItemStatus.type` must be 'trackedItemStatus'"
-  unless trackedItemStatus.trackedItemId
-    return @reject 'You must choose a tracked item.', 'trackedItemId', callback
-  unless trackedItemStatus.memberId
-    return @reject 'You must choose a member.', 'memberId', callback
   unless statuses[trackedItemStatus.statusCode]
     return @reject 'You must select a valid status', 'statusCode', callback
 
