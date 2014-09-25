@@ -9,14 +9,12 @@ browserStorageName = 'teamsnap.authToken'
 
 # Sets up requests for the JSON auth services
 authRequest = request.create().hook (xhr, data) ->
-  xhr.responseType = 'json'
   xhr.setRequestHeader('Accept', jsonMime)
   xhr.setRequestHeader('Content-Type', jsonMime) if data
   xhr.withCredentials = true
 
 # Sets up requests for Collection+JSON API calls
 sdkRequest = request.create().hook (xhr, data) ->
-  xhr.responseType = 'json'
   xhr.setRequestHeader('Accept', collectionJSONMime)
   xhr.setRequestHeader('Content-Type', collectionJSONMime) if data
   xhr.withCredentials = true

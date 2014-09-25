@@ -6,6 +6,7 @@
 promises = require './promises'
 linking = require './linking'
 types = require './types'
+{ Item } = require './model'
 { ScopedCollection, Item, MetaList } = require './model'
 
 lookup = null
@@ -14,12 +15,15 @@ lookup = null
 # Enables persistence: storing all loaded items and associating them, keeping
 # only one copy of each item in memory, automatically disassociating items when
 # deleted, and allowing items to be reset to their saved state on demand.
-exports.enablePersistence = ->
+exports.enablePersistence = (cachedItemData) ->
   return if lookup # already enabled
   @persistenceEnabled = true
   lookup = {}
   modifyModel()
   modifySDK(this)
+  linking.linkItems @plans.concat(@sports), lookup
+  if cachedItemData
+    Item.fromArray @request, cachedItemData
 
 
 # Turns off persistence and disassociates all items currently persisted to allow
@@ -27,26 +31,28 @@ exports.enablePersistence = ->
 exports.disablePersistence = ->
   return unless lookup
   @persistenceEnabled = false
-  lookup = null
   linking.unlinkItems (Object.keys(lookup).map (href) -> lookup[href]), lookup
+  lookup = null
   revertModel()
   revertSDK(this)
+  this
 
 
 exports.findItem = (href) ->
   lookup?[href]
 
 
+exports.getAllItems = ->
+  Object.keys(lookup).map (href) -> lookup[href]
+
 
 modifyModel = ->
-  # Hook into link loading to link items
-  wrapMethod MetaList.prototype, '_request', (_request) ->
-    (request, method, rel, params, type) ->
-      _request.call(this, request, method, rel, params, type).then (items) ->
-        if Array.isArray items
-          linking.linkItems(items, lookup)
-          items.forEach (item) -> item.saveState()
-          items
+  # Hook into item creation to link groups of items
+  wrapMethod Item, 'fromArray', (fromArray) ->
+    (request, array) ->
+      items = fromArray.call(this, request, array)
+      linking.linkItems(items, lookup).map (item) ->
+        item.saveState()
 
   # Hook into ScopedCollection.save to register/update saved items
   wrapMethod ScopedCollection.prototype, 'save', (save) ->

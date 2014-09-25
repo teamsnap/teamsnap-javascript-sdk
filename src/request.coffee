@@ -26,14 +26,13 @@ sendRequest = (method, url, data, hooks, callback) ->
       when 3
         deferred.progress(xhr)
       when 4
-        unless xhr.hasOwnProperty 'response'
-          try
-            xhr.response = JSON.parse xhr.responseText
-          catch e
-            xhr.response = null
+        try
+          xhr.data = JSON.parse(xhr.responseText)
+        catch
+          xhr.data = null
 
         if xhr.status >= 400
-          errorMsg = xhr.response?.collection?.error?.message or ''
+          errorMsg = xhr.data?.collection?.error?.message or ''
 
         if xhr.status is 0
           return promises.defer().promise if unloading

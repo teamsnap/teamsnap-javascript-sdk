@@ -14,6 +14,7 @@ linkItems = (items, lookup = {}) ->
   else
     lookup[items.href] = items if items.href
     linkItem(items, lookup)
+  items
 
 
 # disassociates a list of items with each that were associated
@@ -23,6 +24,7 @@ unlinkItems = (items, lookup = {}) ->
     items.forEach (item) -> unlinkItem item, lookup
   else
     unlinkItem items, lookup
+  items
 
 
 linkItem = (item, lookup) ->

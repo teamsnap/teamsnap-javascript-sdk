@@ -17,13 +17,13 @@ module.exports = (request, cachedCollections) ->
     else
       collectionsPromise = request.get(teamsnap.apiUrl).then (xhr) ->
         collections = {}
-        collections.root = root = Collection.fromData xhr.response
+        collections.root = root = Collection.fromData xhr.data
         loads = []
         types.getTypes().forEach (type) ->
           rel = types.getPluralType type
           if root.links.has rel
             loads.push request.get(root.links.href rel).then (xhr) ->
-              collections[rel] = Collection.fromData xhr.response
+              collections[rel] = Collection.fromData xhr.data
 
         promises.when(loads...).then ->
           collections

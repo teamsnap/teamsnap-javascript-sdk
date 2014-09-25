@@ -26,7 +26,16 @@ types = [
   'trackedItemStatus'
 ]
 
-teamTypes = types.slice(1)
+teamTypes = types.slice()
+teamTypes.remove = (type) ->
+  index = @indexOf(type)
+  @splice(index, 1) unless index is -1
+  this
+
+teamTypes
+  .remove('user')
+  .remove('plan')
+  .remove('sport')
 
 # create lookup hashes
 typeLookup = {}

@@ -54,14 +54,14 @@ class ScopedCollection extends Collection
       return promises.resolve(item).callback callback
 
     @_request(method, item.href or @href, data).then((xhr) =>
-      if (items = xhr.response?.collection?.items)
+      if (items = xhr.data?.collection?.items)
         if items.length > 1
           item.deserialize items.shift()
           all = Item.fromArray @_request, items
           all.unshift(item)
           all
         else if items.length
-          item.deserialize xhr.response
+          item.deserialize xhr.data
     ).callback callback
 
   # Load a link as an array of items
@@ -164,6 +164,14 @@ class Item
       data = template: data: fields
     @_request.delete(@href, data).callback callback
 
+  toJSON: ->
+    obj = {}
+    Object.keys(this).forEach (key) =>
+      value = @[key]
+      return if typeof value is 'function' or key.charAt(0) is '_'
+      return if Array.isArray(value) or value instanceof Item
+      obj[key] = @[key]
+    obj
 
 
 # Handles lists of links, queries, and commands
@@ -231,15 +239,19 @@ class MetaList
           data[underscore key] = value
 
     request(method, entry.href, data).then (xhr) ->
-      items = Item.fromArray(request, xhr.response.collection?.items) or []
+      items = Item.fromArray(request, xhr.data?.collection?.items) or []
       if type is 'item' then items.pop() else items
 
 
 # Utility functions
+dateField = /(At|Date)$/
+dateValue = /^\d{4}-/
 copy = (from, to) ->
   Object.keys(from).forEach (key) ->
+    value = from[key]
     return if typeof value is 'function' or key.charAt(0) is '_'
-    to[key] = from[key]
+    value = new Date(value) if dateField.test(key) and dateValue.test(value)
+    to[key] = value
   to
 
 camelize = (str) ->

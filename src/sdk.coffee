@@ -10,15 +10,12 @@ module.exports = (request, cachedCollections, callback) ->
     callback = cachedCollections
     cachedCollections = null
   
-  loadCollections(request, cachedCollections).then (collections) ->
+  loadCollections(request, cachedCollections).then((collections) ->
     sdk = createSDKObject(request, collections)
-    sdk.plans = collections.plans.items
-    sdk.sports = collections.sports.items
-    
-    sdk.collections.root.loadItem('me').then((me) ->
-      sdk.me = me
-      sdk
-    ).callback callback
+    sdk.plans = Item.fromArray(request, collections.plans.items)
+    sdk.sports = Item.fromArray(request, collections.sports.items)
+    sdk
+  ).callback callback
 
 
 
