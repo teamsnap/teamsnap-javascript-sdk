@@ -1,4 +1,5 @@
 exports.config =
+  sourceMaps: false
   paths:
     public: 'lib'
     watched: ['src', 'test']
