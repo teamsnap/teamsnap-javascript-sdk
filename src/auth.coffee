@@ -5,6 +5,7 @@ request = require './request'
 sdk = require './sdk'
 jsonMime = 'application/json'
 collectionJSONMime = 'application/vnd.collection+json'
+multipartMime = 'multipart/form-data'
 browserStorageName = 'teamsnap.authToken'
 
 # Sets up requests for the JSON auth services
@@ -16,7 +17,8 @@ authRequest = request.create().hook (xhr, data) ->
 # Sets up requests for Collection+JSON API calls
 sdkRequest = request.create().hook (xhr, data) ->
   xhr.setRequestHeader('Accept', collectionJSONMime)
-  xhr.setRequestHeader('Content-Type', collectionJSONMime) if data
+  if data and not (data instanceof FormData)
+    xhr.setRequestHeader('Content-Type', collectionJSONMime)
   xhr.withCredentials = true
 
 

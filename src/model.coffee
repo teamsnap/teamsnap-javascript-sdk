@@ -1,4 +1,5 @@
 promises = require './promises'
+File = global.File or ->
 
 # A representation of a Collection+JSON collection
 class Collection
@@ -220,6 +221,10 @@ class MetaList
       params = undefined
     @_request(request, 'get', rel, params, 'item').callback callback
 
+  # Delete a link
+  delete: (request, rel, callback) ->
+    @_request(request, 'delete', rel, undefined, 'item').callback callback
+
   # Execute a command with the given parameters
   exec: (request, rel, params, callback) ->
     if typeof params is 'function'
@@ -235,11 +240,21 @@ class MetaList
     if params
       data = {}
       for own key, value of params
+        # Break and make this a FormData object
+        if value instanceof File
+          data = new FormData()
+          for own key, value of params
+            data.append(underscore(key), value)
+          break
+
         if entry.params.hasOwnProperty(key)
           data[underscore key] = value
 
     request(method, entry.href, data).then (xhr) ->
-      items = Item.fromArray(request, xhr.data?.collection?.items) or []
+      items = if xhr.data?.collection?.items
+        Item.fromArray(request, xhr.data.collection.items)
+      else
+        []
       if type is 'item' then items.pop() else items
 
 

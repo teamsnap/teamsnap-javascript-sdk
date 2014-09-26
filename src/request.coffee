@@ -1,6 +1,7 @@
 # use node.js version when in node
 if typeof XMLHttpRequest is 'undefined'
   global.XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
+FormData = global.FormData or ->
 promises = require './promises'
 
 # Request
@@ -13,7 +14,7 @@ sendRequest = (method, url, data, hooks, callback) ->
     if query.length
       url += if url.indexOf('?') is -1 then '?' else '&'
       url += query.join('&')
-  else if typeof data is 'object'
+  else if typeof data is 'object' and not (data instanceof FormData)
     data = JSON.stringify data
 
   xhr = new XMLHttpRequest()

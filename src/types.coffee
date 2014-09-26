@@ -13,6 +13,7 @@ types = [
   'location'
   'member'
   'memberEmailAddress'
+  'memberFile'
   'memberLink'
   'memberPhoneNumber'
   'memberPreferences'

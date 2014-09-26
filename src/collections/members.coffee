@@ -36,10 +36,25 @@ exports.deleteMember = (member, callback) ->
 
 
 # Member photo
-exports.deleteMemberPhoto = (memberId) ->
-  unless memberId
+exports.uploadMemberPhoto = (memberId, file) ->
+  if @isItem memberId, 'member'
+    memberId = memberId.id
+  if typeof FormData is 'undefined'
+    @reject 'Your browser does not support the new file upload APIs', 'file',
+      callback
+  unless @isId memberId
     throw new TSArgsError 'teamsnap.deleteMemberPhoto', "`memberId` must be
-      provided"
+      a valid id"
+  unless file instanceof File
+    throw new TSArgsError 'teamsnap.uploadMemberFile', 'must include
+      `file` as type File'
+
+  params = memberId: memberId, file: file
+  @collections.members.exec('uploadMemberPhoto', params)
+    .pop().callback callback
+
+
+exports.removeMemberPhoto = (memberId) ->
   if @isItem memberId, 'member'
     memberId = memberId.id
   unless @isId memberId
@@ -47,34 +62,19 @@ exports.deleteMemberPhoto = (memberId) ->
       a valid id"
 
   params = memberId: memberId
-  @collections.members.exec('removeOriginalPhoto', params)
+  @collections.members.exec('removeMemberPhoto', params)
     .pop().callback callback
 
 
-exports.deleteMemberThumbnail = (memberId) ->
-  unless memberId
-    throw new TSArgsError 'teamsnap.deleteThumbnail', "`memberId` must be
-      provided"
-  if @isItem memberId, 'member'
-    memberId = memberId.id
-  unless @isId memberId
-    throw new TSArgsError 'teamsnap.deleteThumbnail', "`memberId` must be
-      a valid id"
-
-  params = memberId: memberId
-  @collections.members.exec('removeThumbnailPhoto', params)
-    .pop().callback callback
-
-
-exports.generateThumbnail = (memberId, x, y, width, height) ->
+exports.generateMemberThumbnail = (memberId, x, y, width, height) ->
   unless member? and x? and y? and width? and height?
     throw new TSArgsError 'teamsnap.generateThumbnail', "`memberId`, `x`, `y`,
       `width`, and `height` are all required"
   if @isItem memberId, 'member'
     memberId = memberId.id
   unless @isId memberId
-    throw new TSArgsError 'teamsnap.generateThumbnail', "`memberId` must be
-      a valid id"
+    throw new TSArgsError 'teamsnap.generateMemberThumbnail', "`memberId` must
+      be a valid id"
 
   params =
     memberId: member.id
@@ -82,7 +82,7 @@ exports.generateThumbnail = (memberId, x, y, width, height) ->
     cropY: y
     cropWidth: width
     cropHeight: height
-  @collections.members.exec('generateThumbnailPhoto', params)
+  @collections.members.exec('generateMemberThumbnail', params)
     .pop().callback callback
 
 

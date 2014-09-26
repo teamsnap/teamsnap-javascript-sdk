@@ -113,6 +113,7 @@ createSDKObject = (request, collections) ->
   add require './collections/events'
   add require './collections/locations'
   add require './collections/memberEmailAddresses'
+  add require './collections/memberFiles'
   add require './collections/memberLinks'
   add require './collections/memberPhoneNumbers'
   add require './collections/memberPreferences'
