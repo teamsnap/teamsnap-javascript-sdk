@@ -36,7 +36,7 @@ exports.deleteMember = (member, callback) ->
 
 
 # Member photo
-exports.uploadMemberPhoto = (memberId, file) ->
+exports.uploadMemberPhoto = (memberId, file, callback) ->
   if @isItem memberId, 'member'
     memberId = memberId.id
   if typeof FormData is 'undefined'
@@ -54,7 +54,7 @@ exports.uploadMemberPhoto = (memberId, file) ->
     .pop().callback callback
 
 
-exports.removeMemberPhoto = (memberId) ->
+exports.removeMemberPhoto = (memberId, callback) ->
   if @isItem memberId, 'member'
     memberId = memberId.id
   unless @isId memberId
@@ -66,22 +66,22 @@ exports.removeMemberPhoto = (memberId) ->
     .pop().callback callback
 
 
-exports.generateMemberThumbnail = (memberId, x, y, width, height) ->
-  unless member? and x? and y? and width? and height?
-    throw new TSArgsError 'teamsnap.generateThumbnail', "`memberId`, `x`, `y`,
-      `width`, and `height` are all required"
+exports.generateMemberThumbnail = (memberId, x, y, width, height, callback) ->
   if @isItem memberId, 'member'
     memberId = memberId.id
+  unless memberId? and x? and y? and width? and height?
+    throw new TSArgsError 'teamsnap.generateThumbnail', "`memberId`, `x`, `y`,
+      `width`, and `height` are all required"
   unless @isId memberId
     throw new TSArgsError 'teamsnap.generateMemberThumbnail', "`memberId` must
       be a valid id"
 
   params =
-    memberId: member.id
-    cropX: x
-    cropY: y
-    cropWidth: width
-    cropHeight: height
+    memberId: memberId
+    x: x
+    y: y
+    width: width
+    height: height
   @collections.members.exec('generateMemberThumbnail', params)
     .pop().callback callback
 
