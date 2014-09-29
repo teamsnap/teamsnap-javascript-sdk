@@ -15,7 +15,8 @@
   },
   "main": "lib/teamsnap",
   "dependencies": {
-    "xmlhttprequest": "latest"
+    "xmlhttprequest": "latest",
+    "form-data": "latest"
   },
   "devDependencies": {
     "brunch": "latest",

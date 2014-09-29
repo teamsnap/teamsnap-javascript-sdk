@@ -19,6 +19,7 @@ exports.config =
         javascripts:
           joinTo:
             'teamsnap.min.js': /^src\//
+            'test/js/test.min.js': /^test\//
 
   server:
     indexPath: 'lib/test/index.html'

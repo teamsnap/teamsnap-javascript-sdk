@@ -22,7 +22,7 @@ exports.saveMember = (member, callback) ->
   unless member.teamId
     return @reject 'You must choose a team.', 'teamId', callback
   unless member.firstName?.trim()
-    return @reject 'You must provide a firstName for the member.', 'name',
+    return @reject 'You must provide a first name for the member.', 'name',
     callback
 
   @saveItem member, callback
@@ -40,7 +40,7 @@ exports.uploadMemberPhoto = (memberId, file) ->
   if @isItem memberId, 'member'
     memberId = memberId.id
   if typeof FormData is 'undefined'
-    @reject 'Your browser does not support the new file upload APIs', 'file',
+    @reject 'Your browser does not support the new file upload APIs.', 'file',
       callback
   unless @isId memberId
     throw new TSArgsError 'teamsnap.deleteMemberPhoto', "`memberId` must be

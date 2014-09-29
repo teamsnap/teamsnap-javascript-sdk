@@ -39,7 +39,7 @@ exports.uploadMemberFile = (memberFileId, file, callback) ->
   if @isItem memberFileId, 'memberFile'
     memberFileId = memberFileId.id
   if typeof FormData is 'undefined'
-    @reject 'Your browser does not support the new file upload APIs', 'file',
+    @reject 'Your browser does not support the new file upload APIs.', 'file',
       callback
   unless @isId memberFileId
     throw new TSArgsError 'teamsnap.uploadMemberFile', 'must include

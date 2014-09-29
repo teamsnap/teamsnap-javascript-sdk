@@ -25,7 +25,7 @@ exports.saveTrackedItem = (trackedItem, callback) ->
   unless trackedItem.teamId
     return @reject 'You must choose a team.', 'teamId', callback
   unless trackedItem.name?.trim()
-    return @reject 'You must provide a name for the trackedItem.', 'name',
+    return @reject 'You must provide a name for the tracked item.', 'name',
       callback
 
   @saveItem trackedItem, callback
