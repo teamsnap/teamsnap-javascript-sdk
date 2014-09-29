@@ -86,6 +86,18 @@ exports.generateMemberThumbnail = (memberId, x, y, width, height, callback) ->
     .pop().callback callback
 
 
+exports.disableMember = (memberId, callback) ->
+  if @isItem memberId, 'member'
+    memberId = memberId.id
+  unless @isId memberId
+    throw new TSArgsError 'teamsnap.disableMember', "`memberId` must
+      be a valid id"
+
+  params = memberId: memberId
+  @collections.members.exec('disableMember', params)
+    .pop().callback callback
+
+
 # Helper to output a member's name, forward or reverse (reverse will use comma)
 exports.memberName = (member, reverse) ->
   return '' unless member
