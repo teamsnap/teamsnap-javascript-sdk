@@ -28,9 +28,8 @@ unlinkItems = (items, lookup = {}) ->
 
 
 linkItem = (item, lookup) ->
-  return unless item.href
   throw new TSArgsError('linkItem', 'lookup must be provided') unless lookup
-  lookup[item.href] = item
+  lookup[item.href] = item unless item.href
   item.links.each (rel, href) ->
     if types.isPluralType rel
       item[rel] = [] unless item[rel]
@@ -60,7 +59,7 @@ unlinkItem = (item, lookup) ->
   item.links.each (rel, href) ->
     return unless item[rel]
     if types.isPluralType rel
-      unlinkItemsFrom(item[rel], item.href)
+      unlinkItemsFrom(item[rel], item)
     else
       unlinkItemFrom(item, item[rel])
     delete item[rel]
@@ -78,10 +77,10 @@ unlinkItemFrom = (item, other) ->
 
 
 # disassociate the list of items from only the item with href `fromHref`
-unlinkItemsFrom = (items, fromHref) ->
+unlinkItemsFrom = (items, from) ->
   items.forEach (item) ->
     item.links.each (rel, href) ->
-      if href is fromHref
+      if item[rel] is from
         delete item[rel]
 
 

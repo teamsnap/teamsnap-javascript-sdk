@@ -81,7 +81,7 @@ modifyModel = ->
   wrapMethod Item, 'create', (create) ->
     (request, data) ->
       item = create.call(this, request, data)
-      linking.linkItem(item, lookup) if item.href
+      linking.linkItem(item, lookup)
       item
 
   # Hook into item.deserialize to only ever return one copy of an item
@@ -127,11 +127,13 @@ modifyModel = ->
       linking.unlinkItemFrom(this, @[rel])
       undos.push =>
         @[rel] = related
+        @links[rel].href = related.href
         @[rel + 'Id'] = related.id
         linking.linkItemWith(this, related)
     @[rel] = item
     if item
       @[rel + 'Id'] = item.id
+      @links[rel].href = item.href
       linking.linkItemWith(this, item)
       undos.push =>
         delete @[rel]

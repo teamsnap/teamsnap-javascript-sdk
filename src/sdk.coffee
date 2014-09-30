@@ -53,6 +53,9 @@ createSDKObject = (request, collections) ->
         properties = mergeDefaults(properties, defaults)
       unless @isItem properties
         throw new TSArgsError 'teamsnap.create*', 'must include a valid `type`'
+      unless properties.links
+        collection = @getCollectionForItem properties.type
+        properties.links = collection.links
       Item.create @request, properties
 
 

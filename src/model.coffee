@@ -192,6 +192,10 @@ class MetaList
 
       @[camelize entry.rel] = href: entry.href, params: params
 
+  # Clones this metalist
+  copyFrom: (metalist) ->
+    copy metalist, this
+
   # Checks whether a given link, query, or command exists
   has: (rel) ->
     @hasOwnProperty rel
