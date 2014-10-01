@@ -55,7 +55,7 @@ createSDKObject = (request, collections) ->
         throw new TSArgsError 'teamsnap.create*', 'must include a valid `type`'
       unless properties.links
         collection = @getCollectionForItem properties.type
-        properties.links = collection.links
+        properties.links = collection.links.cloneEmpty()
       Item.create @request, properties
 
 

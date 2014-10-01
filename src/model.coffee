@@ -111,7 +111,8 @@ class Item
       @href = data
     else if data and typeof data is 'object'
       copy data, this
-    @links = new MetaList(data?.links)
+    unless @links instanceof MetaList
+      @links = new MetaList(data?.links)
 
   # Deserialize the data from the server into this item object
   deserialize: (data) ->
@@ -192,10 +193,6 @@ class MetaList
 
       @[camelize entry.rel] = href: entry.href, params: params
 
-  # Clones this metalist
-  copyFrom: (metalist) ->
-    copy metalist, this
-
   # Checks whether a given link, query, or command exists
   has: (rel) ->
     @hasOwnProperty rel
@@ -235,6 +232,13 @@ class MetaList
       callback = params
       params = undefined
     @_request(request, 'post', rel, params, 'items').callback callback
+
+  cloneEmpty: ->
+    clone = new MetaList()
+    for own rel, entry of this
+      if entry.href
+        clone[rel] = href: ''
+    clone
 
   # Private method to run links
   _request: (request, method, rel, params, type) ->
