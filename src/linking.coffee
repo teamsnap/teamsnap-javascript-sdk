@@ -29,7 +29,7 @@ unlinkItems = (items, lookup = {}) ->
 
 linkItem = (item, lookup) ->
   throw new TSArgsError('linkItem', 'lookup must be provided') unless lookup
-  lookup[item.href] = item unless item.href
+  lookup[item.href] = item if item.href
   item.links.each (rel, href) ->
     if types.isPluralType rel
       item[rel] = [] unless item[rel]
