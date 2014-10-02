@@ -170,8 +170,8 @@ class Item
     obj = {}
     Object.keys(this).forEach (key) =>
       value = @[key]
-      return if typeof value is 'function' or key.charAt(0) is '_'
-      return if Array.isArray(value) or value instanceof Item
+      if typeof value is 'function' or key.charAt(0) is '_' or @links.has(key)
+        return
       obj[key] = @[key]
     obj
 
