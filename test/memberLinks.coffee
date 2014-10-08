@@ -1,4 +1,4 @@
-describe.skip 'Member Links', ->
+describe 'Member Links', ->
   member = null
   link = null
 

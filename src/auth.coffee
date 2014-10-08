@@ -126,7 +126,7 @@ module.exports = (clientId, secret) ->
         cachedCollections = null
 
       # Shortcut for local testing
-      if teamsnap.apiUrl.indexOf(':3000') isnt -1
+      if not token and teamsnap.apiUrl.indexOf(':3000') isnt -1
         authedRequest = sdkRequest.clone()
         id = 1
         id = token if typeof token is 'number'

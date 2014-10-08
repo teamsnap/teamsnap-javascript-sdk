@@ -24,6 +24,12 @@ input {
 	border: 1px solid #ccc;
 	padding: 8px;
 }
+label {
+	display: inline-block;
+	width: 100px;
+	text-align: right;
+	margin-right: 10px;
+}
 </style>
 </head>
 <body>
@@ -32,8 +38,9 @@ input {
 	<div id="auth">
 		<h1>Authorize To Begin Tests</h1>
 		<p>You must authorize a TeamSnap user to test with.</p>
-		<p><input id="api-url" type="text" value="https://apiv3.teamsnap.com"></p>
-		<p><input id="auth-url" type="text" value="https://auth.teamsnap.com"></p>
+		<p><label for="api-url">API URL</label><input id="api-url" type="text" value="https://apiv3.teamsnap.com" placeholder="https://apiv3.teamsnap.com"></p>
+		<p><label for="auth-url">Auth URL</label><input id="auth-url" type="text" value="https://auth.teamsnap.com" placeholder="https://auth.teamsnap.com"></p>
+		<p><label for="client-id">Application ID</label><input id="client-id" type="text" value=""></p>
 		<p><button id="auth-button" type="button">Authorize</button></p>
 	</div>
 </div>

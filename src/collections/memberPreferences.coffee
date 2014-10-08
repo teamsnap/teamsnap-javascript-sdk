@@ -1,3 +1,8 @@
+exports.PREFS =
+  SCHEDULE_SHOW:
+    ALL: 1
+    GAMES: 2
+    EVENTS: 3
 
 exports.loadMembersPreferences = (params, callback) ->
   if @isId params

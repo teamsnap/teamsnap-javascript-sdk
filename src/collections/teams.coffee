@@ -3,8 +3,12 @@ exports.loadTeams = (params = {}, callback) ->
   if typeof params is 'function'
     callback = params
     params = {}
-  params.userId = @me.id
-  @loadItems 'team', params, callback
+  if Object.keys(params).length
+    @loadItems 'team', params, callback
+  else
+    @loadMe().then (me) =>
+      params.userId = me.id
+      @loadItems 'team', params, callback
 
 
 # Load a single team
@@ -51,6 +55,7 @@ exports.bulkLoad = (teamId, types, callback) ->
 
   unless Array.isArray types
     types = @getTeamTypes()
+    types.splice types.indexOf('availability'), 1
 
   params = teamId: teamId, types: types.map(@underscoreType).join(',')
   @collections.root.queryItems 'bulkLoad', params, callback

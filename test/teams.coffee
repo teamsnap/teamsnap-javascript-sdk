@@ -9,6 +9,7 @@ describe 'Teams', ->
 
   it 'should be able to load a teams data in bulk', (done) ->
     teamsnap.bulkLoad team.id, (err, result) ->
+      console.log(err)
       expect(err).to.be.null
       result.should.be.an('array')
       done()

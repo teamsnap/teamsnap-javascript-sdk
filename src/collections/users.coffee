@@ -8,6 +8,10 @@ exports.loadUsers = (params, callback) ->
   @loadItems 'user', params, callback
 
 
+exports.loadMe = (callback) ->
+  @collections.root.loadItem('me', callback)
+
+
 exports.saveUser = (user, callback) ->
   unless user
     throw new TSArgsError 'teamsnap.saveUser', "`user` must be provided"

@@ -5,46 +5,40 @@ authSection = document.getElementById('auth')
 authButton = document.getElementById('auth-button')
 apiInput = document.getElementById('api-url')
 authInput = document.getElementById('auth-url')
+clientIdInput = document.getElementById('client-id')
 clientId = '1d228d706ce170d61f9368b5967bd7a1641e6ecf742434dc198047f1a36a930a'
 redirect = 'http://localhost:8000/'
 scopes = [
   'read'
-  'write_contacts'
-  'write_contact_email_addresses'
-  'write_events'
-  'write_locations'
-  'write_opponents'
-  'write_refreshments'
-  'write_rosters'
-  'write_roster_email_addresses'
-  'write_rosters_preferences'
-  'write_teams'
-  'write_teams_preferences'
-  'write_teams_results'
-  'write_tracked_items'
-  'write_tracked_item_statuses'
+  'write'
 ]
 
-if typeof localStorage isnt 'undefined' and
-    (url = localStorage.getItem 'teamsnap.apiUrl')
+if (url = localStorage.getItem 'teamsnap.apiUrl')
   apiInput.value = url if url
 
-if typeof localStorage isnt 'undefined' and
-    (url = localStorage.getItem 'teamsnap.authUrl')
+if (url = localStorage.getItem 'teamsnap.authUrl')
   authInput.value = url if url
+
+id = localStorage.getItem 'teamsnap.clientId'
+clientId = id or clientId
+clientIdInput.value = clientId
 
 teamsnap.apiUrl = apiInput.value
 teamsnap.authUrl = authInput.value
+teamsnap.clientId = clientIdInput.value
 
 apiInput.addEventListener 'change', ->
   teamsnap.apiUrl = apiInput.value
-  if typeof localStorage isnt 'undefined'
-    localStorage.setItem 'teamsnap.apiUrl', apiInput.value
+  localStorage.setItem 'teamsnap.apiUrl', apiInput.value
 
 authInput.addEventListener 'change', ->
   teamsnap.authUrl = authInput.value
-  if typeof localStorage isnt 'undefined'
-    localStorage.setItem 'teamsnap.authUrl', authInput.value
+  localStorage.setItem 'teamsnap.authUrl', authInput.value
+
+clientIdInput.addEventListener 'change', ->
+  clientId = clientIdInput.value
+  teamsnap.init clientId if clientId
+  localStorage.setItem 'teamsnap.clientId', clientId
 
 whenAuthed = (sdk) ->
   authSection.parentNode.removeChild authSection
