@@ -50,6 +50,9 @@ exports.getAssignmentSort = (reverse) ->
     else
       valueA = @memberName(itemA.member, reverse).toLowerCase()
       valueB = @memberName(itemB.member, reverse).toLowerCase()
-    if valueA > valueB then 1
+    if valueA is valueB then 0
+    else if !valueA and valueB then 1
+    else if valueA and !valueB then -1
+    else if valueA > valueB then 1
     else if valueA < valueB then -1
     else 0

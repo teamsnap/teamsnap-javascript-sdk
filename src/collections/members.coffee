@@ -115,7 +115,10 @@ exports.getMemberSort = (reverse) ->
     else
       valueA = @memberName(itemA, reverse).toLowerCase()
       valueB = @memberName(itemB, reverse).toLowerCase()
-    if valueA > valueB then 1
+    if valueA is valueB then 0
+    else if !valueA and valueB then 1
+    else if valueA and !valueB then -1
+    else if valueA > valueB then 1
     else if valueA < valueB then -1
     else 0
 
