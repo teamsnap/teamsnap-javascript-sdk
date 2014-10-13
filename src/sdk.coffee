@@ -5,27 +5,32 @@ loadCollections = require './loadCollections'
 urlExp = /^https?:\/\//
 
 
-module.exports = (request, cachedCollections, callback) ->
+module.exports = (request, cachedCollections, version, callback) ->
   if typeof cachedCollections is 'function'
     callback = cachedCollections
     cachedCollections = null
+  if cachedCollections?.version isnt version
+    cachedCollections = null
   
   loadCollections(request, cachedCollections).then((collections) ->
-    sdk = createSDKObject(request, collections)
+    sdk = createSDKObject(request, collections, version)
     sdk.plans = Item.fromArray(request, collections.plans.items)
+    sdk.smsGateways = Item.fromArray(request, collections.smsGateways.items)
     sdk.sports = Item.fromArray(request, collections.sports.items)
+    sdk.timeZones = Item.fromArray(request, collections.timeZones.items)
     sdk
   ).callback callback
 
 
 
-createSDKObject = (request, collections) ->
+createSDKObject = (request, collections, version) ->
   scopedCollections = {}
   Object.keys(collections).forEach (name) ->
     collection = collections[name]
     scopedCollections[name] = new ScopedCollection request, collection
   
   sdk =
+    version: version
     when: promises.when
     request: request
     collections: scopedCollections
@@ -75,6 +80,26 @@ createSDKObject = (request, collections) ->
 
       item = Item.create(@request, item) unless item instanceof Item
       item.delete params, callback
+
+
+    getDefaultSort: ->
+      (itemA, itemB) ->
+        if itemA.type isnt itemB.type
+          valueA = itemA.type
+          valueB = itemB.type
+        else
+          if itemA.createdAt and itemB.createdAt
+            valueA = itemA.createdAt
+            valueB = itemB.createdAt
+          else
+            valueA = itemA.id
+            valueB = itemB.id
+        if valueA is valueB then 0
+        else if !valueA and valueB then 1
+        else if valueA and !valueB then -1
+        else if valueA > valueB then 1
+        else if valueA < valueB then -1
+        else 0
 
 
     getCollectionForItem: (item) ->

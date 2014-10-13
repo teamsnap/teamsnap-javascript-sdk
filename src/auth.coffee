@@ -142,7 +142,7 @@ module.exports = (clientId, secret) ->
       authedRequest = sdkRequest.clone()
       authedRequest.hook (xhr) ->
         xhr.setRequestHeader 'X-Teamsnap-Access-Token', token
-      sdk authedRequest, cachedCollections, callback
+      sdk authedRequest, cachedCollections, @version, callback
 
     # Use to generate a URL for getting a code with a server app.
     getServerAuthUrl: (redirect, scopes) ->

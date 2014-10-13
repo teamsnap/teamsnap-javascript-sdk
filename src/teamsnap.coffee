@@ -9,6 +9,7 @@ teamsnap.Item = model.Item
 teamsnap.promises = promises
 teamsnap.apiUrl = 'https://apiv3.teamsnap.com'
 teamsnap.authUrl = 'https://auth.teamsnap.com'
+teamsnap.version = '1.0.0'
 
 # Returns a teamsnap object for authing users. Only provide the secret when
 # running on the server!

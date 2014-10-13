@@ -37,16 +37,3 @@ exports.deleteTrackedItem = (trackedItem, callback) ->
       '`trackedItem` must be provided'
 
   @deleteItem trackedItem, callback
-    
-
-exports.getTrackedItemSort = ->
-  (itemA, itemB) =>
-    if !@isItem(itemA, 'trackedItem') or !@isItem(itemB, 'trackedItem')
-      valueA = itemA.type
-      valueB = itemB.type
-    else
-      valueA = itemA.createdAt
-      valueB = itemB.createdAt
-    if valueA < valueB then 1
-    else if valueA > valueB then -1
-    else 0

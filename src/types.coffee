@@ -19,10 +19,12 @@ types = [
   'memberPreferences'
   'opponent'
   'plan'
+  'smsGateway'
   'sport'
   'team'
   'teamPreferences'
   'teamPublicSite'
+  'timeZone'
   'trackedItem'
   'trackedItemStatus'
 ]
@@ -36,7 +38,9 @@ teamTypes.remove = (type) ->
 teamTypes
   .remove('user')
   .remove('plan')
+  .remove('smsGateway')
   .remove('sport')
+  .remove('timeZone')
 
 # create lookup hashes
 typeLookup = {}
@@ -46,6 +50,7 @@ pluralLookup =
   memberPreferences: 'membersPreferences'
   teamPreferences: 'teamsPreferences'
   customDatum: 'customData'
+  smsGateway: 'smsGateways'
 
 for type in types
   plural = pluralLookup[type] or switch type.slice -1
