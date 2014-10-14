@@ -137,6 +137,6 @@ exports.canEditItem = (member, team, item) ->
   return true if teamsnap.canEditTeam member, team
   return false if team.isArchivedSeason
   if @isItem item, 'member'
-    item.id is member.id
+    item.href is member.href
   else
-    item.memberId is member.id
+    item.links.member.href is member.href
