@@ -53,8 +53,7 @@ exports.getAllItems = ->
 
 exports.unlinkTeam = (team) ->
   items = [team]
-  users = team.members?
-    .filter((member) -> member.user)
+  users = team.members?.filter((member) -> member.user)
     .map (member) -> member.user
 
   for teamType in @getTeamTypes()
