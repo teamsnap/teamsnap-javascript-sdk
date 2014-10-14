@@ -106,6 +106,7 @@ module.exports = (clientId, secret) ->
       username: username
       password: password
       client_id: clientId
+      client_secret: secret
 
 
 

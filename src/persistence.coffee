@@ -21,6 +21,11 @@ exports.enablePersistence = (cachedItemData) ->
   lookup = {}
   modifyModel()
   modifySDK(this)
+  initialItems = []
+  initialItems.push.apply(initialItems, @plans)
+  initialItems.push.apply(initialItems, @smsGateways)
+  initialItems.push.apply(initialItems, @sports)
+  initialItems.push.apply(initialItems, @timeZones)
   linking.linkItems @plans.concat(@sports), lookup
   if cachedItemData
     Item.fromArray @request, cachedItemData
@@ -44,6 +49,22 @@ exports.findItem = (href) ->
 
 exports.getAllItems = ->
   Object.keys(lookup).map (href) -> lookup[href]
+
+
+exports.unlinkTeam = (team) ->
+  items = [team]
+  users = team.members?
+    .filter((member) -> member.user)
+    .map (member) -> member.user
+
+  for teamType in @getTeamTypes()
+    plural = @getPluralType(teamType)
+    if (value = team[plural]) and value.length
+      items.push value...
+    else if (value = team[teamType])
+      items.push value
+
+  unlinkItems(items)
 
 
 modifyModel = ->
