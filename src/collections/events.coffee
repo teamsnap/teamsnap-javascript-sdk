@@ -51,7 +51,7 @@ exports.saveEvent = (event, callback) ->
 exports.deleteEvent = (event, include, callback) ->
   unless event
     throw new TSArgsError 'teamsnap.deleteEvent', '`event` must be provided'
-  
+
   if typeof include is 'function'
     callback = include
     include = null
@@ -69,7 +69,7 @@ exports.deleteEvent = (event, include, callback) ->
 
 
 exports.sendAvailabilityReminders = (eventId, sendingMemberId, include) ->
-  include = 'unset' unless include
+  include = [] unless include
   if @isItem eventId, 'event'
     eventId = eventId.id
   if @isItem sendingMemberId, 'member'
@@ -80,15 +80,18 @@ exports.sendAvailabilityReminders = (eventId, sendingMemberId, include) ->
   unless @isId sendingMemberId
     throw new TSArgsError 'teamsnap.sendAvailabilityReminders', 'must include id
       `sendingMemberId`'
-  unless include is 'all' or include is 'unset'
+  unless Array.isArray(include)
     throw new TSArgsError 'teamsnap.sendAvailabilityReminders', "`include` must
-      be 'all' or 'unset'"
+      be an array of user ids"
+  if !include? or include.length == 0
+    throw new TSArgsError 'teamsnap.sendAvailabilityReminders', "`include` must
+      be an array of user ids"
 
   options =
     id: eventId
     membersToNotify: include
     notifyTeamAsMemberId: sendingMemberId
-  
+
   @collections.events.exec('sendAvailabilityReminders', options)
 
 
