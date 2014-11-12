@@ -84,6 +84,6 @@ cleanArray = (obj, prop) ->
   if obj[plural]
     obj[prop] = obj[plural]
     delete obj[plural]
-  if Array.isArray obj[prop]
-    obj[prop] = obj[prop].join(',')
+  if obj[prop]? and not Array.isArray obj[prop]
+    obj[prop] = [ obj[prop] ]
   obj
