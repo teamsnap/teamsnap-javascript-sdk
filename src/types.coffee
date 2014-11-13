@@ -24,6 +24,7 @@ types = [
   'team'
   'teamPreferences'
   'teamPublicSite'
+  'teamResults'
   'timeZone'
   'trackedItem'
   'trackedItemStatus'
@@ -49,6 +50,7 @@ singularLookup = {}
 pluralLookup =
   memberPreferences: 'membersPreferences'
   teamPreferences: 'teamsPreferences'
+  teamResults: 'teamsResults'
   customDatum: 'customData'
   smsGateway: 'smsGateways'
 
