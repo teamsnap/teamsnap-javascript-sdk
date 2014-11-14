@@ -82,6 +82,11 @@ createSDKObject = (request, collections, version) ->
       item.delete params, callback
 
 
+    copyItem: (item) ->
+      collection = @getCollectionForItem item
+      item.copy(collection.template)
+
+
     getDefaultSort: ->
       (itemA, itemB) ->
         if itemA.type isnt itemB.type

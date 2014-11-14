@@ -166,6 +166,20 @@ class Item
       data = template: data: fields
     @_request.delete(@href, data).callback callback
 
+  copy: (template) ->
+    obj = {}
+    if template
+      template.forEach (prop) =>
+        camel = camelize prop.name
+        obj[camel] = @[camel]
+    else
+      copy this, obj
+    delete obj.id
+    delete obj.href
+    obj.type = @type
+    obj.links = @links.cloneEmpty()
+    new Item(@_request, obj)
+
   toJSON: ->
     obj = {}
     Object.keys(this).forEach (key) =>
