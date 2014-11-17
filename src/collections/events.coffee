@@ -48,7 +48,8 @@ exports.saveEvent = (event, callback) ->
   @saveItem event, callback
 
 
-exports.deleteEvent = (event, include, callback) ->
+exports.deleteEvent = (event, include, notify, callback) ->
+  params = {}
   unless event
     throw new TSArgsError 'teamsnap.deleteEvent', '`event` must be provided'
 
@@ -63,7 +64,10 @@ exports.deleteEvent = (event, include, callback) ->
     unless includes[include]
       throw new TSArgsError 'teamsnap.deleteEvent', "`include` must be one of
         #{Object.keys(includes).join(', ')}"
-    params = repeatingInclude: include
+    params.repeatingInclude = include
+    
+  if notify
+    params.notifyTeam = notify
 
   @deleteItem event, params, callback
 
