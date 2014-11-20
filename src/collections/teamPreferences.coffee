@@ -29,3 +29,70 @@ exports.saveTeamPreferences = (teamPreferences, callback) ->
       "`teamPreferences.type` must be 'teamPreferences'"
 
   @saveItem teamPreferences, callback
+
+
+exports.uploadTeamPhoto = (teamPreferencesId, file, callback) ->
+  if @isItem teamPreferencesId, 'teamPreferences'
+    teamPreferencesId = teamPreferences.id
+  if typeof FormData is 'undefined'
+    @reject 'Your browser does not support the new file upload APIs.', 'file',
+      callback
+  unless @isId teamPreferencesId
+    throw new TSArgsError 'teamsnap.uploadTeamPhoto', 'must include
+      `teamPreferencesId`'
+  unless file instanceof File
+    throw new TSArgsError 'teamsnap.uploadTeamPhoto', 'must include
+      `file` as type File'
+
+  params = teamPreferencesId: teamPreferencesId, file: file
+  @collections.teamsPreferences.exec('uploadTeamPhoto', params)
+    .pop().callback callback
+
+
+exports.deleteTeamPhoto = (teamPreferencesId, callback) ->
+  unless teamPreferencesId
+    throw new TSArgsError 'teamsnap.deleteTeamPhoto',
+      "`teamPreferencesId` must be provided"
+  if @isItem teamPreferencesId, 'teamPreferences'
+    teamPreferencesId = teamPreferences.id
+  if not @isId teamPreferencesId
+    throw new TSArgsError 'teamsnap.deleteTeamPhoto',
+      "`teamPreferencesId` must be a valid id"
+
+  params = teamPreferencesId: teamPreferencesId
+  @collections.teamsPreferences.exec('removeTeamPhoto', params)
+  .callback callback
+
+
+exports.uploadTeamLogo = (teamPreferencesId, file, callback) ->
+  if @isItem teamPreferencesId, 'teamPreferences'
+    teamPreferencesId = teamPreferences.id
+  if typeof FormData is 'undefined'
+    @reject 'Your browser does not support the new file upload APIs.', 'file',
+      callback
+  unless @isId teamPreferencesId
+    throw new TSArgsError 'teamsnap.uploadTeamLogo', 'must include
+      `teamPreferencesId`'
+  unless file instanceof File
+    throw new TSArgsError 'teamsnap.uploadTeamLogo', 'must include
+      `file` as type File'
+
+  params = teamPreferencesId: teamPreferencesId, file: file
+  @collections.teamsPreferences.exec('uploadTeamLogo', params)
+    .pop().callback callback
+
+
+exports.deleteTeamLogo = (teamPreferencesId, callback) ->
+  unless teamPreferencesId
+    throw new TSArgsError 'teamsnap.deleteTeamLogo',
+      "`teamPreferencesId` must be provided"
+  if @isItem teamPreferencesId, 'teamPreferences'
+    teamPreferencesId = teamPreferences.id
+  if not @isId teamsPreferencesId
+    throw new TSArgsError 'teamsnap.deleteTeamLogo',
+      "`teamPreferencesId` must be a valid id"
+
+  params = teamPreferencesId: teamPreferencesId
+  @collections.teamPreferences.exec('removeTeamLogo', params)
+  .callback callback
+  
