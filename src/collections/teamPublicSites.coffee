@@ -27,3 +27,37 @@ exports.saveTeamPublicSite = (teamPublicSite, callback) ->
       "`teamPublicSite.type` must be 'teamPublicSite'"
 
   @saveItem teamPublicSite, callback
+
+
+exports.uploadTeamPublicPhoto = (teamPublicSiteId, file, callback) ->
+  if @isItem teamPublicSiteId, 'teamPublicSite'
+    teamPublicSiteId = teamPublicSite.id
+  if typeof FormData is 'undefined'
+    @reject 'Your browser does not support the new file upload APIs.', 'file',
+      callback
+  unless @isId teamPublicSiteId
+    throw new TSArgsError 'teamsnap.uploadTeamPublicPhoto', 'must include
+      `teamPublicSiteId`'
+  unless file instanceof File
+    throw new TSArgsError 'teamsnap.uploadTeamPublicPhoto', 'must include
+      `file` as type File'
+
+  params = teamPublicSiteId: teamPublicSiteId, file: file
+  @collections.teamPublicSites.exec('uploadTeamPublicPhoto', params)
+    .pop().callback callback
+
+
+exports.deleteTeamPublicPhoto = (teamPublicSiteId, callback) ->
+  unless teamPublicSiteId
+    throw new TSArgsError 'teamsnap.deleteTeamPublicPhoto',
+      "`teamPublicSiteId` must be provided"
+  if @isItem teamPublicSiteId, 'teamPublicSite'
+    teamPublicSiteId = teamPublicSite.id
+  if not @isId teamPublicSiteId
+    throw new TSArgsError 'teamsnap.deleteTeamPublicPhoto',
+      "`teamPublicSiteId` must be a valid id"
+      
+  params = teamPublicSiteId: teamPublicSiteId
+  @collections.teamPublicSites.exec('removeTeamPublicPhoto', params)
+  .callback callback
+  
