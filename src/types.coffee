@@ -20,6 +20,7 @@ types = [
   'opponent'
   'plan'
   'smsGateway'
+  'sponsor'
   'sport'
   'team'
   'teamPreferences'
