@@ -88,11 +88,11 @@ exports.deleteTeamLogo = (teamPreferencesId, callback) ->
       "`teamPreferencesId` must be provided"
   if @isItem teamPreferencesId, 'teamPreferences'
     teamPreferencesId = teamPreferences.id
-  if not @isId teamsPreferencesId
+  if not @isId teamPreferencesId
     throw new TSArgsError 'teamsnap.deleteTeamLogo',
       "`teamPreferencesId` must be a valid id"
 
   params = teamPreferencesId: teamPreferencesId
-  @collections.teamPreferences.exec('removeTeamLogo', params)
+  @collections.teamsPreferences.exec('removeTeamLogo', params)
   .callback callback
   

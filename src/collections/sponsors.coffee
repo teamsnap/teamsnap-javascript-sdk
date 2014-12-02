@@ -20,10 +20,6 @@ exports.deleteSponsor = (sponsor, callback) ->
     throw new TSArgsError 'teamsnap.deleteSponsor',
       "`sponsor` must be provided"
 
-  if sponsor.links.logo.href.length
-    params = sponsorId: sponsor.id
-    @collections.sponsors.exec('removeSponsorLogo', params)
-
   @deleteItem sponsor, callback
   
 
