@@ -87,6 +87,29 @@ createSDKObject = (request, collections, version) ->
       item.copy(collection.template)
 
 
+    getNameSort: ->
+      (itemA, itemB) ->
+        if itemA.type isnt itemB.type
+          valueA = itemA.type
+          valueB = itemB.type
+        else if typeof itemA.name is 'string' and typeof itemB.name is 'string'
+          valueA = itemA.name.toLowerCase()
+          valueB = itemB.name.toLowerCase()
+        else
+          if itemA.createdAt and itemB.createdAt
+            valueA = itemA.createdAt
+            valueB = itemB.createdAt
+          else
+            valueA = itemA.id
+            valueB = itemB.id
+        if valueA is valueB then 0
+        else if !valueA and valueB then 1
+        else if valueA and !valueB then -1
+        else if valueA > valueB then 1
+        else if valueA < valueB then -1
+        else 0
+
+
     getDefaultSort: ->
       (itemA, itemB) ->
         if itemA.type isnt itemB.type
