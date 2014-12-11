@@ -16,7 +16,5 @@ exports.saveCustomDatum = (customDatum, callback) ->
   unless @isItem customDatum, 'customDatum'
     throw new TSArgsError 'teamsnap.saveCustomField',
       "`customDatum.type` must be 'customDatum'"
-  unless customDatum.customFieldId
-    return @reject 'You must choose a custom field.', 'customFieldId', callback
 
   @saveItem customDatum, callback
