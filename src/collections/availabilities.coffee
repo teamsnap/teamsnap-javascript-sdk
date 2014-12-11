@@ -26,9 +26,21 @@ exports.saveAvailability = (availability, callback) ->
   unless @isItem availability, 'availability'
     throw new TSArgsError 'teamsnap.saveAvailability', "`type` must be
       'availability'"
-  if trackedItemStatus.statusCode isnt null and
-      not statuses[trackedItemStatus.statusCode]
+  if availability.statusCode isnt null and
+      not statuses[availability.statusCode]
     return @reject 'You must select a valid status or null', 'statusCode',
       callback
 
   @saveItem availability, callback
+
+exports.bulkMarkUnsetAvailabilities = (memberId, statusCode, callback) ->
+  unless @isId memberId
+    throw new TSArgsError 'teamsnap.bulkMarkUnsetAvailabilities', "must provide a
+     `memberId`"
+  unless statusCode? and statuses[statusCode]
+    return @reject 'You must select a valid status', 'statusCode',
+      callback
+
+  params = memberId: memberId, statusCode: statusCode
+  @collections.availabilities.exec('bulkMarkUnsetAvailabilities', params)
+    .pop().callback callback
