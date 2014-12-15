@@ -178,6 +178,7 @@ createSDKObject = (request, collections, version) ->
   add require './collections/plans'
   add require './collections/sponsors'
   add require './collections/sports'
+  add require './collections/teamFiles'
   add require './collections/teamPreferences'
   add require './collections/teamPublicSites'
   add require './collections/teamResults'
