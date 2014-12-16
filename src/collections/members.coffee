@@ -99,9 +99,9 @@ exports.disableMember = (memberId, callback) ->
 
 
 # Helper to output a member's name, forward or reverse (reverse will use comma)
-exports.memberName = (member, reverse) ->
+exports.memberName = (member, reverse, forSort) ->
   return '' unless member
-  if reverse and member.firstName and member.lastName
+  if reverse and (member.firstName and member.lastName) or forSort
     return member.lastName + ', ' + member.firstName
   [ member.firstName or '', member.lastName or '' ].join(' ').trim()
 
@@ -113,8 +113,8 @@ exports.getMemberSort = (reverse) ->
       valueA = itemA.type
       valueB = itemB.type
     else
-      valueA = @memberName(itemA, reverse).toLowerCase()
-      valueB = @memberName(itemB, reverse).toLowerCase()
+      valueA = @memberName(itemA, reverse, true).toLowerCase()
+      valueB = @memberName(itemB, reverse, true).toLowerCase()
     if valueA is valueB then 0
     else if !valueA and valueB then 1
     else if valueA and !valueB then -1
