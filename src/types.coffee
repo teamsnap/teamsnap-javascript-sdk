@@ -23,7 +23,7 @@ types = [
   'sponsor'
   'sport'
   'team'
-  'teamFile'
+  # 'teamFile'
   'teamPreferences'
   'teamPublicSite'
   'teamResults'
