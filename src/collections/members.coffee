@@ -101,7 +101,7 @@ exports.disableMember = (memberId, callback) ->
 # Helper to output a member's name, forward or reverse (reverse will use comma)
 exports.memberName = (member, reverse, forSort) ->
   return '' unless member
-  if reverse and (member.firstName and member.lastName) or forSort
+  if reverse and (member.firstName and member.lastName or forSort)
     return member.lastName + ', ' + member.firstName
   [ member.firstName or '', member.lastName or '' ].join(' ').trim()
 
