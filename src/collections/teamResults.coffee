@@ -1,6 +1,7 @@
 exports.loadTeamsResults = (params, callback) ->
   unless params and typeof params is 'object'
-    throw new TSArgsError 'teamsnap.loadTeamsResults', 'must provide query parameters'
+    throw new TSArgsError 'teamsnap.loadTeamsResults', 'must provide query
+     parameters'
 
   @loadItems 'teamResults', params, callback
 
