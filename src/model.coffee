@@ -209,11 +209,11 @@ class MetaList
 
       propName = camelize entry.rel
       @[propName] = href: entry.href, params: params
-      delete linksToRemove[link]
+      delete linksToRemove[propName]
 
     # delete links that have been removed
     for link of linksToRemove
-      delete [link]
+      delete @[link]
 
   # Checks whether a given link, query, or command exists
   has: (rel) ->
