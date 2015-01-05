@@ -35,8 +35,8 @@ exports.saveAvailability = (availability, callback) ->
 
 exports.bulkMarkUnsetAvailabilities = (memberId, statusCode, callback) ->
   unless @isId memberId
-    throw new TSArgsError 'teamsnap.bulkMarkUnsetAvailabilities', "must provide a
-     `memberId`"
+    throw new TSArgsError 'teamsnap.bulkMarkUnsetAvailabilities', "must provide
+     a `memberId`"
   unless statusCode? and statuses[statusCode]
     return @reject 'You must select a valid status', 'statusCode',
       callback

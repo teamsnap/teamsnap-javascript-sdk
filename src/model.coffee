@@ -198,6 +198,8 @@ class MetaList
   # Deserialize the data from the server into this list object
   deserialize: (data) ->
     return unless Array.isArray data
+    linksToRemove = {}
+    Object.keys(this).forEach (link) -> linksToRemove[link] = true
 
     for entry in data
       params = {}
@@ -205,7 +207,13 @@ class MetaList
         for param in entry.data
           params[camelize param.name] = param.value
 
-      @[camelize entry.rel] = href: entry.href, params: params
+      propName = camelize entry.rel
+      @[propName] = href: entry.href, params: params
+      delete linksToRemove[propName]
+
+    # delete links that have been removed
+    for link of linksToRemove
+      delete @[link]
 
   # Checks whether a given link, query, or command exists
   has: (rel) ->
