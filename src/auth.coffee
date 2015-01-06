@@ -1,8 +1,7 @@
-teamsnap = require './teamsnap'
+TeamSnap = require('./teamsnap').TeamSnap
 request = require './request'
 promises = require './promises'
 request = require './request'
-sdk = require './sdk'
 jsonMime = 'application/json'
 collectionJSONMime = 'application/vnd.collection+json'
 multipartMime = 'multipart/form-data'
@@ -65,12 +64,53 @@ sdkRequest = request.create().hook (xhr, data) ->
 # to get a SDK object for loading and saving data
 
 
+# Return an authed SDK object for use with a single authorized user
+TeamSnap::auth = (token) ->
+  if typeof token is 'function'
+    callback = token
+    token = null
+  else if typeof token is 'object'
+    callback = cachedCollections
+    cachedCollections = token
+    token = null
+  if typeof cachedCollections is 'function'
+    callback = cachedCollections
+    cachedCollections = null
 
-module.exports = (clientId, secret) ->
-  unless clientId
-    throw new TSError "`teamsnap.init(clientId)` must be called in order to use
-      TeamSnap's API. See https://auth.teamsnap.com/ to register an app."
+  @request = sdkRequest.clone()
 
+  # Shortcut for local testing
+  if typeof token is 'number' and teamsnap.apiUrl.indexOf(':3000') isnt -1
+    @request.hook (xhr) ->
+      xhr.setRequestHeader 'X-Teamsnap-User-ID', token
+    return this
+
+  token = browserStore() unless token
+  unless token
+    throw new TSArgsError 'teamsnap.auth', 'A token is required to auth
+    unless in the browser it has been cached'
+
+  @request.hook (xhr) ->
+    xhr.setRequestHeader 'Authorization', 'Bearer ' + token
+  this
+
+
+TeamSnap::deleteAuth = ->
+  @request = null
+
+# Returns whether the object is authed or not
+TeamSnap::isAuthed = ->
+  !!@request
+
+# Checks whether the browser has already received authorization for a user
+# by returning the SDK if they're authed
+TeamSnap::hasSession = ->
+  !!browserStore()
+
+
+# Initializes teamsnap with clientId (and optionally secret on the server) to
+# allow authorization flows
+TeamSnap::init = (clientId, secret) ->
 
   # Generates urls
   generateUrl = (endpoint, params) ->
@@ -108,86 +148,45 @@ module.exports = (clientId, secret) ->
       client_id: clientId
       client_secret: secret
 
+  # Use to generate a URL for getting a code with a server app.
+  @getServerAuthUrl = (redirect, scopes) ->
+    generateAuthUrl 'code', redirect, scopes
 
+  # Use to generate a URL for getting the token with a server app.
+  @getServerTokenUrl = (code) ->
+    generateTokenUrl code
 
-  # An object which will auth a user and return the SDK
-  return {
+  # Use to generate a URL for getting the token with a browser app.
+  @getBrowserAuthUrl = (redirect, scopes) ->
+    generateAuthUrl 'token', redirect, scopes
 
-    # Return an authed SDK object for use with a single authorized user
-    auth: (token, cachedCollections, callback) ->
-      if typeof token is 'function'
-        callback = token
-        token = null
-      else if typeof token is 'object'
-        callback = cachedCollections
-        cachedCollections = token
-        token = null
-      if typeof cachedCollections is 'function'
-        callback = cachedCollections
-        cachedCollections = null
+  # Use to generate a URL for getting the token with a CLI app.
+  @getPasswordAuthUrl = (username, password) ->
+    generatePasswordUrl username, password
 
-      # Shortcut for local testing
-      if typeof token is 'number' and teamsnap.apiUrl.indexOf(':3000') isnt -1
-        authedRequest = sdkRequest.clone()
-        authedRequest.hook (xhr) ->
-          xhr.setRequestHeader 'X-Teamsnap-User-ID', token
-        return sdk authedRequest, cachedCollections, callback
+  # Creates an auth dialog opening up the URL and calling the callback once
+  # the dialog has finished. This is used for browser flows or ajax server
+  # flows
+  @createDialog = (url, callback) ->
+    createAuthDialog url, callback
 
-      token = browserStore() unless token
-      unless token
-        throw new TSArgsError 'teamsnap.auth', 'A token is required to auth
-        unless in the browser it has been cached'
+  # Get the token from a code retrieved.
+  @finishServerAuth = (code, callback) ->
+    authRequest.post @getServerTokenUrl(code), callback
 
-      authedRequest = sdkRequest.clone()
-      authedRequest.hook (xhr) ->
-        xhr.setRequestHeader 'Authorization', 'Bearer ' + token
-      sdk authedRequest, cachedCollections, @version, callback
+  # Use in a client-side app to authorize a user and get the SDK for that user
+  @startBrowserAuth = (redirect, scopes, callback) ->
+    if location.protocol is 'file:'
+      throw new TSError 'TeamSnap.js cannot auth from the file system'
+    @createDialog(@getBrowserAuthUrl redirect, scopes).then((response) =>
+      token = response.access_token
+      browserStore token
+      @auth token # returns the SDK
+    ).callback callback
 
-    # Use to generate a URL for getting a code with a server app.
-    getServerAuthUrl: (redirect, scopes) ->
-      generateAuthUrl 'code', redirect, scopes
-
-    # Use to generate a URL for getting the token with a server app.
-    getServerTokenUrl: (code) ->
-      generateTokenUrl code
-
-    # Use to generate a URL for getting the token with a browser app.
-    getBrowserAuthUrl: (redirect, scopes) ->
-      generateAuthUrl 'token', redirect, scopes
-
-    # Use to generate a URL for getting the token with a CLI app.
-    getPasswordAuthUrl: (username, password) ->
-      generatePasswordUrl username, password
-
-    # Creates an auth dialog opening up the URL and calling the callback once
-    # the dialog has finished. This is used for browser flows or ajax server
-    # flows
-    createDialog: (url, callback) ->
-      createAuthDialog url, callback
-
-    # Get the token from a code retrieved.
-    finishServerAuth: (code, callback) ->
-      authRequest.post @getServerTokenUrl(code), callback
-
-    # Use in a client-side app to authorize a user and get the SDK for that user
-    startBrowserAuth: (redirect, scopes, callback) ->
-      if location.protocol is 'file:'
-        throw new TSError 'TeamSnap.js cannot auth from the file system'
-      @createDialog(@getBrowserAuthUrl redirect, scopes).then((response) =>
-        token = response.access_token
-        browserStore token
-        @auth token # returns the SDK
-      ).callback callback
-
-    # Get a token for the user with username and password
-    startPasswordAuth: (username, password, callback) ->
-      authRequest.post @getPasswordAuthUrl(username, password), callback
-
-    # Checks whether the browser has already received authorization for a user
-    # by returning the SDK if they're authed
-    isAuthed: ->
-      !!browserStore()
-  }
+  # Get a token for the user with username and password
+  @startPasswordAuth = (username, password, callback) ->
+    authRequest.post @getPasswordAuthUrl(username, password), callback
 
 
 

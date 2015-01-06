@@ -17,6 +17,9 @@ lookup = null
 # deleted, and allowing items to be reset to their saved state on demand.
 exports.enablePersistence = (cachedItemData) ->
   return if lookup # already enabled
+  unless @collections
+    throw new TSError 'You must auth() and loadCollections() before enabling
+      persistence.'
   @persistenceEnabled = true
   lookup = {}
   modifyModel()

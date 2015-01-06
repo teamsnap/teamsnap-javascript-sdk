@@ -1,6 +1,3 @@
-teamsnap = require '../teamsnap'
-
-
 # General TeamSnap error
 class TSError extends Error
   constructor: (message) ->
