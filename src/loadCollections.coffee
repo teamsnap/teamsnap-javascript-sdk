@@ -9,15 +9,17 @@ collectionsPromise = null
 module.exports = (request, cachedCollections) ->
   # Loads all collections for the TeamSnap API once
   if not collectionsPromise or collectionsPromise.getStatus() is 'reject'
-    if (cachedCollections)
+    collectionsPromise = request.get(teamsnap.apiUrl).then (xhr) ->
       collections = {}
-      for key, value of cachedCollections
-        collections[key] = new Collection(value)
-      collectionsPromise = promises.resolve collections
-    else
-      collectionsPromise = request.get(teamsnap.apiUrl).then (xhr) ->
+      collections.root = root = Collection.fromData xhr.data
+      
+      # Ensure the version hasn't changed, reload it if has
+      if cachedCollections and cachedCollections.root.version is root.version
         collections = {}
-        collections.root = root = Collection.fromData xhr.data
+        for key, value of cachedCollections
+          collections[key] = new Collection(value)
+        collectionsPromise = promises.resolve collections
+      else
         loads = []
         types.getTypes().forEach (type) ->
           rel = types.getPluralType type
@@ -29,3 +31,6 @@ module.exports = (request, cachedCollections) ->
           collections
 
   collectionsPromise
+
+module.exports.clear = ->
+  collectionsPromise = null

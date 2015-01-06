@@ -1,22 +1,23 @@
 promises = require './promises'
-model = require './model'
-auth = require './auth'
+{Collection, Item} = require './model'
 require './errors'
 
-teamsnap = exports
-teamsnap.Collection = model.Collection
-teamsnap.Item = model.Item
-teamsnap.promises = promises
-teamsnap.apiUrl = 'https://apiv3.teamsnap.com'
-teamsnap.authUrl = 'https://auth.teamsnap.com'
-teamsnap.version = '1.0.0'
+class TeamSnap
+  version: '1.1.0'
+  promises: promises
+  when: promises.when
+  TeamSnap: TeamSnap
+  Collection: Collection
+  Item: Item
 
-# Returns a teamsnap object for authing users. Only provide the secret when
-# running on the server!
-teamsnap.init = (clientId, secret) ->
-  for name, method of auth clientId, secret
-    teamsnap[name] = method
-  teamsnap
+  constructor: (@apiUrl = 'https://apiv3.teamsnap.com', @authUrl = 'https://auth.teamsnap.com') ->
+    
+
+
+module.exports = new TeamSnap()
+require './auth'
+require './sdk'
+
 
 unless String::trim
   String::trim = -> @replace /^\s+|\s+$/g, ''

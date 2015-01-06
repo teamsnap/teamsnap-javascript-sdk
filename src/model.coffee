@@ -13,6 +13,7 @@ class Collection
     @queries = new MetaList(data.queries)
     @commands = new MetaList(data.commands)
     @template = data.template or []
+    @version = data.version if data.version
     @items = data.items if data.items
 
   # Deserialize the data from the server into this collection object
@@ -23,6 +24,7 @@ class Collection
     @links.deserialize data.links
     @queries.deserialize data.queries
     @commands.deserialize data.commands
+    @version = data.version if data.version
     @template = data.template?.data or []
     if data.items?.length
       @items = data.items # Not Item objects, just the data for scoped to turn
@@ -41,6 +43,7 @@ class ScopedCollection extends Collection
     @queries = collection.queries
     @commands = collection.commands
     @template = collection.template
+    @version = collection.version
     if collection.items
       @items = Item.fromArray @_request, collection.items
 
