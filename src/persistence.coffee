@@ -191,7 +191,7 @@ modifySDK = (sdk) ->
   # 8. deleteTeam needs to remove all related data except plan and sport
 
   # Load the availabilities and trackedItemStatuses for the new member
-  wrapSaveForNew sdk, 'saveMember', (member) ->
+  wrapSave sdk, 'saveMember', (member) ->
     promises.when(
       sdk.loadAvailabilities memberId: member.id
       sdk.loadTrackedItemStatuses memberId: member.id
@@ -230,12 +230,19 @@ modifySDK = (sdk) ->
       ).callback callback
 
   # Load availabilities for the new event
-  wrapSaveForNew sdk, 'saveEvent', (event) ->
+  wrapSave sdk, 'saveEvent', (event) ->
     ids = if Array.isArray(event)
       (event.map (event) -> event.id).join(',')
     else
       event.id
     sdk.loadAvailabilities eventId: ids
+  , (event) ->
+    if event.isGame
+      promises.when(
+        sdk.loadTeamResults event.teamId
+        sdk.loadOpponentResults event.opponentId
+      )
+
 
   # Remove related records (including repeating events) when an event(s) are
   # deleted
@@ -250,7 +257,7 @@ modifySDK = (sdk) ->
 
         event.team?.events?.forEach (event) ->
           events.push(event) if event.repeatingUuid is uuid
-        
+
         if include is sdk.EVENTS.FUTURE
           events = events.filter (event) ->
             event.startDate >= startDate
@@ -264,13 +271,21 @@ modifySDK = (sdk) ->
         toRemove.push event.availabilities...
 
       linking.unlinkItems toRemove, lookup
-      deleteEvent.call(this, event, include, callback).fail((err) ->
+      deleteEvent.call(this, event, include, callback).then((result) ->
+        if event.isGame
+          promises.when(
+            sdk.loadTeamResults event.teamId
+            sdk.loadOpponentResults event.opponentId
+          ).then -> result
+        else
+          result
+      ,(err) ->
         linking.linkItems toRemove, lookup
         err
       ).callback callback
 
   # Load the tracked item statuses for the new tracked item
-  wrapSaveForNew sdk, 'saveTrackedItem', (trackedItem) ->
+  wrapSave sdk, 'saveTrackedItem', (trackedItem) ->
     sdk.loadTrackedItemStatuses trackedItemId: trackedItem.id
 
   # Remove tracked item statuses when a tracked item is deleted
@@ -328,19 +343,25 @@ revertWrapMethod = (obj, methodName) ->
   obj[methodName] = oldMethod
 
 # Wraps an SDK save call to do extra work after a save is complete
-wrapSaveForNew = (sdk, saveMethodName, onSave) ->
+wrapSave = (sdk, saveMethodName, onSaveNew, onSaveEdit) ->
   wrapMethod sdk, saveMethodName, (save) ->
     (item, callback) ->
-      if item.id
-        save.call(this, item, callback)
-      else
+      if item.id and onSaveEdit
         savedItem = null
         save.call(this, item)
           .then((item) -> savedItem = item)
-          .then(onSave)
+          .then(onSaveEdit)
           .then(-> savedItem)
           .callback callback
-
+      else if not item.id and onSaveNew
+        savedItem = null
+        save.call(this, item)
+          .then((item) -> savedItem = item)
+          .then(onSaveNew)
+          .then(-> savedItem)
+          .callback callback
+      else
+        save.call(this, item, callback)
 
 copy = (from, to) ->
   Object.keys(from).forEach (key) ->
