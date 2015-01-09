@@ -40,25 +40,27 @@ clientIdInput.addEventListener 'change', ->
   teamsnap.init clientId if clientId
   localStorage.setItem 'teamsnap.clientId', clientId
 
-whenAuthed = (sdk) ->
+whenAuthed = ->
   authSection.parentNode.removeChild authSection
-  sessionStorage.setItem 'collections', JSON.stringify(sdk.collections)
-  window.teamsnap = sdk
+  sessionStorage.setItem 'collections', JSON.stringify(teamsnap.collections)
   mocha.setup('bdd')
   window.require.list().filter((_) -> /^test/.test(_)).forEach(require)
   mocha.run()
-whenAuthFailed = (sdk) ->
+whenAuthFailed = (err) ->
   authSection.style.display = ''
 
 authButton.addEventListener 'click', ->
   authSection.style.display = 'none'
-  teamsnap.startBrowserAuth(redirect, scopes).then whenAuthed, whenAuthFailed
+  teamsnap.startBrowserAuth(redirect, scopes)
+    .then(teamsnap.loadCollections)
+    .then(whenAuthed, whenAuthFailed)
 
 
 teamsnap.init clientId
 
-if teamsnap.isAuthed()
+if teamsnap.hasSession()
   authSection.style.display = 'none'
   try
     collections = JSON.parse sessionStorage.getItem 'collections'
-  teamsnap.auth(collections).then whenAuthed, whenAuthFailed
+  teamsnap.auth()
+  teamsnap.loadCollections(collections).then(whenAuthed, whenAuthFailed)
