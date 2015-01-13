@@ -60,4 +60,13 @@ exports.deleteTeamPublicPhoto = (teamPublicSiteId, callback) ->
   params = teamPublicSiteId: teamPublicSiteId
   @collections.teamPublicSites.exec('removeTeamPublicPhoto', params)
   .callback callback
-  
+
+
+exports.validateSubdomain = (subdomain, callback) ->
+  unless subdomain
+    throw new TSArgsError 'teamsnap.validateSubdomain',
+      "`subdomain` must be provided"
+      
+  params = subdomain: subdomain
+  @collections.teamPublicSites.exec('validateSubdomain', params)
+  .callback callback
