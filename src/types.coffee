@@ -18,6 +18,7 @@ types = [
   'memberPhoneNumber'
   'memberPreferences'
   'opponent'
+  'opponentResults'
   'plan'
   'smsGateway'
   'sponsor'
@@ -51,6 +52,7 @@ singularLookup = {}
 # pre-define exceptions
 pluralLookup =
   memberPreferences: 'membersPreferences'
+  opponentResults: 'opponentsResults'
   teamPreferences: 'teamsPreferences'
   teamResults: 'teamsResults'
   customDatum: 'customData'
