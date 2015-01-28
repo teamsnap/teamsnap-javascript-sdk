@@ -184,11 +184,12 @@ modifySDK = (sdk) ->
   # emails, phones, contacts, contact emails, and contact phones
   # 2. deleteContact needs to remove emails and phones
   # 3. saveEvent needs to load avails when new
-  # 4. deleteEvent needs to remove avails and assignments
-  # 7. deleteEvent needs to remove other events when using include
-  # 5. saveTrackedItem needs to load trackedItemStatuses when new
-  # 6. deleteTrackedItem needs to remove trackedItemStatuses
-  # 8. deleteTeam needs to remove all related data except plan and sport
+  # 4. saveEvent needs to remove events in repeating event series
+  # 5. deleteEvent needs to remove avails and assignments
+  # 6. deleteEvent needs to remove other events when using include
+  # 7. saveTrackedItem needs to load trackedItemStatuses when new
+  # 8. deleteTrackedItem needs to remove trackedItemStatuses
+  # 9. deleteTeam needs to remove all related data except plan and sport
 
   # Load the availabilities and trackedItemStatuses for the new member
   wrapSave sdk, 'saveMember', (member) ->
@@ -230,6 +231,7 @@ modifySDK = (sdk) ->
       ).callback callback
 
   # Load availabilities for the new event
+  # Delete repeating events from series if necessary
   wrapSave sdk, 'saveEvent', (event) ->
     ids = if Array.isArray(event)
       (event.map (event) -> event.id).join(',')
@@ -242,6 +244,15 @@ modifySDK = (sdk) ->
         sdk.loadTeamResults event.teamId
         sdk.loadOpponentResults event.opponentId
       )
+    else if Array.isArray(event)
+      repeatingEventIds = (e.id for e in event)
+      firstEvent = event.shift()
+      toRemove = []
+      firstEvent.team?.events?.forEach (e) ->
+        toRemove.push(e) if e.repeatingUuid is firstEvent.repeatingUuid
+      toRemove = toRemove.filter (e) ->
+        e.id not in repeatingEventIds
+      linking.unlinkItems toRemove, lookup
 
 
   # Remove related records (including repeating events) when an event(s) are
