@@ -9,7 +9,7 @@ exports.loadUsers = (params, callback) ->
 
 
 exports.loadMe = (callback) ->
-  @collections.root.loadItem('me', callback)
+  @collections.root.queryItem('me', callback)
 
 
 exports.saveUser = (user, callback) ->
