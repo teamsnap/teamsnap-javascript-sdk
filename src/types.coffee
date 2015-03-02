@@ -9,6 +9,7 @@ types = [
   'contactPhoneNumber'
   'customDatum'
   'customField'
+  'divisionMember'
   'event'
   'location'
   'member'
