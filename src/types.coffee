@@ -11,7 +11,6 @@ types = [
   'customField'
   'divisionMember'
   'event'
-  'forecast'
   'location'
   'member'
   'memberEmailAddress'
