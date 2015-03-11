@@ -78,6 +78,22 @@ exports.invite = (options = {}) ->
 
   @collections.teams.exec('invite', options)
 
+exports.updateTimeZone = (options = {}) ->
+
+  unless options.timeZone
+    throw new TSArgsError 'teamsnap.updateTimeZone',
+      'options.timeZone is required.'
+
+  unless options.teamId
+    throw new TSArgsError 'teamsnap.updateTimeZone',
+      'options.teamId is required.'
+
+  unless options.offsetTeamTimes
+    throw new TSArgsError 'teamsnap.updateTimeZone',
+      'options.offsetTeamTimes is required'
+
+  @collections.teams.exec('updateTimeZone', options)
+
 # Converts memberId or memberIds into an array
 cleanArray = (obj, prop) ->
   plural = prop + 's'
