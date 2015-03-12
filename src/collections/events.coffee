@@ -44,11 +44,14 @@ exports.saveEvent = (event, callback) ->
     return @reject 'You must choose an opponent.', 'opponentId', callback
   if isNaN event.startDate?.getTime()
     return @reject 'You must provide a valid start date.', 'startDate', callback
+  if event.notifyTeam and not event.notifyTeamAsMemberId
+    return @reject 'You must provide the current member\'s id.',
+      'notifyTeamAsMemberId', callback
 
   @saveItem event, callback
 
 
-exports.deleteEvent = (event, include, notify, callback) ->
+exports.deleteEvent = (event, include, notify, notifyAs, callback) ->
   params = {}
   unless event
     throw new TSArgsError 'teamsnap.deleteEvent', '`event` must be provided'
@@ -65,9 +68,14 @@ exports.deleteEvent = (event, include, notify, callback) ->
       throw new TSArgsError 'teamsnap.deleteEvent', "`include` must be one of
         #{Object.keys(includes).join(', ')}"
     params.repeatingInclude = include
-    
+
   if notify
     params.notifyTeam = notify
+    unless notifyAs
+      throw new TSArgsError 'teamsnap.deleteEvent',
+        '`notifyTeamAsMemberId` must be provided'
+    params.notifyTeamAsMemberId = notifyAs
+
 
   @deleteItem event, params, callback
 
