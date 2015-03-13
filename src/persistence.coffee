@@ -258,7 +258,7 @@ modifySDK = (sdk) ->
   # Remove related records (including repeating events) when an event(s) are
   # deleted
   wrapMethod sdk, 'deleteEvent', (deleteEvent) ->
-    (event, include, callback) ->
+    (event, include, notify, notifyAs, callback) ->
       events = [] # additional events and items to remove
 
       # Add all events being deleted
@@ -282,7 +282,7 @@ modifySDK = (sdk) ->
         toRemove.push event.availabilities...
 
       linking.unlinkItems toRemove, lookup
-      deleteEvent.call(this, event, include, callback).then((result) ->
+      deleteEvent.call(this, event, include, notify, notifyAs, callback).then((result) ->
         if event.isGame
           promises.when(
             sdk.loadTeamResults event.teamId
