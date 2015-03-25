@@ -30,6 +30,7 @@ types = [
   'memberPreferences'
   'opponent'
   'opponentResults'
+  'paymentNote'
   'plan'
   'smsGateway'
   'sponsor'
