@@ -15,6 +15,7 @@ types = [
   'forumPost'
   'forumSubscription'
   'forumTopic'
+  'leagueRegistrantDocument'
   'location'
   'member'
   'memberEmailAddress'
