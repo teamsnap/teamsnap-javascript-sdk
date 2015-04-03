@@ -8,6 +8,14 @@ exports.loadCustomData = (params, callback) ->
 
   @loadItems 'customDatum', params, callback
 
+exports.createCustomDatum = (data, field) ->
+  @createItem data,
+    type: 'customDatum'
+    customFieldId: field.id
+    kind: field.kind
+    name: field.name
+    isPrivate: false
+    value: null
 
 exports.saveCustomDatum = (customDatum, callback) ->
   unless customDatum

@@ -1,4 +1,3 @@
-
 exports.loadDivisionCustomData = (params, callback) ->
   if @isId params
     params = teamId: params
@@ -8,6 +7,14 @@ exports.loadDivisionCustomData = (params, callback) ->
 
   @loadItems 'divisionCustomDatum', params, callback
 
+exports.createDivisionCustomDatum = (data, field) ->
+  @createItem data,
+    type: 'divisionCustomDatum'
+    divisionCustomFieldId: field.id
+    kind: field.kind
+    name: field.name
+    isPrivate: false
+    value: null
 
 exports.saveDivisionCustomDatum = (divisionCustomDatum, callback) ->
   unless divisionCustomDatum
