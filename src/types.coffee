@@ -10,6 +10,8 @@ types = [
   'contactPhoneNumber'
   'customDatum'
   'customField'
+  'leagueCustomDatum'
+  'leagueCustomField'
   'divisionMember'
   'event'
   'forumPost'
@@ -65,6 +67,7 @@ pluralLookup =
   teamPreferences: 'teamsPreferences'
   teamResults: 'teamsResults'
   customDatum: 'customData'
+  leagueCustomDatum: 'leagueCustomData'
   smsGateway: 'smsGateways'
 
 for type in types
