@@ -34,7 +34,6 @@ types = [
   'sport'
   'team'
   'teamFee'
-  'teamFile'
   'teamPreferences'
   'teamPublicSite'
   'teamResults'
