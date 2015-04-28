@@ -19,7 +19,7 @@
     "form-data": "latest"
   },
   "devDependencies": {
-    "brunch": "1.7.20",
+    "brunch": "latest",
     "library-brunch": "latest",
     "javascript-brunch": "latest",
     "coffee-script-brunch": "latest",
