@@ -12,6 +12,7 @@ types = [
   'customField'
   'leagueCustomDatum'
   'leagueCustomField'
+  'divisionLocation'
   'divisionMember'
   'event'
   'forumPost'
