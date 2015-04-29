@@ -86,6 +86,8 @@ exports.sendAvailabilityReminders = (eventId, sendingMemberId, include) ->
     eventId = eventId.id
   if @isItem sendingMemberId, 'member'
     sendingMemberId = sendingMemberId.id
+  else if @isItem sendingMemberId, 'divisionMember'
+    sendingMemberId = sendingMemberId.id
   unless @isId eventId
     throw new TSArgsError 'teamsnap.sendAvailabilityReminders', 'must include id
       `eventId`'
