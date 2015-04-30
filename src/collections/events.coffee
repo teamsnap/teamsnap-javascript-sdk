@@ -38,7 +38,7 @@ exports.saveEvent = (event, callback) ->
     return @reject 'You must provide a name.', 'name', callback
   unless event.teamId
     return @reject 'You must choose a team.', 'teamId', callback
-  unless event.locationId
+  unless event.locationId or event.divisionLocationId
     return @reject 'You must choose a location.', 'locationId', callback
   if event.isGame and not event.opponentId
     return @reject 'You must choose an opponent.', 'opponentId', callback
