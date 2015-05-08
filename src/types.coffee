@@ -14,6 +14,7 @@ types = [
   'leagueCustomField'
   'divisionLocation'
   'divisionMember'
+  'divisionMemberPreferences'
   'event'
   'forumPost'
   'forumSubscription'
@@ -63,6 +64,7 @@ singularLookup = {}
 pluralLookup =
   broadcastSms: 'broadcastSmses'
   memberPreferences: 'membersPreferences'
+  divisionMemberPreferences: 'divisionMembersPreferences'
   opponentResults: 'opponentsResults'
   teamPreferences: 'teamsPreferences'
   teamResults: 'teamsResults'
