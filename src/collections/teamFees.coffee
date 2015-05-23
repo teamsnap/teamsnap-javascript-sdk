@@ -22,6 +22,12 @@ exports.saveTeamFee = (teamFee, callback) ->
       "`teamFee.type` must be 'teamFee'"
   unless teamFee.teamId
     return @reject 'You must choose a team.', 'teamId', callback
+  unless teamFee.description
+    return @reject 'You must provide a team fee description.',
+    'description', callback
+  unless teamFee.amount
+    return @reject 'You must provide a fee amount.',
+    'description', callback
   @saveItem teamFee, callback
 
 

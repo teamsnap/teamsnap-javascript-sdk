@@ -8,11 +8,6 @@ exports.loadMemberPayments = (params, callback) ->
   @loadItems 'memberPayment', params, callback
 
 
-exports.createMemberPayment = (data) ->
-  @createItem data,
-    type: 'memberPayment'
-
-
 exports.saveMemberPayment = (memberPayment, callback) ->
   unless memberPayment
     throw new TSArgsError 'teamsnap.saveMemberPayment', '`memberPayment`

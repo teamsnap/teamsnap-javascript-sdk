@@ -22,4 +22,11 @@ exports.savePaymentNote = (paymentNote, callback) ->
       "`paymentNote.type` must be 'paymentNote'"
   unless paymentNote.teamId
     return @reject 'You must choose a team.', 'teamId', callback
+  unless paymentNote.memberPaymentId
+    return @reject 'You must specify a memberPaymentId.',
+    'memberPaymentId', callback
+  unless paymentNote.note
+    return @reject 'You must provide a note.', 'note', callback
+  unless paymentNote.description
+    return @reject 'You must provide a description.', 'description', callback
   @saveItem paymentNote, callback
