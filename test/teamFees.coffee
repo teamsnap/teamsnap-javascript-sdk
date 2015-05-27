@@ -1,5 +1,7 @@
 describe 'Team Fees', ->
 
+  teamFee = null
+  
   it 'should be able to load all team fees', (done) ->
     teamsnap.loadTeamFees team.id, (err, result) ->
       expect(err).to.be.null
@@ -14,4 +16,9 @@ describe 'Team Fees', ->
     teamsnap.saveTeamFee teamFee, (err, result) ->
       expect(err).to.be.null
       result.should.have.property('type', 'teamFee')
+      done()
+
+  it 'should be able to delete a team fee', (done) ->
+    teamsnap.deleteTeamFee teamFee, (err, result) ->
+      expect(err).to.be.null
       done()
