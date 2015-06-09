@@ -27,6 +27,4 @@ exports.savePaymentNote = (paymentNote, callback) ->
     'memberPaymentId', callback
   unless paymentNote.note
     return @reject 'You must provide a note.', 'note', callback
-  unless paymentNote.description
-    return @reject 'You must provide a description.', 'description', callback
   @saveItem paymentNote, callback
