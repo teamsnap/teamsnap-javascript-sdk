@@ -4,6 +4,7 @@ types = [
   'user'
   'assignment'
   'availability'
+  'broadcastEmail'
   'broadcastSms'
   'contact'
   'contactEmailAddress'
