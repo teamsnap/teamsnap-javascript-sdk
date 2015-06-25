@@ -98,7 +98,7 @@ exports.resetStatistics = (teamId, callback) ->
   unless teamId
     throw new TSArgsError 'teamsnap.resetStatistics',
       "`teamId` must be provided"
-  if @isItem teamPreferencesId, 'teamId'
+  if @isItem teamId, 'teamId'
     teamId = teamId.id
   if not @isId teamId
     throw new TSArgsError 'teamsnap.resetStatistics',
