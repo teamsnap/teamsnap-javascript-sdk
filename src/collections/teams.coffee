@@ -94,6 +94,20 @@ exports.updateTimeZone = (options = {}) ->
 
   @collections.teams.exec('updateTimeZone', options)
 
+exports.resetStatistics = (teamId, callback) ->
+  unless teamId
+    throw new TSArgsError 'teamsnap.resetStatistics',
+      "`teamId` must be provided"
+  if @isItem teamPreferencesId, 'teamId'
+    teamId = teamId.id
+  if not @isId teamId
+    throw new TSArgsError 'teamsnap.resetStatistics',
+      "`teamId` must be a valid id"
+
+  params = teamId: teamId
+  @collections.teams.exec('resetStatistics', params)
+  .callback callback
+
 # Converts memberId or memberIds into an array
 cleanArray = (obj, prop) ->
   plural = prop + 's'
