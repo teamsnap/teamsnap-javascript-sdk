@@ -38,11 +38,14 @@ exports.deleteStatistic = (statistic, callback) ->
   @deleteItem statistic, callback
 
 
-exports.reorderStatistics = (statisticIds, callback) ->
+exports.reorderStatistics = (teamId, statisticIds, callback) ->
+  unless @isId teamId
+    throw new TSArgsError 'teamsnap.reorderStatistics', '`teamId`
+      must be provided'
   unless statisticIds and typeof statisticIds is 'object'
     throw new TSArgsError 'teamsnap.reorderStatistics', 'You must provide an
       array of ordered Statistic IDs'
   
-  params = sortedIds: statisticIds
-  @collections.statistics.exec('reorder', statisticIds)
+  params = teamId: teamId, sortedIds: statisticIds
+  @collections.statistics.exec('reorderStatistics', params)
     .callback callback

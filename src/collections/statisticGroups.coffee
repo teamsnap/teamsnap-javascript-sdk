@@ -36,11 +36,14 @@ exports.deleteStatisticGroup = (statisticGroup, callback) ->
   @deleteItem statisticGroup, callback
 
 
-exports.reorderStatisticGroups = (statisticGroupIds, callback) ->
+exports.reorderStatisticGroups = (teamId, statisticGroupIds, callback) ->
+  unless @isId teamId
+    throw new TSArgsError 'teamsnap.reorderStatisticGroups', '`teamId`
+      must be provided'
   unless statisticGroupIds and typeof statisticGroupIds is 'object'
     throw new TSArgsError 'teamsnap.reorderStatisticGroups', 'You must provide
     an array of ordered Statistic Group IDs'
 
-  params = sortedIds: statisticGroupIds
+  params = teamId: teamId, sortedIds: statisticGroupIds
   @collections.statisticGroups.exec('reorderStatisticGroups', params)
     .callback callback
