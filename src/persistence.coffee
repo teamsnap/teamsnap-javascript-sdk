@@ -198,6 +198,7 @@ modifySDK = (sdk) ->
       sdk.loadTrackedItemStatuses memberId: member.id
       sdk.loadCustomData memberId: member.id
       sdk.loadLeagueCustomData memberId: member.id
+      sdk.loadMemberPayments memberId: member.id
     )
 
   # Remove related records when a member is deleted
