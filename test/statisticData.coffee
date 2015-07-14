@@ -1,9 +1,22 @@
 describe 'Statistic Data', ->
 
+  member = null
   location = null
   event = null
   statistic = null
   statisticDatum = null
+  bulkStatistic = null
+  bulkStatisticDatum = null
+
+  before (done) ->
+    member = teamsnap.createMember()
+    member.firstName = 'Esdee'
+    member.lastName = 'Kay'
+    member.teamId = team.id
+    teamsnap.saveMember member, (err, result) ->
+      expect(err).to.be.null
+      result.should.have.property('type', 'member')
+      done()
 
   before (done) ->
     location = teamsnap.createLocation()
@@ -35,8 +48,23 @@ describe 'Statistic Data', ->
       result.should.have.property('type', 'statistic')
       done()
 
+  before (done) ->
+    bulkStatistic = teamsnap.createStatistic()
+    bulkStatistic.name = 'Test Bulk Statistic'
+    bulkStatistic.acronym = 'TSTB'
+    bulkStatistic.teamId = team.id
+    teamsnap.saveStatistic bulkStatistic, (err, result) ->
+      expect(err).to.be.null
+      result.should.have.property('type', 'statistic')
+      done()
+
   after (done) ->
     teamsnap.deleteStatistic statistic, (err, result) ->
+      expect(err).to.be.null
+      done()
+
+  after (done) ->
+    teamsnap.deleteStatistic bulkStatistic, (err, result) ->
       expect(err).to.be.null
       done()
 
@@ -49,12 +77,7 @@ describe 'Statistic Data', ->
     teamsnap.deleteLocation location, (err, result) ->
       expect(err).to.be.null
       done()
-  
-  it 'should be able to load all team statistic data', (done) ->
-    teamsnap.loadStatisticData team.id, (err, result) ->
-      expect(err).to.be.null
-      result.should.be.an('array')
-      done()
+
 
   it 'should be able to create a member statistic datum', (done) ->
     statisticDatum = teamsnap.createStatisticDatum()
@@ -62,12 +85,41 @@ describe 'Statistic Data', ->
     statisticDatum.statisticId = statistic.id
     statisticDatum.eventId = event.id
     teamsnap.saveStatisticDatum statisticDatum, (err, result) ->
-      console.log err
       expect(err).to.be.null
       result.should.have.property('type', 'statisticDatum')
       done()
 
+  it 'should be able to bulk save member statistic data', (done) ->
+    bulkStatisticDatum = teamsnap.createStatisticDatum()
+    bulkStatisticDatum.teamId = team.id
+    bulkStatisticDatum.statisticId = bulkStatistic.id
+    bulkStatisticDatum.eventId = event.id
+    templates = []
+    clonedTemplate =
+    JSON.parse(JSON.stringify(teamsnap.collections.statisticData.template))
+    clonedTemplate.forEach (field) ->
+      camelizedFieldName = field.name.
+      replace(/(\_\w)/g, (m) -> return m[1].toUpperCase())
+      field.value = statisticDatum[camelizedFieldName]
+    templates.push {data: clonedTemplate}
+    teamsnap.bulkSaveStatisticData JSON.stringify(templates), (err, result) ->
+      expect(err).to.be.null
+      result.should.be.an('array')
+      done()
+
+
+  it 'should be able to load all team statistic data', (done) ->
+    teamsnap.loadStatisticData team.id, (err, result) ->
+      expect(err).to.be.null
+      result.should.be.an('array')
+      done()
+
   it 'should be able to delete a statistic datum', (done) ->
     teamsnap.deleteStatisticDatum statisticDatum, (err, result) ->
+      expect(err).to.be.null
+      done()
+
+  it 'should be able to bulk delete statistic data', (done) ->
+    teamsnap.bulkDeleteStatisticData member, event, (err, result) ->
       expect(err).to.be.null
       done()
