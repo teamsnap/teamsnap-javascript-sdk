@@ -212,6 +212,7 @@ modifySDK = (sdk) ->
         toRemove.push contact
       toRemove.push member.trackedItemStatuses...
       toRemove.push member.memberPayments...
+      toRemove.push member.statisticData...
 
       linking.unlinkItems toRemove, lookup
       deleteMember.call(this, member, callback).fail((err) ->
@@ -311,6 +312,33 @@ modifySDK = (sdk) ->
         linking.linkItems toRemove, lookup
         err
       ).callback callback
+
+  # Remove statistic data for related statistic
+  wrapMethod sdk, 'deleteStatistic', (deleteStatistic) ->
+    (statistic, callback) ->
+      toRemove = statistic.statisticData.slice()
+
+      linking.unlinkItems toRemove, lookup
+      deleteStatistic.call(this, statistic).fail((err) ->
+        linking.linkItems toRemove, lookup
+        err
+      ).callback callback
+      
+
+  # Remove deleted member statisticData when using bulk delete command
+  wrapMethod sdk, 'bulkDeleteStatisticData', (bulkDeleteStatisticData) ->
+    (member, event, callback) ->
+      toRemove = []
+      member.statisticData?.forEach (statisticDatum) ->
+        toRemove.push(statisticDatum) if statisticDatum.event is event
+
+      linking.unlinkItems toRemove, lookup
+
+      bulkDeleteStatisticData.call(this, member, event).fail((err) ->
+        linking.linkItems toRemove, lookup
+        err
+      ).callback callback
+
 
   # Remove all records belonging to a team when it is deleted
   wrapMethod sdk, 'deleteTeam', (deleteTeam) ->
