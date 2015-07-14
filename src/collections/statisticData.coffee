@@ -36,3 +36,34 @@ exports.deleteStatisticDatum = (statisticDatum, callback) ->
       '`statisticDatum` must be provided'
 
   @deleteItem statisticDatum, callback
+
+
+exports.bulkSaveStatisticData = (templates, callback) ->
+  unless templates
+    throw new TSArgsError 'teamsnap.bulkSaveStatisticData',
+      "`templates` must be provided"
+
+  params = templates: templates
+  @collections.statisticData.exec('bulkUpdateStatisticData', params)
+  .callback callback
+
+
+exports.bulkDeleteStatisticData = (member, event, callback) ->
+  unless member
+    throw new TSArgsError 'teamsnap.bulkDeleteStatisticData',
+      "`member` must be provided"
+  unless @isItem member, 'member'
+    throw new TSArgsError 'teamsnap.bulkDeleteStatisticData',
+      "`member.type` must be 'member'"
+  unless event
+    throw new TSArgsError 'teamsnap.bulkDeleteStatisticData',
+      "`event` must be provided"
+  unless @isItem event, 'event'
+    throw new TSArgsError 'teamsnap.bulkDeleteStatisticData',
+      "`event.type` must be 'event'"
+  
+  params =
+    memberId: member.id
+    eventId: event.id
+  @collections.statisticData.exec('bulkDeleteStatisticData', params)
+  .callback callback
