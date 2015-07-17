@@ -65,6 +65,7 @@ teamTypes
   .remove('smsGateway')
   .remove('sport')
   .remove('timeZone')
+  .remove('divisionTeamStanding')
 
 # create lookup hashes
 typeLookup = {}
