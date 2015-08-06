@@ -285,7 +285,8 @@ modifySDK = (sdk) ->
         toRemove.push event.availabilities...
 
       linking.unlinkItems toRemove, lookup
-      deleteEvent.call(this, event, include, notify, notifyAs, callback).then((result) ->
+      deleteEvent.call(this, event, include, notify, notifyAs, callback)
+      .then((result) ->
         if event.isGame
           promises.when(
             sdk.loadTeamResults event.teamId

@@ -10,7 +10,8 @@ class TeamSnap
   Collection: Collection
   Item: Item
 
-  constructor: (@apiUrl = 'https://apiv3.teamsnap.com', @authUrl = 'https://auth.teamsnap.com') ->
+  constructor: (@apiUrl = 'https://apiv3.teamsnap.com',
+    @authUrl = 'https://auth.teamsnap.com') ->
     
 
 
