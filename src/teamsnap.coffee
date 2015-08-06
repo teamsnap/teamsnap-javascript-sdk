@@ -3,14 +3,15 @@ promises = require './promises'
 require './errors'
 
 class TeamSnap
-  version: '1.4.0'
+  version: '1.4.1'
   promises: promises
   when: promises.when
   TeamSnap: TeamSnap
   Collection: Collection
   Item: Item
 
-  constructor: (@apiUrl = 'https://apiv3.teamsnap.com', @authUrl = 'https://auth.teamsnap.com') ->
+  constructor: (@apiUrl = 'https://apiv3.teamsnap.com',
+    @authUrl = 'https://auth.teamsnap.com') ->
     
 
 
