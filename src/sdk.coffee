@@ -97,12 +97,16 @@ TeamSnap::getNameSort = ->
       else
         valueA = itemA.id
         valueB = itemB.id
-    if valueA is valueB then 0
-    else if !valueA and valueB then 1
-    else if valueA and !valueB then -1
-    else if valueA > valueB then 1
-    else if valueA < valueB then -1
-    else 0
+    # Let's try to use `localeCompare()` if available
+    if typeof valueA.localeCompare is 'function'
+      valueA.localeCompare valueB
+    else
+      if valueA is valueB then 0
+      else if !valueA and valueB then 1
+      else if valueA and !valueB then -1
+      else if valueA > valueB then 1
+      else if valueA < valueB then -1
+      else 0
 
 
 TeamSnap::getDefaultSort = ->
@@ -117,12 +121,16 @@ TeamSnap::getDefaultSort = ->
       else
         valueA = itemA.id
         valueB = itemB.id
-    if valueA is valueB then 0
-    else if !valueA and valueB then 1
-    else if valueA and !valueB then -1
-    else if valueA > valueB then 1
-    else if valueA < valueB then -1
-    else 0
+    # Let's try to use `localeCompare()` if available
+    if typeof valueA.localeCompare is 'function'
+      valueA.localeCompare valueB
+    else
+      if valueA is valueB then 0
+      else if !valueA and valueB then 1
+      else if valueA and !valueB then -1
+      else if valueA > valueB then 1
+      else if valueA < valueB then -1
+      else 0
 
 
 TeamSnap::getCollectionForItem = (item) ->

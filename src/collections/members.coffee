@@ -115,12 +115,16 @@ exports.getMemberSort = (reverse) ->
     else
       valueA = @memberName(itemA, reverse, true).toLowerCase()
       valueB = @memberName(itemB, reverse, true).toLowerCase()
-    if valueA is valueB then 0
-    else if !valueA and valueB then 1
-    else if valueA and !valueB then -1
-    else if valueA > valueB then 1
-    else if valueA < valueB then -1
-    else 0
+    # Let's try to use `localeCompare()` if available
+    if typeof valueA.localeCompare is 'function'
+      valueA.localeCompare valueB
+    else
+      if valueA is valueB then 0
+      else if !valueA and valueB then 1
+      else if valueA and !valueB then -1
+      else if valueA > valueB then 1
+      else if valueA < valueB then -1
+      else 0
 
 
 # Helper for determining if a member has general write permissions to the team
