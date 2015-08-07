@@ -340,6 +340,33 @@ modifySDK = (sdk) ->
         err
       ).callback callback
 
+  # Update memberBalance and teamFee when saving memberPayment
+  wrapMethod sdk, 'saveMemberPayment', (saveMemberPayment) ->
+    (memberPayment, callback) ->
+      saveMemberPayment.call(this, memberPayment).then((result) ->
+        promises.when(
+          sdk.loadMemberBalances(memberId: memberPayment.memberId)
+          sdk.loadTeamFees(id: memberPayment.teamFeeId)
+        ).then -> result
+      ).callback callback
+      
+
+  # Update memberBalances when saving teamFee
+  wrapMethod sdk, 'saveTeamFee', (saveTeamFee) ->
+    (teamFee, callback) ->
+      saveTeamFee.call(this, teamFee).then((result) ->
+        sdk.loadMemberBalances(teamId: teamFee.teamId).then ->
+          result
+      ).callback callback
+      
+
+  # Update memberBalances when deleting teamFee
+  wrapMethod sdk, 'deleteTeamFee', (deleteTeamFee) ->
+    (teamFee, callback) ->
+      deleteTeamFee.call(this, teamFee).then((result) ->
+        sdk.loadMemberBalances(teamId: teamFee.teamId).then ->  
+          result
+      ).callback callback
 
   # Remove all records belonging to a team when it is deleted
   wrapMethod sdk, 'deleteTeam', (deleteTeam) ->
