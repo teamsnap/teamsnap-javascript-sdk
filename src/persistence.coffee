@@ -364,7 +364,7 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'deleteTeamFee', (deleteTeamFee) ->
     (teamFee, callback) ->
       deleteTeamFee.call(this, teamFee).then((result) ->
-        sdk.loadMemberBalances(teamId: teamFee.teamId).then ->  
+        sdk.loadMemberBalances(teamId: teamFee.teamId).then ->
           result
       ).callback callback
 
