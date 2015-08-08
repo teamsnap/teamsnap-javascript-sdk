@@ -51,7 +51,7 @@ exports.getAssignmentSort = (reverse) ->
       valueA = @memberName(itemA.member, reverse).toLowerCase()
       valueB = @memberName(itemB.member, reverse).toLowerCase()
     # Let's try to use `localeCompare()` if available
-    if typeof valueA.localeCompare is 'function'
+    if typeof valueA?.localeCompare is 'function'
       valueA.localeCompare valueB
     else
       if valueA is valueB then 0
