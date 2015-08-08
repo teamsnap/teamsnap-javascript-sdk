@@ -98,7 +98,7 @@ TeamSnap::getNameSort = ->
         valueA = itemA.id
         valueB = itemB.id
     # Let's try to use `localeCompare()` if available
-    if typeof valueA.localeCompare is 'function'
+    if typeof valueA?.localeCompare is 'function'
       valueA.localeCompare valueB
     else
       if valueA is valueB then 0
@@ -122,7 +122,7 @@ TeamSnap::getDefaultSort = ->
         valueA = itemA.id
         valueB = itemB.id
     # Let's try to use `localeCompare()` if available
-    if typeof valueA.localeCompare is 'function'
+    if typeof valueA?.localeCompare is 'function'
       valueA.localeCompare valueB
     else
       if valueA is valueB then 0
