@@ -88,6 +88,9 @@ class ScopedCollection extends Collection
   exec: (commandName, params, callback) ->
     @commands.exec @_request, commandName, params, callback
 
+  # Execute a file command
+  file: (commandName, params, progress, callback) ->
+    @commands.fileExec @_request, commandName, params, progress, callback
 
 
 # A representation of a Collection+JSON item
@@ -161,7 +164,7 @@ class Item
     if typeof params is 'function'
       callback = params
       params = null
-    
+
     if params
       fields = []
       for own key, value of params
@@ -257,6 +260,21 @@ class MetaList
       callback = params
       params = undefined
     @_request(request, 'post', rel, params, 'items').callback callback
+
+  # Execute a file command with the given parameters
+  fileExec: (request, rel, params, progress, callback) ->
+    if typeof params is 'function'
+      callback = progressEvent
+      progressEvent = params
+      params = undefined
+    progressHook = (xhr, data) ->
+      if data instanceof FormData
+        xhr.upload.addEventListener 'progress', (e) ->
+          if e.lengthComputable
+            progress {loaded: e.loaded, total: e.total}
+    request.hook progressHook
+    @_request(request, 'post', rel, params, 'items')
+    .callback callback
 
   cloneEmpty: ->
     clone = new MetaList()
