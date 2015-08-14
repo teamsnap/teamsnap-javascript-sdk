@@ -324,7 +324,14 @@ modifySDK = (sdk) ->
         linking.linkItems toRemove, lookup
         err
       ).callback callback
-      
+
+  # Update member statistics when saving statisticData
+  wrapSave sdk, 'bulkSaveStatisticData', (templates) ->
+    if templates[0]? and templates[0].memberId?
+      sdk.loadMemberStatistics memberId: templates[0].memberId
+
+  wrapSave sdk, 'saveStatisticDatum', (statisticDatum) ->
+    sdk.loadMemberStatistics statisticId: statisticDatum.statisticId
 
   # Remove deleted member statisticData when using bulk delete command
   wrapMethod sdk, 'bulkDeleteStatisticData', (bulkDeleteStatisticData) ->
@@ -349,7 +356,7 @@ modifySDK = (sdk) ->
           sdk.loadTeamFees(id: memberPayment.teamFeeId)
         ).then -> result
       ).callback callback
-      
+
 
   # Update memberBalances when saving teamFee
   wrapMethod sdk, 'saveTeamFee', (saveTeamFee) ->
@@ -358,7 +365,7 @@ modifySDK = (sdk) ->
         sdk.loadMemberBalances(teamId: teamFee.teamId).then ->
           result
       ).callback callback
-      
+
 
   # Update memberBalances when deleting teamFee
   wrapMethod sdk, 'deleteTeamFee', (deleteTeamFee) ->
