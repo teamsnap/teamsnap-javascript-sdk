@@ -34,18 +34,3 @@ exports.deleteBroadcastEmail = (broadcastEmail, callback) ->
       must be provided'
 
   @deleteItem broadcastEmail, callback
-
-exports.uploadAttachment = (broadcastEmailId, file, callback) ->
-  if typeof FormData is 'undefined'
-    @reject 'Your browser does not support the new file upload APIs.', 'file',
-      callback
-  unless file
-    throw new TSArgsError 'teamsnap.uploadAttachment',
-      'file is required'
-  unless broadcastEmailId
-    throw new TSArgsError 'teamsnap.uploadAttachment',
-      'broadcastEmailId is required'
-
-  params = broadcastEmailId: broadcastEmailId, file: file
-
-  @collections.broadcastEmails.exec('uploadAttachment', params)
