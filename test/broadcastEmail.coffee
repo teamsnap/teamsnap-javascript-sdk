@@ -5,16 +5,10 @@ describe 'Broadcast Emails', ->
   recipient = null
 
   before (done) ->
-    sender = teamsnap.createMember()
-    sender.teamId = team.id
-    sender.firstName = 'Test'
-    teamsnap.saveMember sender, (err, result) ->
-      expect(err).to.be.null
-      memberEmail = teamsnap.createMemberEmailAddress()
-      memberEmail.memberId = sender.id
-      memberEmail.email = "sender@example.com"
-      teamsnap.saveMemberEmailAddress memberEmail, (err, result) ->
-        expect(err).to.be.null
+    teamsnap.loadMe().then (me) ->
+      teamsnap.loadMembers userId: me.id, (err, result) ->
+        result.should.be.an('array')
+        sender = result[0]
         done()
 
   before (done) ->
@@ -29,11 +23,6 @@ describe 'Broadcast Emails', ->
       teamsnap.saveMemberEmailAddress memberEmail, (err, result) ->
         expect(err).to.be.null
         done()
-
-  after (done) ->
-    teamsnap.deleteMember sender, (err, result) ->
-      expect(err).to.be.null
-      done()
 
   after (done) ->
     teamsnap.deleteMember recipient, (err, result) ->

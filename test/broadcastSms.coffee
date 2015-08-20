@@ -5,12 +5,11 @@ describe 'Broadcast Smses', ->
   recipient = null
 
   before (done) ->
-    sender = teamsnap.createMember()
-    sender.teamId = team.id
-    sender.firstName = 'Test'
-    teamsnap.saveMember sender, (err, result) ->
-      expect(err).to.be.null
-      done()
+    teamsnap.loadMe().then (me) ->
+      teamsnap.loadMembers userId: me.id, (err, result) ->
+        result.should.be.an('array')
+        sender = result[0]
+        done()
 
   before (done) ->
     recipient = teamsnap.createMember()
@@ -26,11 +25,6 @@ describe 'Broadcast Smses', ->
       teamsnap.saveMemberPhoneNumber phone, (err, result) ->
         expect(err).to.be.null
         done()
-
-  after (done) ->
-    teamsnap.deleteMember sender, (err, result) ->
-      expect(err).to.be.null
-      done()
 
   after (done) ->
     teamsnap.deleteMember recipient, (err, result) ->
