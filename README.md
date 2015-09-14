@@ -1,6 +1,8 @@
 teamsnap-javascript-sdk
 =======================
 
+[![Join the chat at https://gitter.im/teamsnap/teamsnap-javascript-sdk](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/teamsnap/teamsnap-javascript-sdk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Javascript SDK for TeamSnap's APIv3
 
 Usage
