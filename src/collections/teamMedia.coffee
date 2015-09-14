@@ -34,6 +34,14 @@ exports.uploadTeamMedium = (teamMedium, progressCallback, callback) ->
     .pop().callback callback
 
 
+  exports.deleteTeamMedium = (teamMedium, callback) ->
+    unless teamMedium
+      throw new TSArgsError 'teamsnap.deleteTeamMedium',
+        '`teamMedium` must be provided'
+
+    @deleteItem teamMedium, callback
+
+
 exports.assignMediaToGroup = (teamMediumId, teamMediaGroupId, callback) ->
   unless teamMediumId and @isId teamMediumId
     throw new TSArgsError 'teamsnap.assignMediaToGroup', 'must provide a
@@ -64,7 +72,7 @@ exports.removeMediaFromGroup = (teamMediumId, teamMediaGroupId, callback) ->
     .pop().callback callback
 
 
-exports.rotateTeamMediumImage = (teamMediumId, rotateDirection) ->
+exports.rotateTeamMediumImage = (teamMediumId, rotateDirection, callback) ->
   unless teamMediumId and @isId teamMediumId
     throw new TSArgsError 'teamsnap.rotateTeamMediumImage', 'must provide a
     teamMediumId'
@@ -75,5 +83,5 @@ exports.rotateTeamMediumImage = (teamMediumId, rotateDirection) ->
     teamMediumId: teamMediumId
     rotateDirection: rotateDirection
 
-  @collections.teamMedia.exec('rotateImageTeamMedium', params)
+  @collections.teamMedia.exec('rotateTeamMediumImage', params)
     .pop().callback callback
