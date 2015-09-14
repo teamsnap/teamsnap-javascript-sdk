@@ -18,7 +18,7 @@ example below).
 For use with node.js:
 
 ```
-npm install --save teamsnap
+npm install --save teamsnap.js
 ```
 
 Check the [Quick start guide](https://github.com/teamsnap/teamsnap-javascript-sdk/wiki/Quick-Start) in the [wiki](https://github.com/teamsnap/teamsnap-javascript-sdk/wiki) for more details.
