@@ -191,13 +191,14 @@ modifySDK = (sdk) ->
   # 8. deleteTrackedItem needs to remove trackedItemStatuses
   # 9. deleteTeam needs to remove all related data except plan and sport
 
-  # Load the availabilities and trackedItemStatuses for the new member
+  # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
     promises.when(
       sdk.loadAvailabilities memberId: member.id
       sdk.loadTrackedItemStatuses memberId: member.id
       sdk.loadCustomData memberId: member.id
       sdk.loadLeagueCustomData memberId: member.id
+      sdk.loadMemberPayments memberId: member.id
     )
 
   # Remove related records when a member is deleted
@@ -328,7 +329,7 @@ modifySDK = (sdk) ->
   # Update member statistics when saving statisticData
   wrapSave sdk, 'bulkSaveStatisticData', (templates) ->
     if templates[0]? and templates[0].memberId?
-      sdk.loadMemberStatistics memberId: templates[0].memberId
+      sdk.loadMemberStatistics teamId: templates[0].teamId
 
   wrapSave sdk, 'saveStatisticDatum', (statisticDatum) ->
     sdk.loadMemberStatistics statisticId: statisticDatum.statisticId
