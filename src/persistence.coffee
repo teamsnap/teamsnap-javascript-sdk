@@ -328,7 +328,7 @@ modifySDK = (sdk) ->
   # Update member statistics when saving statisticData
   wrapSave sdk, 'bulkSaveStatisticData', (templates) ->
     if templates[0]? and templates[0].memberId?
-      sdk.loadMemberStatistics memberId: templates[0].memberId
+      sdk.loadMemberStatistics teamId: templates[0].teamId
 
   wrapSave sdk, 'saveStatisticDatum', (statisticDatum) ->
     sdk.loadMemberStatistics statisticId: statisticDatum.statisticId
