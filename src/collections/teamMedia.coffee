@@ -85,3 +85,13 @@ exports.rotateTeamMediumImage = (teamMediumId, rotateDirection, callback) ->
 
   @collections.teamMedia.exec('rotateTeamMediumImage', params)
     .pop().callback callback
+
+
+exports.setMediumAsTeamPhoto = (teamMediumId, callback) ->
+  unless teamMediumId and @isId teamMediumId
+    throw new TSArgsError 'teamsnap.setMediumAsTeamPhoto', 'must provide a
+    teamMediumId'
+  params = teamMediumId: teamMediumId
+
+  @collections.teamMedia.exec('setMediumAsTeamPhoto', params)
+    .pop().callback callback
