@@ -42,6 +42,19 @@ exports.uploadTeamMedium = (teamMedium, progressCallback, callback) ->
     @deleteItem teamMedium, callback
 
 
+exports.bulkDeleteTeamMedia = (teamMediumIds, callback) ->
+  unless teamMediumIds
+    throw new TSArgsError 'teamsnap.bulkDeleteTeamMedia',
+      "`teamMediumIds` must be provided"
+  unless Array.isArray teamMediumIds
+    throw new TSArgsError 'teamsnap.bulkDeleteTeamMedia',
+      "`teamMediumIds` must include 'teamMediumIds' as type Array"
+
+  params =
+    teamMediumIds: teamMediumIds
+  @collections.teamMedia.exec('bulkDeleteTeamMedia', params).callback callback
+
+
 exports.assignMediaToGroup = (teamMediumId, teamMediaGroupId, callback) ->
   unless teamMediumId and @isId teamMediumId
     throw new TSArgsError 'teamsnap.assignMediaToGroup', 'must provide a
