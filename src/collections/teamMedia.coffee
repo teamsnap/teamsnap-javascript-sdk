@@ -34,58 +34,65 @@ exports.uploadTeamMedium = (teamMedium, progressCallback, callback) ->
     .pop().callback callback
 
 
-  exports.deleteTeamMedium = (teamMedium, callback) ->
-    unless teamMedium
-      throw new TSArgsError 'teamsnap.deleteTeamMedium',
-        '`teamMedium` must be provided'
+exports.deleteTeamMedium = (teamMedium, callback) ->
+  unless teamMedium
+    throw new TSArgsError 'teamsnap.deleteTeamMedium',
+      '`teamMedium` must be provided'
 
-    @deleteItem teamMedium, callback
+  @deleteItem teamMedium, callback
+
+
+exports.saveTeamVideoLink = (teamMedium, callback) ->
+  unless teamMedium
+    throw new TSArgsError 'teamsnap.createVideoLink', "`teamMedium` must be
+      provided"
+  unless @isItem teamMedium, 'teamMedium'
+    throw new TSArgsError 'teamsnap.createVideoLink', "`type` must be
+      'teamMedium'"
+  unless @isId teamMedium.teamId
+    throw new TSArgsError 'teamsnap.createVideoLink', 'must include
+      `teamId`'
+  unless @isId teamMedium.teamMediaGroupId
+    throw new TSArgsError 'teamsnap.createVideoLink', 'must include
+      `teamMediaGroupId`'
+
+  @collections.teamMedia.exec('createTeamVideoLink', teamMedium)
+    .pop().callback callback
 
 
 exports.bulkDeleteTeamMedia = (teamMediumIds, callback) ->
   unless teamMediumIds
     throw new TSArgsError 'teamsnap.bulkDeleteTeamMedia',
       "`teamMediumIds` must be provided"
-  unless Array.isArray teamMediumIds
-    throw new TSArgsError 'teamsnap.bulkDeleteTeamMedia',
-      "`teamMediumIds` must include 'teamMediumIds' as type Array"
 
   params =
     teamMediumIds: teamMediumIds
   @collections.teamMedia.exec('bulkDeleteTeamMedia', params).callback callback
 
 
-exports.assignMediaToGroup = (teamMediumId, teamMediaGroupId, callback) ->
-  unless teamMediumId and @isId teamMediumId
-    throw new TSArgsError 'teamsnap.assignMediaToGroup', 'must provide a
-    teamMediumId'
+# This accepts a `teamMediaGroupId`, but in order to take advantage of some
+# persistence features, you'll need to provide a `teamMediaGroup` object instead
+exports.assignMediaToGroup = (teamMediumIds, teamMediaGroupId, callback) ->
+  unless teamMediumIds
+    throw new TSArgsError 'teamsnap.assignMediaToGroup', 'must provide
+      teamMediumIds'
+  if @isItem teamMediaGroupId, 'teamMediaGroup'
+    teamMediaGroupId = teamMediaGroupId.id
   unless teamMediaGroupId and @isId teamMediaGroupId
     throw new TSArgsError 'teamsnap.assignMediaToGroup', 'must provide a
     teamMediaGroupId'
+
   params =
-    teamMediumId: teamMediumId
+    teamMediumIds: teamMediumIds
     teamMediaGroupId: teamMediaGroupId
 
   @collections.teamMedia.exec('assignMediaToGroup', params)
     .pop().callback callback
 
 
-exports.removeMediaFromGroup = (teamMediumId, teamMediaGroupId, callback) ->
-  unless teamMediumId and @isId teamMediumId
-    throw new TSArgsError 'teamsnap.removeMediaFromGroup', 'must provide a
-    teamMediumId'
-  unless teamMediaGroupId and @isId teamMediaGroupId
-    throw new TSArgsError 'teamsnap.removeMediaFromGroup', 'must provide a
-    teamMediaGroupId'
-  params =
-    teamMediumId: teamMediumId
-    teamMediaGroupId: teamMediaGroupId
-
-  @collections.teamMedia.exec('removeMediaFromGroup', params)
-    .pop().callback callback
-
-
 exports.rotateTeamMediumImage = (teamMediumId, rotateDirection, callback) ->
+  if @isItem teamMediumId, 'teamMedium'
+    teamMediumId = teamMediumId.id
   unless teamMediumId and @isId teamMediumId
     throw new TSArgsError 'teamsnap.rotateTeamMediumImage', 'must provide a
     teamMediumId'
@@ -99,12 +106,29 @@ exports.rotateTeamMediumImage = (teamMediumId, rotateDirection, callback) ->
   @collections.teamMedia.exec('rotateTeamMediumImage', params)
     .pop().callback callback
 
-
+# This accepts a `teamMediumId`, but in order to take advantage of some
+# persistence features, you'll need to provide a `teamMedium` object instead
 exports.setMediumAsTeamPhoto = (teamMediumId, callback) ->
+  if @isItem teamMediumId, 'teamMedium'
+    teamMediumId = teamMediumId.id
   unless teamMediumId and @isId teamMediumId
-    throw new TSArgsError 'teamsnap.setMediumAsTeamPhoto', 'must provide a
+    throw new TSArgsError 'teamsnap.setMediumAsTeamPhoto', 'must include a
     teamMediumId'
   params = teamMediumId: teamMediumId
 
   @collections.teamMedia.exec('setMediumAsTeamPhoto', params)
+    .pop().callback callback
+
+
+# This accepts a `teamMediumId`, but in order to take advantage of some
+# persistence features, you'll need to provide a `teamMedium` object instead
+exports.setMediumAsMemberPhoto = (teamMediumId, callback) ->
+  if @isItem teamMediumId, 'teamMedium'
+    teamMediumId = teamMediumId.id
+  unless teamMediumId and @isId teamMediumId
+    throw new TSArgsError 'teamsnap.setMediumAsMemberPhoto', 'must include a
+    teamMediumId'
+  params = teamMediumId: teamMediumId
+
+  @collections.teamMedia.exec('setMediumAsMemberPhoto', params)
     .pop().callback callback

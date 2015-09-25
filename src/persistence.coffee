@@ -375,6 +375,49 @@ modifySDK = (sdk) ->
           result
       ).callback callback
 
+
+  # Update teamMediaGroups when assigning new media
+  wrapMethod sdk, 'assignMediaToGroup', (assignMediaToGroup) ->
+    (teamMediumIds, teamMediaGroup, callback) ->
+      assignMediaToGroup.call(this, teamMediumIds, teamMediaGroup)
+      .then((result) ->
+        # Will only work if `teamMediaGroup` is an item rather than an id.
+        if teamMediaGroup.teamId?
+          promises.when(
+            sdk.loadTeamMediaGroups(teamId: teamMediaGroup.teamId)
+            sdk.loadTeamMedia(teamId: teamMediaGroup.teamId)
+          ).then -> result
+        else
+          result
+      ).callback callback
+
+
+  # Update teamPreferences when setting teamMedium as teamPhoto
+  wrapMethod sdk, 'setMediumAsTeamPhoto', (setMediumAsTeamPhoto) ->
+    (teamMedium, callback) ->
+      setMediumAsTeamPhoto.call(this, teamMedium).then((result) ->
+        # Will only work if `teamMedium` is an item rather than an id.
+        if teamMedium.teamId?
+          sdk.loadTeamPreferences(teamMedium.teamId).then ->
+            result
+        else
+          result
+      ).callback callback
+
+
+  # Update teamPreferences when setting teamMedium as teamPhoto
+  wrapMethod sdk, 'setMediumAsMemberPhoto', (setMediumAsMemberPhoto) ->
+    (teamMedium, callback) ->
+      setMediumAsTeamPhoto.call(this, teamMedium).then((result) ->
+        # Will only work if `teamMedium` is an item rather than an id.
+        # This isn't ideal as it reloads the whole member collection, but
+        # probably won't be used enough to make a huge performance impact.
+        # (at least until a better method of passing this member is available)
+        if teamMedium.teamId?
+          sdk.loadMembers(teamMedium.teamId).then ->
+            result
+      ).callback callback
+
   # Remove all records belonging to a team when it is deleted
   wrapMethod sdk, 'deleteTeam', (deleteTeam) ->
     (team, callback) ->
