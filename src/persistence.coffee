@@ -418,6 +418,19 @@ modifySDK = (sdk) ->
             result
       ).callback callback
 
+
+  # Remove comments when deleting teamMedium
+  wrapMethod sdk, 'deleteTeamMedium', (deleteTeamMedium) ->
+    (teamMedium, callback) ->
+      toRemove = teamMedium.teamMediumComments.slice()
+
+      linking.unlinkItems toRemove, lookup
+      deleteTeamMedium.call(this, teamMedium).fail((err) ->
+        linking.linkItems toRemove, lookup
+        err
+      ).callback callback
+
+
   # Remove all records belonging to a team when it is deleted
   wrapMethod sdk, 'deleteTeam', (deleteTeam) ->
     (team, callback) ->
