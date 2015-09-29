@@ -14,16 +14,21 @@ describe 'Team Medium Comments', ->
       expect(err).to.be.null
       done()
 
+
+  before (done) ->
     # Create teamMediaGroup
     teamMediaGroup = teamsnap.createTeamMediaGroup()
     teamMediaGroup.teamId = team.id
     teamMediaGroup.memberId = member.id
     teamMediaGroup.mediaFormat = 'video'
+    teamMediaGroup.name = 'Test Media Group'
     teamsnap.saveTeamMediaGroup teamMediaGroup, (err, result) ->
       expect(err).to.be.null
       result.should.have.property('type', 'teamMediaGroup')
       done()
 
+
+  before (done) ->
     # Create teamMedium
     teamMedium = teamsnap.createTeamMedium()
     teamMedium.teamMediaGroupId = teamMediaGroup.id
@@ -47,6 +52,7 @@ describe 'Team Medium Comments', ->
 
   # Create teamMediumComment
   it 'should be able to create a team medium comment', (done) ->
+
     teamMediumComment = teamsnap.createTeamMediumComment()
     teamMediumComment.teamId = team.id
     teamMediumComment.memberId = member.id

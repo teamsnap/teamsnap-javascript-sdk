@@ -25,7 +25,7 @@ describe 'Team Media Groups', ->
     teamMediaGroup = teamsnap.createTeamMediaGroup()
     teamMediaGroup.teamId = team.id
     teamMediaGroup.memberId = member.id
-    teamMediaGroup.mediaFormat = 'photo'
+    teamMediaGroup.mediaFormat = 'image'
     teamMediaGroup.name = 'Test Media Group'
 
     teamsnap.saveTeamMediaGroup teamMediaGroup, (err, result) ->

@@ -14,11 +14,14 @@ describe 'Team Media', ->
       expect(err).to.be.null
       done()
 
+
+  before (done) ->
     # Create teamMediaGroup
     teamMediaGroup = teamsnap.createTeamMediaGroup()
     teamMediaGroup.teamId = team.id
     teamMediaGroup.memberId = member.id
     teamMediaGroup.mediaFormat = 'video'
+    teamMediaGroup.name = 'Test Media Group'
     teamsnap.saveTeamMediaGroup teamMediaGroup, (err, result) ->
       expect(err).to.be.null
       result.should.have.property('type', 'teamMediaGroup')
@@ -52,6 +55,8 @@ describe 'Team Media', ->
     teamsnap.loadTeamMedia team.id, (err, result) ->
       expect(err).to.be.null
       result.should.be.an('array')
+      result.should.have.property('length', 1)
+      teamMedium = result.pop()
       done()
 
 
