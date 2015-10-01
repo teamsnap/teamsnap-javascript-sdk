@@ -3,7 +3,7 @@ promises = require './promises'
 require './errors'
 
 class TeamSnap
-  version: '1.7.0-pre'
+  version: '1.7.0-pre2'
   promises: promises
   when: promises.when
   TeamSnap: TeamSnap
