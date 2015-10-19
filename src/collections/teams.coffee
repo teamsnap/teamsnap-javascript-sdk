@@ -61,6 +61,19 @@ exports.bulkLoad = (teamId, types, callback) ->
   @collections.root.queryItems 'bulkLoad', params, callback
 
 
+# Like bulkLoad, only way smarter.
+exports.smartLoad = (params, callback) ->
+  unless @isId params.teamId
+    throw new TSArgsError 'teamsnap.bulkLoad', 'teamId must be provided'
+
+  unless Array.isArray param.types
+    types = @getTeamTypes()
+    types.splice types.indexOf('availability'), 1
+
+  params.types = param.types.map(@underscoreType).join(',')
+  @collections.root.queryItems 'bulkLoad', params, callback
+
+
 exports.invite = (options = {}) ->
   cleanArray options, 'memberId'
   cleanArray options, 'contactId'
