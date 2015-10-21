@@ -179,17 +179,26 @@ revertModel = ->
 
 
 modifySDK = (sdk) ->
-  # 1. saveMember needs to load avails and trackedItemStatuses when new
-  # 2. deleteMember needs to remove avails, trackedItemStatuses, assignments,
+  # 1. Load team after adding media
+  # 2. saveMember needs to load avails and trackedItemStatuses when new
+  # 3. deleteMember needs to remove avails, trackedItemStatuses, assignments,
   # emails, phones, contacts, contact emails, and contact phones
-  # 2. deleteContact needs to remove emails and phones
-  # 3. saveEvent needs to load avails when new
-  # 4. saveEvent needs to remove events in repeating event series
-  # 5. deleteEvent needs to remove avails and assignments
-  # 6. deleteEvent needs to remove other events when using include
-  # 7. saveTrackedItem needs to load trackedItemStatuses when new
-  # 8. deleteTrackedItem needs to remove trackedItemStatuses
-  # 9. deleteTeam needs to remove all related data except plan and sport
+  # 4. deleteContact needs to remove emails and phones
+  # 5. saveEvent needs to load avails when new
+  # 6. saveEvent needs to remove events in repeating event series
+  # 7. deleteEvent needs to remove avails and assignments
+  # 8. deleteEvent needs to remove other events when using include
+  # 9. saveTrackedItem needs to load trackedItemStatuses when new
+  # 10. deleteTrackedItem needs to remove trackedItemStatuses
+  # 11. deleteTeam needs to remove all related data except plan and sport
+
+  # Loads team when media is uploaded
+  wrapMethod sdk, 'uploadTeamMedium', (uploadTeamMedium) ->
+    (teamMedium, progressCallback, callback) ->
+      uploadTeamMedium.call(this, teamMedium, progressCallback).then((result) ->
+        sdk.loadTeam(teamMedium.teamId).then ->
+          result
+         )
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -448,8 +457,6 @@ modifySDK = (sdk) ->
         linking.unlinkItems toRemove, lookup
         result
       ).callback callback
-
-
 
 revertSDK = (sdk) ->
   revertWrapMethod sdk, 'saveMember'
