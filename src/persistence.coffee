@@ -421,16 +421,43 @@ modifySDK = (sdk) ->
       ).callback callback
 
 
-  # Remove comments when deleting teamMedium
+  # Reload team to get "storage" used.
+  wrapMethod sdk, 'uploadTeamMedium', (uploadTeamMedium) ->
+    (teamMedium, progressCallback, callback) ->
+      uploadTeamMedium.call(this, teamMedium, progressCallback).then((result) ->
+        sdk.loadTeam(teamMedium.teamId).then ->
+          result
+      ).callback callback
+
+  # Remove comments when deleting teamMedium, reload team (for file usage quota)
   wrapMethod sdk, 'deleteTeamMedium', (deleteTeamMedium) ->
     (teamMedium, callback) ->
       toRemove = teamMedium.teamMediumComments.slice()
 
       linking.unlinkItems toRemove, lookup
-      deleteTeamMedium.call(this, teamMedium).fail((err) ->
+      deleteTeamMedium.call(this, teamMedium).then((result) ->
+        sdk.loadTeam(teamMedium.teamId).then ->
+          result
+      ,(err) ->
         linking.linkItems toRemove, lookup
         err
       ).callback callback
+
+
+  # Note: For the purposes of persistence, this method will accept a teamId,
+  # even though it isn't accepted in the actual method.
+  wrapMethod sdk, 'bulkDeleteTeamMedia', (bulkDeleteTeamMedia) ->
+    (teamMediumIds, teamId, callback) ->
+      if typeof teamId is 'function'
+        callback = teamId
+
+      bulkDeleteTeamMedia.call(this, teamMediumIds, callback).then((result) ->
+        if typeof teamId is 'string' or typeof teamId is 'number'
+          sdk.loadTeam(teamId).then ->
+            result
+        else
+          result
+      )
 
 
   # Remove all records belonging to a team when it is deleted
