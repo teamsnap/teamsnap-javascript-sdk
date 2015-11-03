@@ -409,14 +409,11 @@ modifySDK = (sdk) ->
 
   # Update teamPreferences when setting teamMedium as teamPhoto
   wrapMethod sdk, 'setMediumAsMemberPhoto', (setMediumAsMemberPhoto) ->
-    (teamMedium, callback) ->
-      setMediumAsTeamPhoto.call(this, teamMedium).then((result) ->
-        # Will only work if `teamMedium` is an item rather than an id.
-        # This isn't ideal as it reloads the whole member collection, but
-        # probably won't be used enough to make a huge performance impact.
-        # (at least until a better method of passing this member is available)
-        if teamMedium.teamId?
-          sdk.loadMembers(teamMedium.teamId).then ->
+    (teamMedium, member, callback) ->
+      setMediumAsMemberPhoto.call(this, teamMedium, member).then((result) ->
+        # Will only work if `member` is an item rather than an id.
+        if member.id?
+          sdk.loadMembers(id: member.id).then ->
             result
       ).callback callback
 
