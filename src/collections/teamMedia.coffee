@@ -120,15 +120,20 @@ exports.setMediumAsTeamPhoto = (teamMediumId, callback) ->
     .pop().callback callback
 
 
-# This accepts a `teamMediumId`, but in order to take advantage of some
-# persistence features, you'll need to provide a `teamMedium` object instead
-exports.setMediumAsMemberPhoto = (teamMediumId, callback) ->
+# This accepts a `memberId`, but in order to take advantage of some
+# persistence features, you'll need to provide a `member` object instead
+exports.setMediumAsMemberPhoto = (teamMediumId, memberId, callback) ->
   if @isItem teamMediumId, 'teamMedium'
     teamMediumId = teamMediumId.id
+  if @isItem memberId, 'member'
+    memberId = memberId.id
   unless teamMediumId and @isId teamMediumId
     throw new TSArgsError 'teamsnap.setMediumAsMemberPhoto', 'must include a
     teamMediumId'
-  params = teamMediumId: teamMediumId
+  unless memberId and @isId memberId
+    throw new TSArgsError 'teamsnap.setMediumAsMemberPhoto', 'must include a
+    memberId'
+  params = teamMediumId: teamMediumId, memberId: memberId
 
   @collections.teamMedia.exec('setMediumAsMemberPhoto', params)
     .pop().callback callback
