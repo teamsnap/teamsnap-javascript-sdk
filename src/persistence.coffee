@@ -345,7 +345,7 @@ modifySDK = (sdk) ->
       linking.unlinkItems toRemove, lookup
 
       bulkDeleteStatisticData.call(this, member, event).then(->
-        sdk.loadMemberStatistics(memberId: member.id)
+        sdk.loadMemberStatistics(teamId: member.teamId)
       ).fail((err) ->
         linking.linkItems toRemove, lookup
         err
