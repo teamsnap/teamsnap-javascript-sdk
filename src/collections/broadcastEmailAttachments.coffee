@@ -14,21 +14,22 @@ exports.deleteBroadcastEmailAttachment = (broadcastEmailAttachment, callback) ->
 
   @deleteItem broadcastEmailAttachment, callback
 
-exports.uploadBroadcastEmailAttachment = (broadcastEmailId, memberId, file, progressCallback, callback) ->
-  if typeof FormData is 'undefined'
-    @reject 'Your browser does not support the new file upload APIs.', 'file',
-      callback
-  unless broadcastEmailId
-    throw new TSArgsError 'teamsnap.uploadBroadcastEmailAttachment',
-      'broadcastEmailId is required'
-  unless file instanceof File
-    throw new TSArgsError 'teamsnap.uploadBroadcastEmailAttachment',
-      'must include `file` as type File', 'file is required'
-  unless memberId
-    throw new TSArgsError 'teamsnap.uploadBroadcastEmailAttachment',
-      'memberId is required'
+exports.uploadBroadcastEmailAttachment = (broadcastEmailId, memberId, file,
+  progressCallback, callback) ->
+    if typeof FormData is 'undefined'
+      @reject 'Your browser does not support the new file upload APIs.', 'file',
+        callback
+    unless broadcastEmailId
+      throw new TSArgsError 'teamsnap.uploadBroadcastEmailAttachment',
+        'broadcastEmailId is required'
+    unless file instanceof File
+      throw new TSArgsError 'teamsnap.uploadBroadcastEmailAttachment',
+        'must include `file` as type File', 'file is required'
+    unless memberId
+      throw new TSArgsError 'teamsnap.uploadBroadcastEmailAttachment',
+        'memberId is required'
 
-  params = broadcastEmailId: broadcastEmailId, file: file, memberId: memberId
+    params = broadcastEmailId: broadcastEmailId, file: file, memberId: memberId
 
-  @collections.broadcastEmailAttachments.file('uploadBroadcastEmailAttachment',
-    params, progressCallback, callback)
+    @collections.broadcastEmailAttachments
+    .file('uploadBroadcastEmailAttachment', params, progressCallback, callback)
