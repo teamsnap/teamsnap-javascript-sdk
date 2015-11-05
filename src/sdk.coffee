@@ -18,7 +18,8 @@ TeamSnap::loadCollections = (cachedCollections, callback) ->
 
     @apiVersion = colls.root.version
     @plans = Item.fromArray(@request, colls.plans.items?.slice() || [])
-    @smsGateways = Item.fromArray(@request, colls.smsGateways.items?.slice() || [])
+    @smsGateways =
+      Item.fromArray(@request, colls.smsGateways.items?.slice() || [])
     @sports = Item.fromArray(@request, colls.sports.items?.slice() || [])
     @timeZones = Item.fromArray(@request, colls.timeZones.items?.slice() || [])
     this
