@@ -137,3 +137,29 @@ exports.setMediumAsMemberPhoto = (teamMediumId, memberId, callback) ->
 
   @collections.teamMedia.exec('setMediumAsMemberPhoto', params)
     .pop().callback callback
+
+
+# Share teamMedium on an associated Facebook page that YOU manage
+exports.facebookShareMedium = (teamMediumId, facebookPageId, postToWall,
+  caption, callback) ->
+    if typeof caption is 'function'
+      callback = caption
+
+    if @isItem teamMediumId, 'teamMedium'
+      teamMediumId = teamMediumId.id
+    unless facebookPageId and typeof facebookPageId is 'number'
+      throw new TSArgsError 'teamsnap.facebookShareMedium', 'must include a
+      facebookPageId'
+    unless postToWall and typeof postToWall is 'boolean'
+      throw new TSArgsError 'teamsnap.facebookShareMedium', 'must include
+      boolean postToWall'
+
+    params = {
+      teamMediumId: teamMediumId,
+      facebookPageId: facebookPageId,
+      caption: caption,
+      postToWall: postToWall
+    }
+
+    @collections.teamMedia.exec('facebookShareMedium', params)
+      .pop().callback callback

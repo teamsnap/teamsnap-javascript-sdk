@@ -23,6 +23,7 @@ exports.saveTeamMediaGroup = (teamMediaGroup, callback) ->
 
   @saveItem teamMediaGroup, callback
 
+
 exports.reorderTeamMediaGroups = (teamId, teamMediaGroupIds, callback) ->
   unless @isId teamId
     throw new TSArgsError 'teamsnap.reorderTeamMediaGroups', '`teamId`
@@ -34,3 +35,29 @@ exports.reorderTeamMediaGroups = (teamId, teamMediaGroupIds, callback) ->
   params = teamId: teamId, sortedIds: teamMediaGroupIds
   @collections.teamMediaGroups.exec('reorderTeamMediaGroups', params)
     .callback callback
+
+
+# Share teamMediaGroup on an associated Facebook page that YOU manage
+exports.facebookShareMediaGroup = (teamMediumId, facebookPageId, postToWall,
+  albumName, callback) ->
+    if typeof albumName is 'function'
+      callback = albumName
+
+    if @isItem teamMediumId, 'teamMedium'
+      teamMediumId = teamMediumId.id
+    unless facebookPageId and typeof facebookPageId is 'number'
+      throw new TSArgsError 'teamsnap.facebookShareMediaGroup', 'must include a
+      facebookPageId'
+    unless postToWall and typeof postToWall is 'boolean'
+      throw new TSArgsError 'teamsnap.facebookShareMediaGroup', 'must include
+      boolean postToWall'
+
+    params = {
+      teamMediumId: teamMediumId,
+      facebookPageId: facebookPageId,
+      albumName: albumName,
+      postToWall: postToWall
+    }
+
+    @collections.teamMedia.exec('facebookShareMediaGroup', params)
+      .pop().callback callback

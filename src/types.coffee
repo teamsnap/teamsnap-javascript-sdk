@@ -57,6 +57,7 @@ types = [
   'timeZone'
   'trackedItem'
   'trackedItemStatus'
+  'userFacebookPage'
 ]
 
 teamTypes = types.slice()

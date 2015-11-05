@@ -218,6 +218,7 @@ add require './collections/teamResults'
 add require './collections/teamStatistics'
 add require './collections/trackedItems'
 add require './collections/trackedItemStatuses'
+add require './collections/userFacebookPages'
 add require './collections/users'
 
 
