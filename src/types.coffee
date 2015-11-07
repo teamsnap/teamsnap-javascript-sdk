@@ -4,9 +4,9 @@ types = [
   'user'
   'assignment'
   'availability'
+  'broadcastAlert'
   'broadcastEmail'
   'broadcastEmailAttachment'
-  'broadcastSms'
   'contact'
   'contactEmailAddress'
   'contactPhoneNumber'
@@ -76,7 +76,6 @@ typeLookup = {}
 singularLookup = {}
 # pre-define exceptions
 pluralLookup =
-  broadcastSms: 'broadcastSmses'
   memberPreferences: 'membersPreferences'
   divisionMemberPreferences: 'divisionMembersPreferences'
   opponentResults: 'opponentsResults'
