@@ -1,9 +1,9 @@
 exports.loadBroadcastEmailAttachments = (params, callback) ->
   if @isId params
-    params = id: params
+    params = teamId: params
   else unless params and typeof params is 'object'
     throw new TSArgsError 'teamsnap.loadBroadcastEmailAttachments', 'must
-      provide an id or query parameters'
+      provide a teamId or query parameters'
 
   @loadItems 'broadcastEmailAttachment', params, callback
 
