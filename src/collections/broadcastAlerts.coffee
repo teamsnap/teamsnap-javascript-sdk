@@ -30,7 +30,7 @@ exports.saveBroadcastAlert = (broadcastAlert, callback) ->
 
 exports.deleteBroadcastAlert = (broadcastAlert, callback) ->
   unless broadcastAlert
-    throw new TSArgsError 'teamsnap.deleteBroadcastAlert', '`broadcastAlert` must
-      be provided'
+    throw new TSArgsError 'teamsnap.deleteBroadcastAlert', '`broadcastAlert`
+      must be provided'
 
   @deleteItem broadcastAlert, callback
