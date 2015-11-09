@@ -52,7 +52,7 @@ describe 'Broadcast Emails', ->
       done()
 
   it 'should be able to load a single broadcast email', (done) ->
-    teamsnap.loadBroadcastEmails email.id, (err, result) ->
+    teamsnap.loadBroadcastEmails {id: email.id}, (err, result) ->
       expect(err).to.be.null
       result.should.be.an('array')
       result.should.have.property('length', 1)

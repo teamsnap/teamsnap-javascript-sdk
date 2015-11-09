@@ -58,7 +58,7 @@ describe 'Broadcast Alerts', ->
         done()
 
   it 'should be able to load a single broadcast alert', (done) ->
-    teamsnap.loadBroadcastAlerts alert.id, (err, result) ->
+    teamsnap.loadBroadcastAlerts {id: alert.id}, (err, result) ->
       expect(err).to.be.null
       result.should.be.an('array')
       result.should.have.property('length', 1)
