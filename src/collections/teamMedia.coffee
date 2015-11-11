@@ -140,8 +140,8 @@ exports.setMediumAsMemberPhoto = (teamMediumId, memberId, callback) ->
 
 
 # Share teamMedium on an associated Facebook page that YOU manage
-exports.facebookShareMedium = (teamMediumId, facebookPageId, postToWall,
-  caption, callback) ->
+exports.facebookShareMedium = (teamMediumId, facebookPageId,
+  isSuppressedFromFeed, caption, callback) ->
     if typeof caption is 'function'
       callback = caption
 
