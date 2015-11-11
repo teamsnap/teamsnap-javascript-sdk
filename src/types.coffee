@@ -4,8 +4,9 @@ types = [
   'user'
   'assignment'
   'availability'
+  'broadcastAlert'
   'broadcastEmail'
-  'broadcastSms'
+  'broadcastEmailAttachment'
   'contact'
   'contactEmailAddress'
   'contactPhoneNumber'
@@ -44,6 +45,9 @@ types = [
   'sport'
   'team'
   'teamFee'
+  'teamMedium'
+  'teamMediumComment'
+  'teamMediaGroup'
   'teamPaypalPreferences'
   'teamPreferences'
   'teamPublicSite'
@@ -72,11 +76,11 @@ typeLookup = {}
 singularLookup = {}
 # pre-define exceptions
 pluralLookup =
-  broadcastSms: 'broadcastSmses'
   memberPreferences: 'membersPreferences'
   divisionMemberPreferences: 'divisionMembersPreferences'
   opponentResults: 'opponentsResults'
   statisticDatum: 'statisticData'
+  teamMedium: 'teamMedia'
   teamPaypalPreferences: 'teamsPaypalPreferences'
   teamPreferences: 'teamsPreferences'
   teamResults: 'teamsResults'

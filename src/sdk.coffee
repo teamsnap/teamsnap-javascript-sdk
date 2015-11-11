@@ -17,10 +17,11 @@ TeamSnap::loadCollections = (cachedCollections, callback) ->
       @collections[name] = new ScopedCollection(@request, colls[name])
 
     @apiVersion = colls.root.version
-    @plans = Item.fromArray(@request, colls.plans.items.slice())
-    @smsGateways = Item.fromArray(@request, colls.smsGateways.items.slice())
-    @sports = Item.fromArray(@request, colls.sports.items.slice())
-    @timeZones = Item.fromArray(@request, colls.timeZones.items.slice())
+    @plans = Item.fromArray(@request, colls.plans.items?.slice() || [])
+    @smsGateways =
+      Item.fromArray(@request, colls.smsGateways.items?.slice() || [])
+    @sports = Item.fromArray(@request, colls.sports.items?.slice() || [])
+    @timeZones = Item.fromArray(@request, colls.timeZones.items?.slice() || [])
     this
   ).callback callback
 
@@ -167,8 +168,9 @@ add require './persistence'
 add require './collections/teams'
 add require './collections/assignments'
 add require './collections/availabilities'
+add require './collections/broadcastAlerts'
 add require './collections/broadcastEmails'
-add require './collections/broadcastSms'
+add require './collections/broadcastEmailAttachments'
 add require './collections/contactEmailAddresses'
 add require './collections/contactPhoneNumbers'
 add require './collections/contacts'
@@ -205,6 +207,9 @@ add require './collections/statistics'
 add require './collections/statisticData'
 add require './collections/statisticGroups'
 add require './collections/teamFees'
+add require './collections/teamMedia'
+add require './collections/teamMediumComments'
+add require './collections/teamMediaGroups'
 add require './collections/teamPaypalPreferences'
 add require './collections/teamPreferences'
 add require './collections/teamPublicSites'

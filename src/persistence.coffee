@@ -191,13 +191,15 @@ modifySDK = (sdk) ->
   # 8. deleteTrackedItem needs to remove trackedItemStatuses
   # 9. deleteTeam needs to remove all related data except plan and sport
 
-  # Load the availabilities and trackedItemStatuses for the new member
+  # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
     promises.when(
       sdk.loadAvailabilities memberId: member.id
       sdk.loadTrackedItemStatuses memberId: member.id
       sdk.loadCustomData memberId: member.id
       sdk.loadLeagueCustomData memberId: member.id
+      sdk.loadMemberPayments memberId: member.id
+      sdk.loadMemberBalances memberId: member.id
     )
 
   # Remove related records when a member is deleted
@@ -212,6 +214,7 @@ modifySDK = (sdk) ->
         toRemove.push contact
       toRemove.push member.trackedItemStatuses...
       toRemove.push member.memberPayments...
+      toRemove.push member.memberStatistics...
       toRemove.push member.statisticData...
 
       linking.unlinkItems toRemove, lookup
@@ -328,7 +331,7 @@ modifySDK = (sdk) ->
   # Update member statistics when saving statisticData
   wrapSave sdk, 'bulkSaveStatisticData', (templates) ->
     if templates[0]? and templates[0].memberId?
-      sdk.loadMemberStatistics memberId: templates[0].memberId
+      sdk.loadMemberStatistics teamId: templates[0].teamId
 
   wrapSave sdk, 'saveStatisticDatum', (statisticDatum) ->
     sdk.loadMemberStatistics statisticId: statisticDatum.statisticId
@@ -342,7 +345,9 @@ modifySDK = (sdk) ->
 
       linking.unlinkItems toRemove, lookup
 
-      bulkDeleteStatisticData.call(this, member, event).fail((err) ->
+      bulkDeleteStatisticData.call(this, member, event).then(->
+        sdk.loadMemberStatistics(teamId: member.teamId)
+      ).fail((err) ->
         linking.linkItems toRemove, lookup
         err
       ).callback callback
@@ -374,6 +379,86 @@ modifySDK = (sdk) ->
         sdk.loadMemberBalances(teamId: teamFee.teamId).then ->
           result
       ).callback callback
+
+
+  # Update teamMediaGroups when assigning new media
+  wrapMethod sdk, 'assignMediaToGroup', (assignMediaToGroup) ->
+    (teamMediumIds, teamMediaGroup, callback) ->
+      assignMediaToGroup.call(this, teamMediumIds, teamMediaGroup)
+      .then((result) ->
+        # Will only work if `teamMediaGroup` is an item rather than an id.
+        if teamMediaGroup.teamId?
+          promises.when(
+            sdk.loadTeamMediaGroups(teamId: teamMediaGroup.teamId)
+            sdk.loadTeamMedia(teamId: teamMediaGroup.teamId)
+          ).then -> result
+        else
+          result
+      ).callback callback
+
+
+  # Update teamPreferences when setting teamMedium as teamPhoto
+  wrapMethod sdk, 'setMediumAsTeamPhoto', (setMediumAsTeamPhoto) ->
+    (teamMedium, callback) ->
+      setMediumAsTeamPhoto.call(this, teamMedium).then((result) ->
+        # Will only work if `teamMedium` is an item rather than an id.
+        if teamMedium.teamId?
+          sdk.loadTeamPreferences(teamMedium.teamId).then ->
+            result
+        else
+          result
+      ).callback callback
+
+
+  # Update teamPreferences when setting teamMedium as teamPhoto
+  wrapMethod sdk, 'setMediumAsMemberPhoto', (setMediumAsMemberPhoto) ->
+    (teamMedium, member, callback) ->
+      setMediumAsMemberPhoto.call(this, teamMedium, member).then((result) ->
+        # Will only work if `member` is an item rather than an id.
+        if member.id?
+          sdk.loadMembers(id: member.id).then ->
+            result
+      ).callback callback
+
+
+  # Reload team to get "storage" used.
+  wrapMethod sdk, 'uploadTeamMedium', (uploadTeamMedium) ->
+    (teamMedium, progressCallback, callback) ->
+      uploadTeamMedium.call(this, teamMedium, progressCallback).then((result) ->
+        sdk.loadTeam(teamMedium.teamId).then ->
+          result
+      ).callback callback
+
+  # Remove comments when deleting teamMedium, reload team (for file usage quota)
+  wrapMethod sdk, 'deleteTeamMedium', (deleteTeamMedium) ->
+    (teamMedium, callback) ->
+      toRemove = teamMedium.teamMediumComments.slice()
+
+      linking.unlinkItems toRemove, lookup
+      deleteTeamMedium.call(this, teamMedium).then((result) ->
+        sdk.loadTeam(teamMedium.teamId).then ->
+          result
+      ,(err) ->
+        linking.linkItems toRemove, lookup
+        err
+      ).callback callback
+
+
+  # Note: For the purposes of persistence, this method will accept a teamId,
+  # even though it isn't accepted in the actual method.
+  wrapMethod sdk, 'bulkDeleteTeamMedia', (bulkDeleteTeamMedia) ->
+    (teamMediumIds, teamId, callback) ->
+      if typeof teamId is 'function'
+        callback = teamId
+
+      bulkDeleteTeamMedia.call(this, teamMediumIds, callback).then((result) ->
+        if typeof teamId is 'string' or typeof teamId is 'number'
+          sdk.loadTeam(teamId).then ->
+            result
+        else
+          result
+      )
+
 
   # Remove all records belonging to a team when it is deleted
   wrapMethod sdk, 'deleteTeam', (deleteTeam) ->
