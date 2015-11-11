@@ -40,6 +40,7 @@ types = [
   'smsGateway'
   'sponsor'
   'statistic'
+  'statisticAggregate'
   'statisticDatum'
   'statisticGroup'
   'sport'
