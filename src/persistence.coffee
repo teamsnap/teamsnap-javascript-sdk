@@ -199,6 +199,7 @@ modifySDK = (sdk) ->
       sdk.loadCustomData memberId: member.id
       sdk.loadLeagueCustomData memberId: member.id
       sdk.loadMemberPayments memberId: member.id
+      sdk.loadMemberBalances memberId: member.id
     )
 
   # Remove related records when a member is deleted
