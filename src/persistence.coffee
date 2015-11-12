@@ -200,6 +200,7 @@ modifySDK = (sdk) ->
       sdk.loadLeagueCustomData memberId: member.id
       sdk.loadMemberPayments memberId: member.id
       sdk.loadMemberBalances memberId: member.id
+      sdk.loadTeamFees teamId: member.teamId
     )
 
   # Remove related records when a member is deleted
@@ -218,9 +219,12 @@ modifySDK = (sdk) ->
       toRemove.push member.statisticData...
 
       linking.unlinkItems toRemove, lookup
-      deleteMember.call(this, member, callback).fail((err) ->
-        linking.linkItems toRemove, lookup
-        err
+      deleteMember.call(this, member, callback).then((result) ->
+        sdk.loadTeamFees(member.teamId)
+        return result
+        ).fail((err) ->
+          linking.linkItems toRemove, lookup
+          err
       ).callback callback
 
   # Remove related records when a contact is deleted
