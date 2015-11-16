@@ -338,10 +338,12 @@ modifySDK = (sdk) ->
     if templates[0]? and templates[0].memberId?
       teamId = templates[0].teamId
       sdk.loadMemberStatistics teamId: teamId
+      sdk.loadStatisticData teamId: teamId
       sdk.loadStatisticAggregates teamId: teamId
 
   wrapSave sdk, 'saveStatisticDatum', (statisticDatum) ->
     sdk.loadMemberStatistics statisticId: statisticDatum.statisticId
+    sdk.loadStatisticData teamId: teamId
     sdk.loadStatisticAggregates teamId: statisticDatum.teamId
 
   # Remove deleted member statisticData when using bulk delete command
@@ -356,6 +358,7 @@ modifySDK = (sdk) ->
       bulkDeleteStatisticData.call(this, member, event).then((result) ->
         promises.when(
           sdk.loadMemberStatistics(teamId: member.teamId)
+          sdk.loadStatisticData(teamId: member.teamId)
           sdk.loadStatisticAggregates(teamId: member.teamId)
         ).then -> result
       ).fail((err) ->
