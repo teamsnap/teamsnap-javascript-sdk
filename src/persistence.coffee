@@ -221,6 +221,7 @@ modifySDK = (sdk) ->
       linking.unlinkItems toRemove, lookup
       deleteMember.call(this, member, callback).then((result) ->
         sdk.loadTeamFees(member.teamId)
+        sdk.loadStatisticAggregates(member.teamId)
         return result
         ).fail((err) ->
           linking.linkItems toRemove, lookup
@@ -335,10 +336,13 @@ modifySDK = (sdk) ->
   # Update member statistics when saving statisticData
   wrapSave sdk, 'bulkSaveStatisticData', (templates) ->
     if templates[0]? and templates[0].memberId?
-      sdk.loadMemberStatistics teamId: templates[0].teamId
+      teamId = templates[0].teamId
+      sdk.loadMemberStatistics teamId: teamId
+      sdk.loadStatisticAggregates teamId: teamId
 
   wrapSave sdk, 'saveStatisticDatum', (statisticDatum) ->
     sdk.loadMemberStatistics statisticId: statisticDatum.statisticId
+    sdk.loadStatisticAggregates teamId: statisticDatum.teamId
 
   # Remove deleted member statisticData when using bulk delete command
   wrapMethod sdk, 'bulkDeleteStatisticData', (bulkDeleteStatisticData) ->
@@ -349,8 +353,11 @@ modifySDK = (sdk) ->
 
       linking.unlinkItems toRemove, lookup
 
-      bulkDeleteStatisticData.call(this, member, event).then(->
-        sdk.loadMemberStatistics(teamId: member.teamId)
+      bulkDeleteStatisticData.call(this, member, event).then((result) ->
+        promises.when(
+          sdk.loadMemberStatistics(teamId: member.teamId)
+          sdk.loadStatisticAggregates(teamId: member.teamId)
+        ).then -> result
       ).fail((err) ->
         linking.linkItems toRemove, lookup
         err
