@@ -27,11 +27,9 @@ exports.reorderTeamMediaGroups = (teamId, teamMediaGroupIds, callback) ->
   unless @isId teamId
     throw new TSArgsError 'teamsnap.reorderTeamMediaGroups', '`teamId`
       must be provided'
-  unless teamMediaGroupIds and
-    typeof teamMediaGroupIds is 'object' and
-    Array.isArray teamMediaGroupIds
-      throw new TSArgsError 'teamsnap.reorderTeamMediaGroups', 'You must provide
-        an array of ordered Team Media Group IDs'
+  unless teamMediaGroupIds and Array.isArray teamMediaGroupIds
+    throw new TSArgsError 'teamsnap.reorderTeamMediaGroups', 'You must provide
+      an array of ordered Team Media Group IDs'
 
   params = teamId: teamId, sortedIds: teamMediaGroupIds
   @collections.teamMediaGroups.exec('reorderTeamMediaGroups', params)

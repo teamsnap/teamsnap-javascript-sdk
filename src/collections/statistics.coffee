@@ -42,11 +42,9 @@ exports.reorderStatistics = (teamId, statisticIds, callback) ->
   unless @isId teamId
     throw new TSArgsError 'teamsnap.reorderStatistics', '`teamId`
       must be provided'
-  unless statisticIds and
-    typeof statisticIds is 'object' and
-    Array.isArray statisticIds
-      throw new TSArgsError 'teamsnap.reorderStatistics', 'You must provide an
-        array of ordered Statistic IDs'
+  unless statisticIds and Array.isArray statisticIds
+    throw new TSArgsError 'teamsnap.reorderStatistics', 'You must provide an
+      array of ordered Statistic IDs'
 
   params = teamId: teamId, sortedIds: statisticIds
   @collections.statistics.exec('reorderStatistics', params)
