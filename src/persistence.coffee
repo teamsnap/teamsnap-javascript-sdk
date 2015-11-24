@@ -339,7 +339,6 @@ modifySDK = (sdk) ->
     teamId = statistic.teamId
     bulkLoadTypes = "statisticData,memberStatistic,
                      teamStatistics,statisticAggregate"
-    console.log bulkLoadTypes
     sdk.bulkLoad(teamId, bulkLoadTypes)
 
   # Update member statistics when saving statisticData
