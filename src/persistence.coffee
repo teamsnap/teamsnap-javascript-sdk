@@ -337,8 +337,8 @@ modifySDK = (sdk) ->
   # Reload statisdic data when crating a new statistic with a formula
   wrapSave sdk, 'saveStatistic', (statistic) ->
     teamId = statistic.teamId
-    bulkLoadTypes = "statisticData,memberStatistic,
-                     teamStatistics,statisticAggregate"
+    bulkLoadTypes = 'statisticDatum, memberStatistic, 
+                     teamStatistic, statisticAggregate'
     sdk.bulkLoad(teamId, bulkLoadTypes)
 
   # Update member statistics when saving statisticData
