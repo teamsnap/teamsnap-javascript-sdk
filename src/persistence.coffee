@@ -190,6 +190,7 @@ modifySDK = (sdk) ->
   # 7. saveTrackedItem needs to load trackedItemStatuses when new
   # 8. deleteTrackedItem needs to remove trackedItemStatuses
   # 9. deleteTeam needs to remove all related data except plan and sport
+  # 10. deleteForumTopic needs to delete all related posts
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -358,7 +359,7 @@ modifySDK = (sdk) ->
           teamId = member.teamId
           bulkLoadTypes = "memberStatistic,statisticDatum,statisticAggregate"
           sdk.bulkLoad(teamId, bulkLoadTypes)
-          
+
         ).then -> result
       ).fail((err) ->
         linking.linkItems toRemove, lookup
@@ -489,6 +490,17 @@ modifySDK = (sdk) ->
         result
       ).callback callback
 
+  # Remove related posts when a topic is deleted
+  wrapMethod sdk, 'deleteForumTopic', (deleteForumTopic) ->
+    (topic, callback) ->
+      toRemove = []
+      toRemove.push topic.forumPosts...
+
+      linking.unlinkItems toRemove, lookup
+      deleteForumTopic.call(this, topic, callback).fail((err) ->
+        linking.linkItems toRemove, lookup
+        err
+      ).callback callback
 
 
 revertSDK = (sdk) ->
