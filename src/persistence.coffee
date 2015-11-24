@@ -334,6 +334,14 @@ modifySDK = (sdk) ->
         err
       ).callback callback
 
+  # Reload statisdic data when crating a new statistic with a formula
+  wrapSave sdk, 'saveStatistic', (statistic) ->
+    teamId = statistic.teamId
+    bulkLoadTypes = "statisticData,memberStatistic,
+                     teamStatistics,statisticAggregate"
+    console.log bulkLoadTypes
+    sdk.bulkLoad(teamId, bulkLoadTypes)
+
   # Update member statistics when saving statisticData
   wrapSave sdk, 'bulkSaveStatisticData', (templates) ->
     if templates[0]? and templates[0].memberId?
