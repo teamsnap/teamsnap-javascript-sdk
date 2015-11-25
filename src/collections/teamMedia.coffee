@@ -158,7 +158,7 @@ exports.facebookShareMedium = (teamMediumId, facebookPageId,
       teamMediumId: teamMediumId,
       facebookPageId: facebookPageId,
       caption: caption,
-      postToWall: postToWall
+      isSuppressedFromFeed: isSuppressedFromFeed
     }
 
     @collections.teamMedia.exec('facebookShareMedium', params)
