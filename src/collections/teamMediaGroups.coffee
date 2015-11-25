@@ -38,8 +38,8 @@ exports.reorderTeamMediaGroups = (teamId, teamMediaGroupIds, callback) ->
 
 
 # Share teamMediaGroup on an associated Facebook page that YOU manage
-exports.facebookShareMediaGroup = (teamMediumId, facebookPageId, postToWall,
-  albumName, callback) ->
+exports.facebookShareMediaGroup = (teamMediaGroupId, facebookPageId,
+  isSuppressedFromFeed, albumName, callback) ->
     if typeof albumName is 'function'
       callback = albumName
 
@@ -53,10 +53,10 @@ exports.facebookShareMediaGroup = (teamMediumId, facebookPageId, postToWall,
       boolean postToWall'
 
     params = {
-      teamMediumId: teamMediumId,
+      teamMediaGroupId: teamMediaGroupId,
       facebookPageId: facebookPageId,
       albumName: albumName,
-      postToWall: postToWall
+      isSuppressedFromFeed: isSuppressedFromFeed
     }
 
     @collections.teamMedia.exec('facebookShareMediaGroup', params)
