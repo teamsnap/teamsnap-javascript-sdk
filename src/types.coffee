@@ -19,6 +19,7 @@ types = [
   'divisionMemberPreferences'
   'divisionTeamStanding'
   'event'
+  'facebookPage'
   'forumPost'
   'forumSubscription'
   'forumTopic'
@@ -57,7 +58,6 @@ types = [
   'timeZone'
   'trackedItem'
   'trackedItemStatus'
-  'userFacebookPage'
 ]
 
 teamTypes = types.slice()

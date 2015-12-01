@@ -140,19 +140,28 @@ exports.setMediumAsMemberPhoto = (teamMediumId, memberId, callback) ->
 
 
 # Share teamMedium on an associated Facebook page that YOU manage
-exports.facebookShareMedium = (teamMediumId, facebookPageId,
+exports.facebookShareTeamMedium = (teamMediumId, facebookPageId,
   isSuppressedFromFeed, caption, callback) ->
+    # If a facebookPageId is not present, APIv3 will assume you're
+    # posting to your personal profile.
+    if typeof facebookPageId is 'boolean'
+      callback = caption
+      caption = isSuppressedFromFeed
+      isSuppressedFromFeed = facebookPageId
+      facebookPageId = null
+    # Caption is optional
     if typeof caption is 'function'
       callback = caption
 
+    if facebookPageId?
+      facebookPageId = parseInt facebookPageId
+
     if @isItem teamMediumId, 'teamMedium'
       teamMediumId = teamMediumId.id
-    unless facebookPageId and typeof facebookPageId is 'number'
-      throw new TSArgsError 'teamsnap.facebookShareMedium', 'must include a
-      facebookPageId'
-    unless postToWall and typeof postToWall is 'boolean'
+
+    unless isSuppressedFromFeed? and typeof isSuppressedFromFeed is 'boolean'
       throw new TSArgsError 'teamsnap.facebookShareMedium', 'must include
-      boolean postToWall'
+      boolean isSuppressedFromFeed'
 
     params = {
       teamMediumId: teamMediumId,
@@ -161,5 +170,5 @@ exports.facebookShareMedium = (teamMediumId, facebookPageId,
       isSuppressedFromFeed: isSuppressedFromFeed
     }
 
-    @collections.teamMedia.exec('facebookShareMedium', params)
+    @collections.teamMedia.exec('facebookShareTeamMedium', params)
       .pop().callback callback
