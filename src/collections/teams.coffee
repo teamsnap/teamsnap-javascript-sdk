@@ -66,11 +66,11 @@ exports.smartLoad = (params, callback) ->
   unless @isId params.teamId
     throw new TSArgsError 'teamsnap.bulkLoad', 'teamId must be provided'
 
-  unless Array.isArray param.types
+  unless Array.isArray params.types
     types = @getTeamTypes()
     types.splice types.indexOf('availability'), 1
 
-  params.types = param.types.map(@underscoreType).join(',')
+  params.types = params.types.map(@underscoreType).join(',')
   @collections.root.queryItems 'bulkLoad', params, callback
 
 
