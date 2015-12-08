@@ -33,7 +33,7 @@ exports.saveTeamPreferences = (teamPreferences, callback) ->
 
 exports.uploadTeamPhoto = (teamPreferencesId, file, callback) ->
   if @isItem teamPreferencesId, 'teamPreferences'
-    teamPreferencesId = teamPreferences.id
+    teamPreferencesId = teamPreferencesId.id
   if typeof FormData is 'undefined'
     @reject 'Your browser does not support the new file upload APIs.', 'file',
       callback
@@ -95,4 +95,3 @@ exports.deleteTeamLogo = (teamPreferencesId, callback) ->
   params = teamPreferencesId: teamPreferencesId
   @collections.teamsPreferences.exec('removeTeamLogo', params)
   .callback callback
-  

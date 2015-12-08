@@ -1,8 +1,8 @@
 exports.loadForumTopics = (params, callback) ->
   if @isId params
-    params = id: params
+    params = teamId: params
   else unless params and typeof params is 'object'
-    throw new TSArgsError 'teamsnap.loadForumTopics', 'must provide an id or
+    throw new TSArgsError 'teamsnap.loadForumTopics', 'must provide a teamId or
       query parameters'
 
   @loadItems 'forumTopic', params, callback
