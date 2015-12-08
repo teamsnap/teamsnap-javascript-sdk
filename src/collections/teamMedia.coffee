@@ -139,6 +139,19 @@ exports.setMediumAsMemberPhoto = (teamMediumId, memberId, callback) ->
     .pop().callback callback
 
 
+exports.reorderTeamMedia = (teamId, teamMediaIds, callback) ->
+  unless @isId teamId
+    throw new TSArgsError 'teamsnap.reorderTeamMedia', '`teamId`
+      must be provided'
+  unless teamMediaIds and Array.isArray teamMediaIds
+    throw new TSArgsError 'teamsnap.reorderTeamMedia', 'You must provide
+      an array of ordered Team Medium IDs'
+
+  params = teamId: teamId, sortedIds: teamMediaIds
+  @collections.teamMedia.exec('reorderTeamMedia', params)
+    .callback callback
+
+
 # Share teamMedium on an associated Facebook page that YOU manage
 exports.facebookShareTeamMedium = (teamMediumId, facebookPageId,
   isSuppressedFromFeed, caption, callback) ->
