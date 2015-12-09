@@ -1,11 +1,22 @@
-exports.teamPaypalPreferences = (params, callback) ->
+exports.loadTeamsPaypalPreferences = (params, callback) ->
   if @isId params
     params = teamId: params
   else unless params and typeof params is 'object'
-    throw new TSArgsError 'teamsnap.teamPaypalPreferences', 'must provide a
+    throw new TSArgsError 'teamsnap.loadTeamsPaypalPreferences', 'must provide a
+      teamId or query parameters'
+
+  @loadItems 'teamPaypalPreferences', params, callback
+
+
+exports.loadTeamPaypalPreferences = (params, callback) ->
+  if @isId params
+    params = teamId: params
+  else unless params and typeof params is 'object'
+    throw new TSArgsError 'teamsnap.loadTeamPaypalPreferences', 'must provide a
       teamId or query parameters'
 
   @loadItem 'teamPaypalPreferences', params, callback
+
 
 exports.saveTeamPaypalPreferences = (teamPaypalPreferences, callback) ->
   unless teamPaypalPreferences
@@ -16,4 +27,3 @@ exports.saveTeamPaypalPreferences = (teamPaypalPreferences, callback) ->
       "`teamPaypalPreferences.type` must be 'teamPaypalPreferences'"
 
   @saveItem teamPaypalPreferences, callback
-  
