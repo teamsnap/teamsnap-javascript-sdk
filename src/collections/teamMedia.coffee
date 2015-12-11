@@ -42,6 +42,26 @@ exports.deleteTeamMedium = (teamMedium, callback) ->
   @deleteItem teamMedium, callback
 
 
+exports.saveTeamMedium = (teamMedium, callback) ->
+  unless teamMedium
+    throw new TSArgsError 'teamsnap.saveTeamMedium', "`teamMedium` must be
+    provided"
+  unless @isItem teamMedium, 'teamMedium'
+    throw new TSArgsError 'teamsnap.saveTeamMedium', "`type` must be
+      'teamMedium'"
+  unless @isId teamMedium.teamId
+    throw new TSArgsError 'teamsnap.saveTeamMedium', 'must include
+      `teamId`'
+  unless @isId teamMedium.memberId
+    throw new TSArgsError 'teamsnap.saveTeamMedium', 'must include
+      `memberId`'
+  unless @isId teamMedium.teamMediaGroupId
+    throw new TSArgsError 'teamsnap.saveTeamMedium', 'must include
+      `teamMediaGroupId`'
+
+  @saveItem teamMedium, callback
+
+
 exports.saveTeamVideoLink = (teamMedium, callback) ->
   unless teamMedium
     throw new TSArgsError 'teamsnap.createVideoLink', "`teamMedium` must be
