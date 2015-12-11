@@ -255,6 +255,7 @@ modifySDK = (sdk) ->
       promises.when(
         sdk.loadTeamResults event.teamId
         sdk.loadOpponentResults event.opponentId
+        sdk.loadEventStatistics eventId: event.id
       )
     else if Array.isArray(event)
       repeatingEventIds = (e.id for e in event)
@@ -292,6 +293,7 @@ modifySDK = (sdk) ->
       events.forEach (event) ->
         toRemove.push event.assignments...
         toRemove.push event.availabilities...
+        toRemove.push event.eventStatistics...
 
       linking.unlinkItems toRemove, lookup
       deleteEvent.call(this, event, include, notify, notifyAs, callback)
@@ -327,6 +329,7 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'deleteStatistic', (deleteStatistic) ->
     (statistic, callback) ->
       toRemove = statistic.statisticData.slice()
+      toRemove.push statistic.eventStatistics...
 
       linking.unlinkItems toRemove, lookup
       deleteStatistic.call(this, statistic).fail((err) ->
@@ -334,28 +337,35 @@ modifySDK = (sdk) ->
         err
       ).callback callback
 
-  # Reload statisdic data when crating a new statistic with a formula
+  # Reload statistic data when crating a new statistic with a formula
   wrapSave sdk, 'saveStatistic', (statistic) ->
     teamId = statistic.teamId
-    bulkLoadTypes = 'statisticDatum, memberStatistic, 
-                     teamStatistic, statisticAggregate'
+    bulkLoadTypes = ['memberStatistic', 'teamStatistic', 'statisticAggregate']
     sdk.bulkLoad(teamId, bulkLoadTypes)
+
+  , (statistic) ->
+    sdk.loadEventStatistics statisticId: statistic.id
 
   # Update member statistics when saving statisticData
   wrapSave sdk, 'bulkSaveStatisticData', (templates) ->
     if templates[0]? and templates[0].memberId?
       teamId = templates[0].teamId
-      sdk.bulkLoad(teamId, "memberStatistic,statisticDatum,statisticAggregate")
+      statisticId = templates[0].statisticId
+      bulkLoadTypes = ['memberStatistic', 'statisticAggregate']
+      sdk.bulkLoad(teamId, bulkLoadTypes)
+      sdk.loadEventStatistics statisticId: statisticId
 
   wrapSave sdk, 'saveStatisticDatum', (statisticDatum) ->
     teamId = statisticDatum.teamId
-    sdk.bulkLoad(teamId, "statisticDatum,statisticAggregate")
-    sdk.loadMemberStatistics statisticId: statisticDatum.statisticId
+    bulkLoadTypes = ['memberStatistic', 'statisticAggregate']
+    sdk.bulkLoad(teamId, bulkLoadTypes)
+    sdk.loadEventStatistics statisticId: statisticDatum.statisticId
 
   # Remove deleted member statisticData when using bulk delete command
   wrapMethod sdk, 'bulkDeleteStatisticData', (bulkDeleteStatisticData) ->
     (member, event, callback) ->
       toRemove = []
+      toRemove.push event.eventStatistics
       member.statisticData?.forEach (statisticDatum) ->
         toRemove.push(statisticDatum) if statisticDatum.event is event
 
@@ -364,9 +374,9 @@ modifySDK = (sdk) ->
       bulkDeleteStatisticData.call(this, member, event).then((result) ->
         promises.when(
           teamId = member.teamId
-          bulkLoadTypes = "memberStatistic,statisticDatum,statisticAggregate"
+          bulkLoadTypes = ['memberStatistic', 'statisticAggregate']
           sdk.bulkLoad(teamId, bulkLoadTypes)
-
+          sdk.loadEventStatistics eventId: event.id
         ).then -> result
       ).fail((err) ->
         linking.linkItems toRemove, lookup
