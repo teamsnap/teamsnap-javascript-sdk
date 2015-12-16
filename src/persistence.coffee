@@ -237,9 +237,74 @@ modifySDK = (sdk) ->
       toRemove.push contact.contactPhoneNumbers...
 
       linking.unlinkItems toRemove, lookup
-      deleteContact.call(this, contact, callback).fail((err) ->
+      deleteContact.call(this, contact, callback).then((result) ->
+        sdk.loadMembers({memberId: contact.memberId}).then -> result
+      ).fail((err) ->
         linking.linkItems toRemove, lookup
         err
+      ).callback callback
+
+  # Reload member when saving memberEmailAddress
+  wrapMethod sdk, 'saveMemberEmailAddress', (saveMemberEmailAddress) ->
+    (emailAddress, callback) ->
+      saveMemberEmailAddress.call(this, emailAddress, callback).then((result) ->
+        sdk.loadMembers({id: emailAddress.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when deleting memberEmailAddress
+  wrapMethod sdk, 'deleteMemberEmailAddress', (deleteMemberEmailAddress) ->
+    (emailAddress, callback) ->
+      deleteMemberEmailAddress.call(this, emailAddress, callback)
+      .then((result) ->
+        sdk.loadMembers({id: emailAddress.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when saving memberPhoneNumber
+  wrapMethod sdk, 'saveMemberPhoneNumber', (saveMemberPhoneNumber) ->
+    (phoneNumber, callback) ->
+      saveMemberPhoneNumber.call(this, phoneNumber, callback)
+      .then((result) ->
+        sdk.loadMembers({id: phoneNumber.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when deleting memberPhoneNumber
+  wrapMethod sdk, 'deleteMemberPhoneNumber', (deleteMemberPhoneNumber) ->
+    (phoneNumber, callback) ->
+      deleteMemberPhoneNumber.call(this, phoneNumber, callback)
+      .then((result) ->
+        sdk.loadMembers({id: phoneNumber.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when saving contactEmailAddress
+  wrapMethod sdk, 'saveContactEmailAddress', (saveContactEmailAddress) ->
+    (emailAddress, callback) ->
+      saveContactEmailAddress.call(this, emailAddress, callback)
+      .then((result) ->
+        sdk.loadMembers({id: emailAddress.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when deleting contactEmailAddress
+  wrapMethod sdk, 'deleteContactEmailAddress', (deleteContactEmailAddress) ->
+    (emailAddress, callback) ->
+      deleteContactEmailAddress.call(this, emailAddress, callback)
+      .then((result) ->
+        sdk.loadMembers({id: emailAddress.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when saving contactPhoneNumber
+  wrapMethod sdk, 'saveContactPhoneNumber', (saveContactPhoneNumber) ->
+    (phoneNumber, callback) ->
+      saveContactPhoneNumber.call(this, phoneNumber, callback)
+      .then((result) ->
+        sdk.loadMembers({id: phoneNumber.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when deleting contactPhoneNumber
+  wrapMethod sdk, 'deleteContactPhoneNumber', (deleteContactPhoneNumber) ->
+    (phoneNumber, callback) ->
+      deleteContactPhoneNumber.call(this, phoneNumber, callback)
+      .then((result) ->
+        sdk.loadMembers({id: phoneNumber.memberId}).then -> result
       ).callback callback
 
   # Load availabilities for the new event
@@ -337,29 +402,46 @@ modifySDK = (sdk) ->
         err
       ).callback callback
 
-  # Reload statistic data when crating a new statistic with a formula
-  wrapSave sdk, 'saveStatistic', (statistic) ->
-    teamId = statistic.teamId
-    bulkLoadTypes = ['memberStatistic', 'teamStatistic', 'statisticAggregate']
-    sdk.bulkLoad(teamId, bulkLoadTypes)
-
-  , (statistic) ->
-    sdk.loadEventStatistics statisticId: statistic.id
+  # Reload statistic data when updating a statistic
+  wrapMethod sdk, 'saveStatistic', (saveStatistic) ->
+    (statistic, callback) ->
+      saveStatistic.call(this, statistic, callback).then((result) ->
+        teamId = statistic.teamId
+        statisticId = result.id
+        bulkLoadTypes =
+          ['memberStatistic', 'teamStatistic', 'statisticAggregate']
+        promises.when(
+          sdk.bulkLoad(teamId, bulkLoadTypes)
+          sdk.loadEventStatistics statisticId: statisticId
+        ).then -> result
+      ).callback callback
 
   # Update member statistics when saving statisticData
-  wrapSave sdk, 'bulkSaveStatisticData', (templates) ->
-    if templates[0]? and templates[0].memberId?
-      teamId = templates[0].teamId
-      statisticId = templates[0].statisticId
-      bulkLoadTypes = ['memberStatistic', 'statisticAggregate']
-      sdk.bulkLoad(teamId, bulkLoadTypes)
-      sdk.loadEventStatistics statisticId: statisticId
+  wrapMethod sdk, 'bulkSaveStatisticData', (bulkSaveStatisticData) ->
+    (templates, callback) ->
+      bulkSaveStatisticData.call(this, templates, callback).then((result) ->
+        if result[0]? and result[0].teamId?
+          teamId = result[0].teamId
+          statisticId = result[0].statisticId
+          bulkLoadTypes = ['memberStatistic', 'statisticAggregate']
+          promises.when(
+            sdk.bulkLoad(teamId, bulkLoadTypes)
+            sdk.loadEventStatistics statisticId: statisticId
+          ).then -> result
+      ).callback callback
 
-  wrapSave sdk, 'saveStatisticDatum', (statisticDatum) ->
-    teamId = statisticDatum.teamId
-    bulkLoadTypes = ['memberStatistic', 'statisticAggregate']
-    sdk.bulkLoad(teamId, bulkLoadTypes)
-    sdk.loadEventStatistics statisticId: statisticDatum.statisticId
+  wrapMethod sdk, 'saveStatisticDatum', (saveStatisticDatum) ->
+    (statisticDatum, callback) ->
+      saveStatisticDatum.call(this, statisticDatum, callback)
+      .then((result) ->
+        teamId = result.teamId
+        statisticId = result.statisticId
+        bulkLoadTypes = ['memberStatistic', 'statisticAggregate']
+        promises.when(
+          sdk.bulkLoad(teamId, bulkLoadTypes)
+          sdk.loadEventStatistics statisticId: statisticId
+        ).then -> result
+      ).callback callback
 
   # Remove deleted member statisticData when using bulk delete command
   wrapMethod sdk, 'bulkDeleteStatisticData', (bulkDeleteStatisticData) ->
@@ -374,9 +456,10 @@ modifySDK = (sdk) ->
       bulkDeleteStatisticData.call(this, member, event).then((result) ->
         promises.when(
           teamId = member.teamId
+          eventId = event.id
           bulkLoadTypes = ['memberStatistic', 'statisticAggregate']
           sdk.bulkLoad(teamId, bulkLoadTypes)
-          sdk.loadEventStatistics eventId: event.id
+          sdk.loadEventStatistics eventId: eventId
         ).then -> result
       ).fail((err) ->
         linking.linkItems toRemove, lookup
@@ -387,9 +470,11 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'saveMemberPayment', (saveMemberPayment) ->
     (memberPayment, callback) ->
       saveMemberPayment.call(this, memberPayment).then((result) ->
+        memberId = result.memberId
+        teamFeeId = result.teamFeeId
         promises.when(
-          sdk.loadMemberBalances(memberId: memberPayment.memberId)
-          sdk.loadTeamFees(id: memberPayment.teamFeeId)
+          sdk.loadMemberBalances(memberId: memberId)
+          sdk.loadTeamFees(id: teamFeeId)
         ).then -> result
       ).callback callback
 
@@ -398,7 +483,8 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'saveTeamFee', (saveTeamFee) ->
     (teamFee, callback) ->
       saveTeamFee.call(this, teamFee).then((result) ->
-        sdk.loadMemberBalances(teamId: teamFee.teamId).then ->
+        teamId = result.teamId
+        sdk.loadMemberBalances(teamId: teamId).then ->
           result
       ).callback callback
 
@@ -407,7 +493,8 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'deleteTeamFee', (deleteTeamFee) ->
     (teamFee, callback) ->
       deleteTeamFee.call(this, teamFee).then((result) ->
-        sdk.loadMemberBalances(teamId: teamFee.teamId).then ->
+        teamId = teamFee.teamId
+        sdk.loadMemberBalances(teamId: teamId).then ->
           result
       ).callback callback
 
@@ -417,14 +504,9 @@ modifySDK = (sdk) ->
     (teamMediumIds, teamMediaGroup, callback) ->
       assignMediaToGroup.call(this, teamMediumIds, teamMediaGroup)
       .then((result) ->
-        # Will only work if `teamMediaGroup` is an item rather than an id.
-        if teamMediaGroup.teamId?
-          promises.when(
-            sdk.loadTeamMediaGroups(teamId: teamMediaGroup.teamId)
-            sdk.loadTeamMedia(teamId: teamMediaGroup.teamId)
-          ).then -> result
-        else
-          result
+        teamId = result[0].teamId
+        bulkLoadTypes = ['teamMediaGroup', 'teamMedium']
+        sdk.bulkLoad(teamId, bulkLoadTypes).then -> result
       ).callback callback
 
 
@@ -432,11 +514,8 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'setMediumAsTeamPhoto', (setMediumAsTeamPhoto) ->
     (teamMedium, callback) ->
       setMediumAsTeamPhoto.call(this, teamMedium).then((result) ->
-        # Will only work if `teamMedium` is an item rather than an id.
-        if teamMedium.teamId?
-          sdk.loadTeamPreferences(teamMedium.teamId).then ->
-            result
-        else
+        teamId = result.teamId
+        sdk.loadTeamPreferences(teamId).then ->
           result
       ).callback callback
 
