@@ -470,9 +470,11 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'saveMemberPayment', (saveMemberPayment) ->
     (memberPayment, callback) ->
       saveMemberPayment.call(this, memberPayment).then((result) ->
+        memberId = result.memberId
+        teamFeeId = result.teamFeeId
         promises.when(
-          sdk.loadMemberBalances(memberId: memberPayment.memberId)
-          sdk.loadTeamFees(id: memberPayment.teamFeeId)
+          sdk.loadMemberBalances(memberId: memberId)
+          sdk.loadTeamFees(id: teamFeeId)
         ).then -> result
       ).callback callback
 
@@ -481,7 +483,8 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'saveTeamFee', (saveTeamFee) ->
     (teamFee, callback) ->
       saveTeamFee.call(this, teamFee).then((result) ->
-        sdk.loadMemberBalances(teamId: teamFee.teamId).then ->
+        teamId = result.teamId
+        sdk.loadMemberBalances(teamId: teamId).then ->
           result
       ).callback callback
 
@@ -490,7 +493,8 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'deleteTeamFee', (deleteTeamFee) ->
     (teamFee, callback) ->
       deleteTeamFee.call(this, teamFee).then((result) ->
-        sdk.loadMemberBalances(teamId: teamFee.teamId).then ->
+        teamId = teamFee.teamId
+        sdk.loadMemberBalances(teamId: teamId).then ->
           result
       ).callback callback
 
