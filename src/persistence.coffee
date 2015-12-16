@@ -237,9 +237,74 @@ modifySDK = (sdk) ->
       toRemove.push contact.contactPhoneNumbers...
 
       linking.unlinkItems toRemove, lookup
-      deleteContact.call(this, contact, callback).fail((err) ->
+      deleteContact.call(this, contact, callback).then((result) ->
+        sdk.loadMembers({memberId: contact.memberId}).then -> result
+      ).fail((err) ->
         linking.linkItems toRemove, lookup
         err
+      ).callback callback
+
+  # Reload member when saving memberEmailAddress
+  wrapMethod sdk, 'saveMemberEmailAddress', (saveMemberEmailAddress) ->
+    (emailAddress, callback) ->
+      saveMemberEmailAddress.call(this, emailAddress, callback).then((result) ->
+        sdk.loadMembers({id: emailAddress.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when deleting memberEmailAddress
+  wrapMethod sdk, 'deleteMemberEmailAddress', (deleteMemberEmailAddress) ->
+    (emailAddress, callback) ->
+      deleteMemberEmailAddress.call(this, emailAddress, callback)
+      .then((result) ->
+        sdk.loadMembers({id: emailAddress.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when saving memberPhoneNumber
+  wrapMethod sdk, 'saveMemberPhoneNumber', (saveMemberPhoneNumber) ->
+    (phoneNumber, callback) ->
+      saveMemberPhoneNumber.call(this, phoneNumber, callback)
+      .then((result) ->
+        sdk.loadMembers({id: phoneNumber.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when deleting memberPhoneNumber
+  wrapMethod sdk, 'deleteMemberPhoneNumber', (deleteMemberPhoneNumber) ->
+    (phoneNumber, callback) ->
+      deleteMemberPhoneNumber.call(this, phoneNumber, callback)
+      .then((result) ->
+        sdk.loadMembers({id: phoneNumber.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when saving contactEmailAddress
+  wrapMethod sdk, 'saveContactEmailAddress', (saveContactEmailAddress) ->
+    (emailAddress, callback) ->
+      saveContactEmailAddress.call(this, emailAddress, callback)
+      .then((result) ->
+        sdk.loadMembers({id: emailAddress.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when deleting contactEmailAddress
+  wrapMethod sdk, 'deleteContactEmailAddress', (deleteContactEmailAddress) ->
+    (emailAddress, callback) ->
+      deleteContactEmailAddress.call(this, emailAddress, callback)
+      .then((result) ->
+        sdk.loadMembers({id: emailAddress.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when saving contactPhoneNumber
+  wrapMethod sdk, 'saveContactPhoneNumber', (saveContactPhoneNumber) ->
+    (phoneNumber, callback) ->
+      saveContactPhoneNumber.call(this, phoneNumber, callback)
+      .then((result) ->
+        sdk.loadMembers({id: phoneNumber.memberId}).then -> result
+      ).callback callback
+
+  # Reload member when deleting contactPhoneNumber
+  wrapMethod sdk, 'deleteContactPhoneNumber', (deleteContactPhoneNumber) ->
+    (phoneNumber, callback) ->
+      deleteContactPhoneNumber.call(this, phoneNumber, callback)
+      .then((result) ->
+        sdk.loadMembers({id: phoneNumber.memberId}).then -> result
       ).callback callback
 
   # Load availabilities for the new event
