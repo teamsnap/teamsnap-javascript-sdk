@@ -107,7 +107,7 @@ exports.assignMediaToGroup = (teamMediumIds, teamMediaGroupId, callback) ->
     teamMediaGroupId: teamMediaGroupId
 
   @collections.teamMedia.exec('assignMediaToGroup', params)
-    .pop().callback callback
+    .callback callback
 
 
 exports.rotateTeamMediumImage = (teamMediumId, rotateDirection, callback) ->

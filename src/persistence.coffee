@@ -504,14 +504,9 @@ modifySDK = (sdk) ->
     (teamMediumIds, teamMediaGroup, callback) ->
       assignMediaToGroup.call(this, teamMediumIds, teamMediaGroup)
       .then((result) ->
-        # Will only work if `teamMediaGroup` is an item rather than an id.
-        if teamMediaGroup.teamId?
-          promises.when(
-            sdk.loadTeamMediaGroups(teamId: teamMediaGroup.teamId)
-            sdk.loadTeamMedia(teamId: teamMediaGroup.teamId)
-          ).then -> result
-        else
-          result
+        teamId = result[0].teamId
+        bulkLoadTypes = ['teamMediaGroup', 'teamMedium']
+        sdk.bulkLoad(teamId, bulkLoadTypes).then -> result
       ).callback callback
 
 
@@ -519,11 +514,8 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'setMediumAsTeamPhoto', (setMediumAsTeamPhoto) ->
     (teamMedium, callback) ->
       setMediumAsTeamPhoto.call(this, teamMedium).then((result) ->
-        # Will only work if `teamMedium` is an item rather than an id.
-        if teamMedium.teamId?
-          sdk.loadTeamPreferences(teamMedium.teamId).then ->
-            result
-        else
+        teamId = result.teamId
+        sdk.loadTeamPreferences(teamId).then ->
           result
       ).callback callback
 
