@@ -231,6 +231,18 @@ modifySDK = (sdk) ->
           err
       ).callback callback
 
+  # Reload the sent and received messages after saving
+  # a broadcast alert.
+  wrapMethod sdk, 'saveBroadcastAlert', (saveBroadcastAlert) ->
+    (broadcastAlert, callback) ->
+      saveBroadcastAlert.call(this, broadcastAlert, callback)
+      .then((result) ->
+        sdk.loadReceivedMessages({memberId: broadcastAlert.memberId})
+        .then -> result
+        sdk.loadSentMessages({memberId: broadcastAlert.memberId})
+        .then -> result
+      ).callback callback
+
   # Remove related records when a contact is deleted
   wrapMethod sdk, 'deleteContact', (deleteContact) ->
     (contact, callback) ->
