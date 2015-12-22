@@ -237,10 +237,10 @@ modifySDK = (sdk) ->
     (broadcastAlert, callback) ->
       saveBroadcastAlert.call(this, broadcastAlert, callback)
       .then((result) ->
-        sdk.loadReceivedMessages({memberId: broadcastAlert.memberId})
-        .then -> result
-        sdk.loadSentMessages({memberId: broadcastAlert.memberId})
-        .then -> result
+        promises.when(
+          sdk.loadReceivedMessages({memberId: broadcastAlert.memberId})
+          sdk.loadSentMessages({memberId: broadcastAlert.memberId})
+        ).then -> result
       ).callback callback
 
   # Remove related records when a contact is deleted
