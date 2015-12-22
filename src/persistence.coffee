@@ -122,6 +122,8 @@ modifyModel = ->
         body.template.data = body.template.data.filter (field) ->
           oldValue = state[camelize field.name]
           value = field.value
+          if field.name is 'type'
+            value = camelize(value)
           isSame =
             value is oldValue or
             (value and oldValue and value.valueOf() is oldValue.valueOf())
