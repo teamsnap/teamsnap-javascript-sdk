@@ -96,10 +96,10 @@ exports.sendAvailabilityReminders = (eventId, sendingMemberId, include) ->
       `sendingMemberId`'
   unless Array.isArray(include)
     throw new TSArgsError 'teamsnap.sendAvailabilityReminders', "`include` must
-      be an array of user ids"
+      be an array of member ids"
   if !include? or include.length == 0
     throw new TSArgsError 'teamsnap.sendAvailabilityReminders', "`include` must
-      be an array of user ids"
+      be an array of member ids"
 
   options =
     id: eventId
