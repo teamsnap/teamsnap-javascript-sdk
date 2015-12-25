@@ -1,3 +1,7 @@
+exports.ROTATION_DIRECTIONS =
+  CLOCKWISE: 'clockwise'
+  COUNTERCLOCKWISE: 'counterclockwise'
+
 exports.loadTeamMedia = (params, callback) ->
   if @isId params
     params = teamId: params

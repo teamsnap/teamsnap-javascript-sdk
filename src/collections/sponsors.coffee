@@ -1,3 +1,13 @@
+exports.loadSponsors = (params, callback) ->
+  if @isId params
+    params = teamId: params
+  else unless params and typeof params is 'object'
+    throw new TSArgsError 'teamsnap.loadSponsors', 'must provide a teamId or
+      query parameters'
+
+  @loadItems 'sponsor', params, callback
+
+
 exports.createSponsor = (data) ->
   @createItem data,
     type: 'sponsor'
@@ -21,7 +31,7 @@ exports.deleteSponsor = (sponsor, callback) ->
       "`sponsor` must be provided"
 
   @deleteItem sponsor, callback
-  
+
 
 exports.uploadSponsorLogo = (sponsorId, file, callback) ->
   if @isItem sponsorId, 'sponsor'
@@ -50,7 +60,7 @@ exports.deleteSponsorLogo = (sponsorId, callback) ->
   if not @isId sponsorId
     throw new TSArgsError 'teamsnap.deleteSponsorLogo',
       "`sponsorId` must be a valid id"
-      
+
   params = sponsorId: sponsorId
   @collections.sponsors.exec('removeSponsorLogo', params)
   .callback callback
