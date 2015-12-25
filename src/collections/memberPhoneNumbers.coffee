@@ -14,22 +14,22 @@ exports.createMemberPhoneNumber = (data) ->
     type: 'memberPhoneNumber'
 
 
-exports.saveMemberPhoneNumber = (phoneNumber, callback) ->
-  unless phoneNumber
-    throw new TSArgsError 'teamsnap.saveMemberPhoneNumber', '`phoneNumber`
+exports.saveMemberPhoneNumber = (memberPhoneNumber, callback) ->
+  unless memberPhoneNumber
+    throw new TSArgsError 'teamsnap.saveMemberPhoneNumber', '`memberPhoneNumber`
       must be provided'
-  unless @isItem phoneNumber, 'memberPhoneNumber'
+  unless @isItem memberPhoneNumber, 'memberPhoneNumber'
     throw new TSArgsError 'teamsnap.saveMemberPhoneNumber',
-      "`phoneNumber.type` must be 'memberPhoneNumber'"
-  unless phoneNumber.memberId
+      "`memberPhoneNumber.type` must be 'memberPhoneNumber'"
+  unless memberPhoneNumber.memberId
     return @reject 'You must choose a member.', 'memberId', callback
 
-  @saveItem phoneNumber, callback
+  @saveItem memberPhoneNumber, callback
 
 
-exports.deleteMemberPhoneNumber = (phoneNumber, callback) ->
-  unless phoneNumber
+exports.deleteMemberPhoneNumber = (memberPhoneNumber, callback) ->
+  unless memberPhoneNumber
     throw new TSArgsError 'teamsnap.deleteMemberPhoneNumber',
-      '`phoneNumber` must be provided'
+      '`memberPhoneNumber` must be provided'
 
-  @deleteItem phoneNumber, callback
+  @deleteItem memberPhoneNumber, callback
