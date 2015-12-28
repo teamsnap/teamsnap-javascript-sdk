@@ -6,3 +6,8 @@ exports.loadReceivedMessages = (params, callback) ->
       teamId or query parameters'
 
   @loadItems 'receivedMessage', params, callback
+
+exports.markReceivedMessageAsRead = (id, callback) ->
+  params = id: id
+  @collections.receivedMessages.exec('markReceivedMessageAsRead', params)
+    .pop().callback callback

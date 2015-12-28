@@ -237,11 +237,23 @@ modifySDK = (sdk) ->
     (broadcastAlert, callback) ->
       saveBroadcastAlert.call(this, broadcastAlert, callback)
       .then((result) ->
+        memberId = result.memberId
         promises.when(
-          sdk.loadReceivedMessages({memberId: broadcastAlert.memberId})
-          sdk.loadSentMessages({memberId: broadcastAlert.memberId})
+          sdk.loadReceivedMessages({memberId: memberId})
+          sdk.loadSentMessages({memberId: memberId})
         ).then -> result
       ).callback callback
+
+  wrapMethod sdk, 'markReceivedMessageAsRead', (markReceivedMessageAsRead) ->
+    (receivedMessage, callback) ->
+      markReceivedMessageAsRead.call(this, receivedMessage, callback)
+      .then((result) ->
+        memberId = result.memberId
+        promises.when(
+          sdk.loadReceivedMessages({memberId: memberId})
+        ).then -> result
+      ).callback callback
+
 
   # Remove related records when a contact is deleted
   wrapMethod sdk, 'deleteContact', (deleteContact) ->
