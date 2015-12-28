@@ -44,6 +44,8 @@ types = [
   'opponentResults'
   'paymentNote'
   'plan'
+  'receivedMessage'
+  'sentMessage'
   'smsGateway'
   'sponsor'
   'statistic'
