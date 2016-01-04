@@ -24,6 +24,14 @@ exports.saveTeamMediaGroup = (teamMediaGroup, callback) ->
   @saveItem teamMediaGroup, callback
 
 
+exports.deleteTeamMediaGroup = (teamMediaGroup, callback) ->
+  unless teamMediaGroup
+    throw new TSArgsError 'teamsnap.deleteTeamMediaGroup',
+      '`teamMediaGroup` must be provided'
+
+  @deleteItem teamMediaGroup, callback
+
+
 exports.reorderTeamMediaGroups = (teamId, teamMediaGroupIds, callback) ->
   unless @isId teamId
     throw new TSArgsError 'teamsnap.reorderTeamMediaGroups', '`teamId`
