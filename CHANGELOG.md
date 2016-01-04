@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-## Jan 4, 2015
+## Jan 4, 2016
 
 ## Version 1.7.0
 
