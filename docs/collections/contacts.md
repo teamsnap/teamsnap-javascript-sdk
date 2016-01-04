@@ -1,4 +1,4 @@
-# Contact Phone Numbers
+# Contacts
 
 ## Methods
 
