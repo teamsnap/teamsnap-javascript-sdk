@@ -17,10 +17,11 @@ TeamSnap::loadCollections = (cachedCollections, callback) ->
       @collections[name] = new ScopedCollection(@request, colls[name])
 
     @apiVersion = colls.root.version
-    @plans = Item.fromArray(@request, colls.plans.items.slice())
-    @smsGateways = Item.fromArray(@request, colls.smsGateways.items.slice())
-    @sports = Item.fromArray(@request, colls.sports.items.slice())
-    @timeZones = Item.fromArray(@request, colls.timeZones.items.slice())
+    @plans = Item.fromArray(@request, colls.plans.items?.slice() || [])
+    @smsGateways =
+      Item.fromArray(@request, colls.smsGateways.items?.slice() || [])
+    @sports = Item.fromArray(@request, colls.sports.items?.slice() || [])
+    @timeZones = Item.fromArray(@request, colls.timeZones.items?.slice() || [])
     this
   ).callback callback
 
@@ -167,8 +168,9 @@ add require './persistence'
 add require './collections/teams'
 add require './collections/assignments'
 add require './collections/availabilities'
+add require './collections/broadcastAlerts'
 add require './collections/broadcastEmails'
-add require './collections/broadcastSms'
+add require './collections/broadcastEmailAttachments'
 add require './collections/contactEmailAddresses'
 add require './collections/contactPhoneNumbers'
 add require './collections/contacts'
@@ -178,9 +180,11 @@ add require './collections/leagueCustomData'
 add require './collections/leagueCustomFields'
 add require './collections/divisionLocations'
 add require './collections/divisionMembers'
-add require './collections/divisionMemberPreferences'
+add require './collections/divisionMembersPreferences'
 add require './collections/divisionTeamStandings'
 add require './collections/events'
+add require './collections/eventStatistics'
+add require './collections/facebookPages'
 add require './collections/forumPosts'
 add require './collections/forumSubscriptions'
 add require './collections/forumTopics'
@@ -192,23 +196,27 @@ add require './collections/memberFiles'
 add require './collections/memberLinks'
 add require './collections/memberPayments'
 add require './collections/memberPhoneNumbers'
-add require './collections/memberPreferences'
+add require './collections/membersPreferences'
 add require './collections/memberStatistics'
 add require './collections/members'
 add require './collections/opponents'
-add require './collections/opponentResults'
+add require './collections/opponentsResults'
 add require './collections/paymentNotes'
 add require './collections/plans'
 add require './collections/sponsors'
 add require './collections/sports'
+add require './collections/statisticAggregates'
 add require './collections/statistics'
 add require './collections/statisticData'
 add require './collections/statisticGroups'
 add require './collections/teamFees'
-add require './collections/teamPaypalPreferences'
-add require './collections/teamPreferences'
+add require './collections/teamMedia'
+add require './collections/teamMediumComments'
+add require './collections/teamMediaGroups'
 add require './collections/teamPublicSites'
-add require './collections/teamResults'
+add require './collections/teamsPaypalPreferences'
+add require './collections/teamsPreferences'
+add require './collections/teamsResults'
 add require './collections/teamStatistics'
 add require './collections/trackedItems'
 add require './collections/trackedItemStatuses'

@@ -1,5 +1,4 @@
 TeamSnap = require('./teamsnap').TeamSnap
-request = require './request'
 promises = require './promises'
 request = require './request'
 jsonMime = 'application/json'

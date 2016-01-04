@@ -264,14 +264,16 @@ class MetaList
   # Execute a file command with the given parameters
   fileExec: (request, rel, params, progress, callback) ->
     if typeof params is 'function'
-      callback = progressEvent
-      progressEvent = params
+      callback = progress
+      progress = params
       params = undefined
+
     progressHook = (xhr, data) ->
       if data instanceof FormData
-        xhr.upload.addEventListener 'progress', (e) ->
+        xhr.upload.onprogress = (e) ->
           if e.lengthComputable
             progress {loaded: e.loaded, total: e.total}
+
     request.hook progressHook
     @_request(request, 'post', rel, params, 'items')
     .callback callback

@@ -34,14 +34,3 @@ exports.saveMemberPreferences = (memberPreferences, callback) ->
       "`memberPreferences.type` must be 'memberPreferences'"
 
   @saveItem memberPreferences, callback
-
-
-exports.saveTeamPreferences = (teamPreferences, callback) ->
-  unless teamPreferences
-    throw new TSArgsError 'teamsnap.saveTeamPreferences',
-      "`teamPreferences` must be provided"
-  unless @isItem teamPreferences, 'teamPreferences'
-    throw new TSArgsError 'teamsnap.saveTeamPreferences',
-      "`teamPreferences.type` must be 'teamPreferences'"
-
-  @saveItem teamPreferences, callback

@@ -15,22 +15,22 @@ exports.createMemberEmailAddress = (data) ->
     receivesTeamEmails: true
 
 
-exports.saveMemberEmailAddress = (emailAddress, callback) ->
-  unless emailAddress
-    throw new TSArgsError 'teamsnap.saveMemberEmailAddress', '`emailAddress`
-      must be provided'
-  unless @isItem emailAddress, 'memberEmailAddress'
+exports.saveMemberEmailAddress = (memberEmailAddress, callback) ->
+  unless memberEmailAddress
     throw new TSArgsError 'teamsnap.saveMemberEmailAddress',
-      "`emailAddress.type` must be 'memberEmailAddress'"
-  unless emailAddress.memberId
+     '`memberEmailAddress` must be provided'
+  unless @isItem memberEmailAddress, 'memberEmailAddress'
+    throw new TSArgsError 'teamsnap.saveMemberEmailAddress',
+      "`memberEmailAddress.type` must be 'memberEmailAddress'"
+  unless memberEmailAddress.memberId
     return @reject 'You must choose a member.', 'memberId', callback
 
-  @saveItem emailAddress, callback
+  @saveItem memberEmailAddress, callback
 
 
-exports.deleteMemberEmailAddress = (emailAddress, callback) ->
-  unless emailAddress
+exports.deleteMemberEmailAddress = (memberEmailAddress, callback) ->
+  unless memberEmailAddress
     throw new TSArgsError 'teamsnap.deleteMemberEmailAddress',
-      '`emailAddress` must be provided'
+      '`memberEmailAddress` must be provided'
 
-  @deleteItem emailAddress, callback
+  @deleteItem memberEmailAddress, callback

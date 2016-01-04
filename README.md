@@ -21,4 +21,4 @@ For use with node.js:
 npm install --save teamsnap.js
 ```
 
-Check the [Quick start guide](https://github.com/teamsnap/teamsnap-javascript-sdk/wiki/Quick-Start) in the [wiki](https://github.com/teamsnap/teamsnap-javascript-sdk/wiki) for more details.
+Check the [Quick start guide](https://github.com/teamsnap/teamsnap-javascript-sdk/wiki/Quick-Start) in the [wiki](https://github.com/teamsnap/teamsnap-javascript-sdk/wiki) for more details or read through the [Collections](./docs/collections.md) documentation for a complete list of SDK methods.
