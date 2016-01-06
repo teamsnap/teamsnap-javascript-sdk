@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+## Jan 6, 2016
+
+## Version 1.7.1
+- Persistence fix in teamMediaGroups - related to: https://github.com/teamsnap/apiv3/pull/1703
+
 ## Jan 4, 2016
 
 ## Version 1.7.0

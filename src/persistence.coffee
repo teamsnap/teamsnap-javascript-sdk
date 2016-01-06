@@ -537,8 +537,10 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'uploadTeamMedium', (uploadTeamMedium) ->
     (teamMedium, progressCallback, callback) ->
       uploadTeamMedium.call(this, teamMedium, progressCallback).then((result) ->
-        sdk.loadTeam(teamMedium.teamId).then ->
-          result
+        promises.when(
+          sdk.loadTeam teamMedium.teamId
+          sdk.loadTeamMediaGroups(id: teamMedium.teamMediaGroupId)
+        ).then -> result
       ).callback callback
 
   # Remove comments when deleting teamMedium, reload team (for file usage quota)
@@ -548,8 +550,10 @@ modifySDK = (sdk) ->
 
       linking.unlinkItems toRemove, lookup
       deleteTeamMedium.call(this, teamMedium).then((result) ->
-        sdk.loadTeam(teamMedium.teamId).then ->
-          result
+        promises.when(
+          sdk.loadTeam teamMedium.teamId
+          sdk.loadTeamMediaGroups(id: teamMedium.teamMediaGroupId)
+        ).then -> result
       ,(err) ->
         linking.linkItems toRemove, lookup
         err
