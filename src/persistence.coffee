@@ -407,11 +407,21 @@ modifySDK = (sdk) ->
   # Reload statistic data when updating a statistic
   wrapMethod sdk, 'saveStatistic', (saveStatistic) ->
     (statistic, callback) ->
+      # Unlink statisticGroup when being removed.
+      if not statisticGroupId? and statistic.statisticGroup?
+        linking.unlinkItems statistic.statisticGroup, statistic
+
       saveStatistic.call(this, statistic, callback).then((result) ->
         teamId = statistic.teamId
         statisticId = result.id
-        bulkLoadTypes =
-          ['memberStatistic', 'teamStatistic', 'statisticAggregate']
+        bulkLoadTypes = [
+          'memberStatistic',
+          'teamStatistic',
+          'statisticAggregate',
+          'statistic',
+          'statisticGroup'
+        ]
+
         promises.when(
           sdk.bulkLoad(teamId, bulkLoadTypes)
           sdk.loadEventStatistics statisticId: statisticId

@@ -1,13 +1,17 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-## Jan 6, 2016
+### Jan 8, 2016 // Version 1.7.2
+- Persistence fix when changing statisticGroupId to null on a statistic.
+- Update CHANGELOG formatting - much easier to read.
 
-## Version 1.7.1
+---
+
+### Jan 6, 2016 // Version 1.7.1
 - Persistence fix in teamMediaGroups - related to: https://github.com/teamsnap/apiv3/pull/1703
 
-## Jan 4, 2016
+---
 
-## Version 1.7.0
+### Jan 4, 2016 // Version 1.7.0
 
 - This CHANGELOG. This is a broad list of recent changes - expect future updates to be more granular and with greater frequency.
 - Adds support for the following apiv3 types
