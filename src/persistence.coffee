@@ -553,6 +553,31 @@ modifySDK = (sdk) ->
         ).then -> result
       ).callback callback
 
+
+  # Reload teamMediaGroup when saving teamMedium.
+  wrapMethod sdk, 'saveTeamMedium', (saveTeamMedium) ->
+    (teamMedium, callback) ->
+      teamMediaGroupIds = [teamMedium.teamMediaGroupId]
+      # If we're chaning teamMediaGroupId via save.
+
+      unless teamMedium._state?.teamMediaGroupId? is teamMedium.teamMediaGroupId
+        teamMediaGroupIds.push teamMedium._state.teamMediaGroupId
+
+      saveTeamMedium.call(this, teamMedium).then((result) ->
+        teamId = teamMedium.teamId
+        sdk.loadTeamMediaGroups(id: teamMediaGroupIds)
+      ).callback callback
+
+
+
+  # Reload teamMediaGroup when saving video link.
+  wrapMethod sdk, 'saveTeamVideoLink', (saveTeamVideoLink) ->
+    (teamMedium, callback) ->
+      saveTeamVideoLink.call(this, teamMedium).then((result) ->
+        sdk.loadTeamMediaGroups(id: teamMedium.teamMediaGroupId)
+      ).callback callback
+
+
   # Remove comments when deleting teamMedium, reload team (for file usage quota)
   wrapMethod sdk, 'deleteTeamMedium', (deleteTeamMedium) ->
     (teamMedium, callback) ->
@@ -579,11 +604,30 @@ modifySDK = (sdk) ->
 
       bulkDeleteTeamMedia.call(this, teamMediumIds, callback).then((result) ->
         if typeof teamId is 'string' or typeof teamId is 'number'
-          sdk.loadTeam(teamId).then ->
-            result
+          promises.when(
+            sdk.loadTeam teamId
+            sdk.loadTeamMediaGroups(teamId: teamId)
+          ).then -> result
         else
           result
-      )
+      ).callback callback
+
+
+  # Note: For the purposes of persistence, this method will accept a
+  #teamMediaGroupId, even though it isn't accepted in the actual method.
+  wrapMethod sdk, 'reorderTeamMedia', (reorderTeamMedia) ->
+    (teamId, teamMediaIds, teamMediaGroupId, callback) ->
+      params = teamId: teamId
+      if typeof teamMediaGroupId is 'function'
+        callback = teamMediaGroupId
+
+      if typeof teamMediaGroupId is 'string' or
+      typeof teamMediaGroupId is 'number'
+        params = id: teamMediaGroupId
+
+      reorderTeamMedia.call(this, teamId, teamMediaIds).then((result) ->
+        sdk.loadTeamMediaGroups(params).then -> result
+      ).callback callback
 
 
   # Remove all records belonging to a team when it is deleted
