@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### Jan 13, 2016 // Version 1.7.3
+- Persistence fixes related to `teamMediaGroup` items when sorting and saving `teamMedia`.
+
+---
+
 ### Jan 8, 2016 // Version 1.7.2
 - Persistence fix when changing statisticGroupId to null on a statistic.
 - Update CHANGELOG formatting - much easier to read.
