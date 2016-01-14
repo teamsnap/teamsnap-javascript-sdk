@@ -658,6 +658,18 @@ modifySDK = (sdk) ->
         err
       ).callback callback
 
+  # Reload memberEmailAddresses when invite is sent
+  wrapMethod sdk, 'invite', (invite) ->
+    (options, callback) ->
+      invite.call(this, options).then((result) ->
+        if options.hasOwnProperty('memberId')
+          memberId = options.memberId
+          sdk.loadMemberEmailAddresses({memberId: memberId}).then -> result
+        else if options.hasOwnProperty('contactId')
+          contactId = options.contactId
+          sdk.loadContactEmailAddresses({contactId: contactId}).then -> result
+    ).callback callback
+
 
 revertSDK = (sdk) ->
   revertWrapMethod sdk, 'saveMember'

@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### Jan 14, 2016 // Version 1.7.4
+- Reload `memberEmailAddress` and `contactEmailAddress` when sending `invite`.
+
+---
+
 ### Jan 13, 2016 // Version 1.7.3
 - Persistence fixes related to `teamMediaGroup` items when sorting and saving `teamMedia`.
 
