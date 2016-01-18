@@ -121,3 +121,17 @@ exports.getEventSort = ->
     if valueA > valueB then 1
     else if valueA < valueB then -1
     else 0
+
+exports.bulkCreateEvents = (params, callback) ->
+  unless params.teamId
+    return @reject 'You must choose a team.', 'teamId', callback
+  unless Array.isArray(params.events)
+    throw new TSArgsError 'teamsnap.bulkCreateEvents', "`events` must
+      be an array of events"
+
+  options =
+    templates: params.events
+    teamId: params.teamId
+    notifyTeamAsMemberId: params.sendingMemberId
+    notifyTeam: params.notifyTeam
+  @collections.events.exec('bulkCreate', options, callback)
