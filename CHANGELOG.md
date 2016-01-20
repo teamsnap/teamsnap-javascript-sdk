@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### Jan 20, 2016 // Version 1.7.5
+- Reload `eventStatistics` teamwide when changes to `statistics` or `statisticData`.
+
+---
+
 ### Jan 14, 2016 // Version 1.7.4
 - Reload `memberEmailAddress` and `contactEmailAddress` when sending `invite`.
 
