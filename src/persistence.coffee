@@ -397,9 +397,22 @@ modifySDK = (sdk) ->
     (statistic, callback) ->
       toRemove = statistic.statisticData.slice()
       toRemove.push statistic.eventStatistics...
+      toRemove.push statistic.memberStatistics...
+      toRemove.push statistic.teamStatistics...
+      toRemove.push statistic.statisticAggregates...
 
       linking.unlinkItems toRemove, lookup
-      deleteStatistic.call(this, statistic).fail((err) ->
+      deleteStatistic.call(this, statistic).then((result) ->
+        teamId = statistic.teamId
+        statisticId = result.id
+        bulkLoadTypes = [
+          'memberStatistic',
+          'teamStatistic',
+          'statisticAggregate',
+          'eventStatistic'
+        ]
+        sdk.bulkLoad(teamId, bulkLoadTypes).then -> result
+      ).fail((err) ->
         linking.linkItems toRemove, lookup
         err
       ).callback callback
@@ -419,13 +432,11 @@ modifySDK = (sdk) ->
           'teamStatistic',
           'statisticAggregate',
           'statistic',
-          'statisticGroup'
+          'statisticGroup',
+          'eventStatistic'
         ]
 
-        promises.when(
-          sdk.bulkLoad(teamId, bulkLoadTypes)
-          sdk.loadEventStatistics statisticId: statisticId
-        ).then -> result
+        sdk.bulkLoad(teamId, bulkLoadTypes).then -> result
       ).callback callback
 
   # Update member statistics when saving statisticData
@@ -434,12 +445,12 @@ modifySDK = (sdk) ->
       bulkSaveStatisticData.call(this, templates, callback).then((result) ->
         if result[0]? and result[0].teamId?
           teamId = result[0].teamId
-          statisticId = result[0].statisticId
-          bulkLoadTypes = ['memberStatistic', 'statisticAggregate']
-          promises.when(
-            sdk.bulkLoad(teamId, bulkLoadTypes)
-            sdk.loadEventStatistics statisticId: statisticId
-          ).then -> result
+          bulkLoadTypes = [
+            'memberStatistic',
+            'statisticAggregate',
+            'eventStatistic'
+          ]
+          sdk.bulkLoad(teamId, bulkLoadTypes).then -> result
       ).callback callback
 
   wrapMethod sdk, 'saveStatisticDatum', (saveStatisticDatum) ->
@@ -448,11 +459,12 @@ modifySDK = (sdk) ->
       .then((result) ->
         teamId = result.teamId
         statisticId = result.statisticId
-        bulkLoadTypes = ['memberStatistic', 'statisticAggregate']
-        promises.when(
-          sdk.bulkLoad(teamId, bulkLoadTypes)
-          sdk.loadEventStatistics statisticId: statisticId
-        ).then -> result
+        bulkLoadTypes = [
+          'memberStatistic',
+          'statisticAggregate',
+          'eventStatistic'
+        ]
+        sdk.bulkLoad(teamId, bulkLoadTypes).then -> result
       ).callback callback
 
   # Remove deleted member statisticData when using bulk delete command
@@ -466,13 +478,13 @@ modifySDK = (sdk) ->
       linking.unlinkItems toRemove, lookup
 
       bulkDeleteStatisticData.call(this, member, event).then((result) ->
-        promises.when(
-          teamId = member.teamId
-          eventId = event.id
-          bulkLoadTypes = ['memberStatistic', 'statisticAggregate']
-          sdk.bulkLoad(teamId, bulkLoadTypes)
-          sdk.loadEventStatistics eventId: eventId
-        ).then -> result
+        teamId = member.teamId
+        bulkLoadTypes = [
+          'memberStatistic',
+          'statisticAggregate',
+          'eventStatistic'
+        ]
+        sdk.bulkLoad(teamId, bulkLoadTypes).then -> result
       ).fail((err) ->
         linking.linkItems toRemove, lookup
         err
