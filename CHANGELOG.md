@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### Jan 26, 2016 // Version 1.7.6
+- Addresses bug where, When saving a `statistic`, its `statisticGroup` may be incorrectly unlinked.
+
+---
+
 ### Jan 20, 2016 // Version 1.7.5
 - Reload `eventStatistics` teamwide when changes to `statistics` or `statisticData`.
 

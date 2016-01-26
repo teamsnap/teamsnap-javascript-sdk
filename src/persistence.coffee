@@ -421,7 +421,7 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'saveStatistic', (saveStatistic) ->
     (statistic, callback) ->
       # Unlink statisticGroup when being removed.
-      if not statisticGroupId? and statistic.statisticGroup?
+      if not statistic.statisticGroupId? and statistic.statisticGroup?
         linking.unlinkItems statistic.statisticGroup, statistic
 
       saveStatistic.call(this, statistic, callback).then((result) ->
