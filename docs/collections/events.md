@@ -8,6 +8,7 @@
 - [deleteEvent](#deleteEvent)
 - [sendAvailabilityReminders](#sendAvailabilityReminders)
 - [getEventSort](#getEventSort)
+- [bulkCreateEvents](#bulkCreateEvents)
 
 
 ---
@@ -163,3 +164,38 @@ _none_
 eventArray.sort(teamsnap.getEventSort());
 
 ```
+
+
+---
+<a id="bulkCreateEvents"></a>
+## `bulkCreateEvents(params, callback)`
+Creates multiple events.
+
+### Params
+* `params`: [object] - Object that contains additional data:
+  * `teamId`: [int] - Id of Team the events are for
+  * `events`: [array] - Array of event objects to create
+  * `sendingMemberId`: [int] - Id of member that notify email will come from (optional).
+  * `notifyTeam` - [bool] - Flag indictating if notify email should be sent to team.
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+// Creates multiple events for `teamId: 1` and sends a notify email to team.
+teamsnap.bulkCreateEvents({
+  teamId: 1,
+  events: [{
+    teamId: 1,
+    locationId: 1,
+    opponentId: 1
+    isGame: true,
+    startDate: new Date()
+  },
+  sendingMemberId: 1,
+  notifyTeam: true
+});
+```
+
+
+---

@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### Feb 4, 2016 // Version 1.8.0
+- Adds `bulkCreateEvents` method.
+
+---
+
 ### Jan 26, 2016 // Version 1.7.6
 - Addresses bug where, When saving a `statistic`, its `statisticGroup` may be incorrectly unlinked.
 
