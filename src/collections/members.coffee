@@ -138,6 +138,7 @@ exports.canEditTeam = (member, team) ->
 exports.canEditItem = (member, team, item) ->
   return false unless member and team and @isItem item
   return false if item.readOnly
+  return false if item.type is 'member' and item.isOwner and not member.isOwner
   return true if teamsnap.canEditTeam member, team
   return false if team.isArchivedSeason
   if @isItem item, 'member'
