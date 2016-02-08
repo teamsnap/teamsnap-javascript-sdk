@@ -3,6 +3,9 @@
 ### Feb 15, 2016 // Version 1.9.0
 - Refactors `bulkLoad` to accept "Smart Load" params.
 
+### Feb 9, 2016 // Version 1.9.0
+- Adds `inviteMemberEmailAddresses` method.
+
 ---
 
 ### Feb 4, 2016 // Version 1.8.1

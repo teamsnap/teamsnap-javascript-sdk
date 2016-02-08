@@ -6,6 +6,7 @@
 - [createMemberEmailAddress](#createMemberEmailAddress)
 - [saveMemberEmailAddress](#saveMemberEmailAddress)
 - [deleteMemberEmailAddress](#deleteMemberEmailAddress)
+- [inviteMemberEmailAddresses](#inviteMemberEmailAddresses)
 
 
 ---
@@ -113,5 +114,43 @@ teamsnap.saveMemberEmailAddress(memberEmailAddress).then(function(){
   teamsnap.deleteMemberEmailAddress(memberEmailAddress).then(function(){
     // Poof! It's gone!
   });
+});
+```
+<a id="inviteMemberEmailAddresses"></a>
+## `inviteMemberEmailAddresses(params, callback)`
+Invite memberEmailAddresses to a team
+
+### Params
+* `options`: [object] - Object that contains additional data:
+  * `memberEmailAddressIds`: [string] A comma separated list of ids
+  * `teamId`: [int] Id of Team
+  * `memberId`: [int] Id of member associated with `memberEmailAddressIds`
+  * `notifyAsMemberId`: [int] Id of member sending invitation
+  * `introduction`: [string] Introduction text for invitation (optional)
+
+### Examples
+```javascript
+// ~~~~~
+// Deletes a memberEmailAddress item.
+teamsnap.inviteMemberEmailAddresses(params);
+
+// ~~~~~
+// Creates a new memberEmailAddress and invites it to the team. 
+var memberEmailAddress = teamsnap.createMemberEmailAddress({
+  memberId: 1,
+  email: 'member@example.com',
+  receivesTeamEmails: true
+});
+
+var options = {
+  memberEmailAddressIds: "'" + memberEmailAddress.id + "'"
+  teamId: 1,
+  memberId: 2,
+  notifyAsMemberId: 1,
+  introduction: "Welcome to the team!"
+};
+
+teamsnap.inviteMemberEmailAddresses(options).then(function() {
+  // memberEmailAddress has been invited!
 });
 ```
