@@ -131,7 +131,7 @@ Invite memberEmailAddresses to a team
 ### Examples
 ```javascript
 // ~~~~~
-// Deletes a memberEmailAddress item.
+// Invites a MemberEmailAddress.
 teamsnap.inviteMemberEmailAddresses(params);
 
 // ~~~~~
