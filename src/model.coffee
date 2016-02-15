@@ -303,7 +303,7 @@ class MetaList
         if entry.params.hasOwnProperty(key)
           data[underscore key] = value
         # Check for search filters (example: `event__id`)
-        else if key.indexOf '__'
+        else if key.indexOf('__') isnt -1
           filteredOn = key.split '__'
           itemCollection = teamsnap.getCollectionForItem(filteredOn[0])
           # Ensure valid param on filtered item type's search query

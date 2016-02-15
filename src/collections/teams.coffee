@@ -46,31 +46,30 @@ exports.deleteTeam = (team, callback) ->
 
 # Loads all items associated with a team, optionally limited by the types array
 exports.bulkLoad = (teamId, types, callback) ->
-  unless @isId teamId
-    throw new TSArgsError 'teamsnap.bulkLoad', 'teamId must be provided'
+  if typeof teamId is 'object'
+    loadParams = teamId
+    # Using params object (smartload)
+    unless @isId loadParams.teamId
+      throw new TSArgsError 'teamsnap.bulkLoad', 'teamId must be provided'
+    teamId = loadParams.teamId
+    if loadParams.types?
+      types = loadParams.types
+  else
+    # Using classic bulk_load
+    unless @isId teamId
+      throw new TSArgsError 'teamsnap.bulkLoad', 'teamId must be provided'
 
-  if typeof types is 'function'
-    callback = types
-    types = null
+    if typeof types is 'function'
+      callback = types
+      types = null
 
   unless Array.isArray types
     types = @getTeamTypes()
     types.splice types.indexOf('availability'), 1
 
   params = teamId: teamId, types: types.map(@underscoreType).join(',')
-  @collections.root.queryItems 'bulkLoad', params, callback
-
-
-# Like bulkLoad, only way smarter.
-exports.smartLoad = (params, callback) ->
-  unless @isId params.teamId
-    throw new TSArgsError 'teamsnap.bulkLoad', 'teamId must be provided'
-
-  unless Array.isArray params.types
-    types = @getTeamTypes()
-    types.splice types.indexOf('availability'), 1
-
-  params.types = params.types.map(@underscoreType).join(',')
+  if loadParams?.scopeTo?
+    params.scopeTo = @underscoreType(loadParams.scopeTo)
   @collections.root.queryItems 'bulkLoad', params, callback
 
 
