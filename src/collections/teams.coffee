@@ -52,8 +52,7 @@ exports.bulkLoad = (teamId, types, callback) ->
     unless @isId loadParams.teamId
       throw new TSArgsError 'teamsnap.bulkLoad', 'teamId must be provided'
     teamId = loadParams.teamId
-    if loadParams.types?
-      types = loadParams.types
+    types = loadParams.types
   else
     # Using classic bulk_load
     unless @isId teamId
