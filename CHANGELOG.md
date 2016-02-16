@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### Feb 15, 2016 // Version 1.9.0
+- Refactors `bulkLoad` to accept "Smart Load" params.
+
+---
+
 ### Feb 4, 2016 // Version 1.8.1
 - Update `canEditItem()` helper to return false when a manager attempts to edit an owner's member item.
 

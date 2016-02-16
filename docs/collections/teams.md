@@ -146,21 +146,44 @@ teamsnap.saveTeam(team).then(function(){
 
 
 <a id="bulkLoad"></a>
-## `bulkLoad(teamId, types, callback)`
+## `bulkLoad(teamId, types, callback)` / `bulkLoad(params, callback)`
 Query that returns multiple types based on provided parameters.
+
+In addition to bulk loading specific types for a given team, you can scope and filter the query to
+return more specific datasets. We sometimes refer to this as "Smart Load", but it's still APIv3's
+`bulk_load` query.
 
 _Note: Some items, such as `availability` are not currently available for `bulkLoad` for performance reasons. Likewise, loading many types at once without narrowing the scope may provide a less than optimal response, or possibly incur an API timeout with larger datasets._
 
 ### Params
+_Note: There are two ways you can call `bulkLoad`. This is the simple / classic way._
 * `teamId`: [int] - a `teamId` to load items for.
 * `types`: [array] - array of types to load.
+* `callback`: [function] - callback to be executed when the operation completes.
+
+_Using "Smart Load" params_
+* `params`: [object] - object should contain the following params:
+  - `teamId`: [int] - a `teamId` to load items for.
+  - `types`: [array] - array of types to load.
+  - `scopeTo`: [string] - item in the query to scope other items to.
+  - `[itemType__queryParam]`: [string] - additional filters can be set with the item's type and one of its available search params separated by a double underscore (`__`). This accepts a string for the value - which could be a date, an ID, or event a list of IDs. See the specific event's available search params with `teamsnap.collections.[itemCollection].queries.search.params` where `itemCollection` is the collection to look up.
 * `callback`: [function] - callback to be executed when the operation completes.
 
 ### Examples
 ```javascript
 // ~~~~~
 // Bulk loads several types at once.
-teamsnap.bulkLoad(1, ['member', 'event', 'availability']);
+teamsnap.bulkLoad(1, ['member', 'event', 'assignment']);
+
+// ~~~~~
+// Bulk load events and assignments related to eventId 1-6.
+bulkLoadParams = {
+  teamId: 1,
+  types: ['event', 'assignment'],
+  scopeTo: 'event',
+  event__id: '1,2,3,4,5,6'
+}
+teamsnap.bulkLoad(bulkLoadParams);
 ```
 
 
