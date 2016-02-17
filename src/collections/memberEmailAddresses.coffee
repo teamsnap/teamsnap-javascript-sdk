@@ -17,19 +17,23 @@ exports.createMemberEmailAddress = (data) ->
 
 exports.inviteMemberEmailAddresses = (options, callback) ->
   unless options.memberEmailAddressIds
-    throw new TSArgsError 'teamsnap.inviteMemberEmailAddresses', 'options.memberEmailAddressIds is required.'
+    throw new TSArgsError 'teamsnap.inviteMemberEmailAddresses',
+      'options.memberEmailAddressIds is required.'
 
   unless options.memberId
-    throw new TSArgsError 'teamsnap.inviteMemberEmailAddresses', 'options.memberId is required.'
+    throw new TSArgsError 'teamsnap.inviteMemberEmailAddresses',
+      'options.memberId is required.'
 
   unless options.teamId
-    throw new TSArgsError 'teamsnap.inviteMemberEmailAddresses', 'options.teamId is required.'
+    throw new TSArgsError 'teamsnap.inviteMemberEmailAddresses',
+      'options.teamId is required.'
 
   unless options.notifyAsMemberId
-    throw new TSArgsError 'teamsnap.inviteMemberEmailAddresses', 'options.notifyAsMemberId is
-      required.'
+    throw new TSArgsError 'teamsnap.inviteMemberEmailAddresses',
+      'options.notifyAsMemberId is required.'
 
-  @collections.memberEmailAddresses.exec('invite', options).pop().callback callback
+  @collections.memberEmailAddresses
+    .exec('invite', options).pop().callback callback
 
 exports.saveMemberEmailAddress = (memberEmailAddress, callback) ->
   unless memberEmailAddress
