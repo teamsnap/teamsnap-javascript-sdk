@@ -1,6 +1,6 @@
 {
   "name": "teamsnap.js",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "A JavaScript library for using the TeamSnap API.",
   "author": "Jacob Wright with TeamSnap (http://www.teamsnap.com)",
   "homepage": "https://github.com/teamsnap/teamsnap-javascript-sdk",
@@ -15,15 +15,15 @@
   },
   "main": "lib/teamsnap",
   "dependencies": {
-    "xmlhttprequest": "latest",
-    "form-data": "latest"
+    "xmlhttprequest": "1.8.0",
+    "form-data": "1.0.0-rc3"
   },
   "devDependencies": {
-    "brunch": "latest",
-    "library-brunch": "latest",
-    "javascript-brunch": "latest",
-    "coffee-script-brunch": "latest",
-    "uglify-js-brunch": "latest",
-    "coffeelint-brunch": "latest"
+    "brunch": "1.8.5",
+    "library-brunch": "1.2.0",
+    "javascript-brunch": "1.8.0",
+    "coffee-script-brunch": "1.8.3",
+    "uglify-js-brunch": "1.7.8",
+    "coffeelint-brunch": "1.7.1"
   }
 }
