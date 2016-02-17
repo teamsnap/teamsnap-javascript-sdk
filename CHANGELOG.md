@@ -1,10 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### Feb 17, 2016 // Version 1.10.0
+- Adds `inviteMemberEmailAddresses` method.
+---
+
 ### Feb 15, 2016 // Version 1.9.0
 - Refactors `bulkLoad` to accept "Smart Load" params.
-
-### Feb 9, 2016 // Version 1.9.0
-- Adds `inviteMemberEmailAddresses` method.
 
 ---
 
