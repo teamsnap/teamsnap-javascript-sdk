@@ -1,3 +1,4 @@
+exports.INVITED_STATES = ["new", "new_user", "existing_user"]
 
 exports.loadMemberEmailAddresses = (params, callback) ->
   if @isId params
