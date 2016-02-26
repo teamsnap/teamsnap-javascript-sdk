@@ -1,10 +1,27 @@
+memberPayment = {}
+
 describe 'Member Payments', ->
+
   beforeEach (done) ->
-    memberPayment = {
-      id: 1
-      amountDue: 200.00
-      amountPaid: 100.00
-    }
+    team.members = [
+      {
+        id: 1,
+        firstName: 'Ownie',
+        lastName: 'Owner',
+        memberPayments: [
+          {
+            type: 'memberPayment',
+            id: 222,
+            amountDue: 100.00,
+            amountPaid: 50.00,
+            memberId: 1,
+            teamId: team.id
+
+          }
+        ]
+      }
+    ]
+    memberPayment = team.members[0].memberPayments[0]
     done()
 
   describe 'loadMemberPayments', ->
@@ -15,12 +32,12 @@ describe 'Member Payments', ->
 
   describe 'memberPaymentTransaction', ->
     it 'should accept a memberPayment object', ->
-      teamsnap.memberPaymentTransaction memberPayment.id, 4, (err, result) ->
-        result.id.should.equal 1
+      teamsnap.memberPaymentTransaction memberPayment, 4, (err, result) ->
+        result.id.should.equal 222
 
     it 'should accept a memberPaymentId', ->
-      teamsnap.memberPaymentTransaction 2, 10.00, (err, result) ->
-        result.id.should.equal 2
+      teamsnap.memberPaymentTransaction memberPayment.id, 10.00, (err, result) ->
+       result.id.should.equal 222
 
     it 'should adjust memberPayment.amoutPaid', ->
       teamsnap.memberPaymentTransaction memberPayment.id, 10.00, (err, result) ->

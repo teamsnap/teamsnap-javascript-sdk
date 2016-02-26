@@ -683,11 +683,12 @@ modifySDK = (sdk) ->
           contactId = options.contactId
           sdk.loadContactEmailAddresses({contactId: contactId}).then -> result
     ).callback callback
-    
+
 
   wrapMethod sdk, 'memberPaymentTransaction', (memberPaymentTransaction) ->
     (memberPaymentId, amount, note, callback) ->
-      memberPaymentTransaction.call(this, memberPaymentId, amount, note).then((result) ->
+      memberPaymentTransaction.call(this, memberPaymentId, amount, note)
+      .then((result) ->
         memberId = result.memberId
         teamFeeId = result.teamFeeId
         promises.when(

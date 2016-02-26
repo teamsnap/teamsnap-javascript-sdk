@@ -59,8 +59,8 @@ Creates a `memberPaymentTransaction`.
 
 ### Params
 * `memberPaymentId`: [id, object] - `memberPaymentId` or `memberPayment` item to be saved.
-* `amount`: [int] - `memberPayment.amountPaid`.
-* `note`: [string] - optional string.
+* `amount`: [int, float] - The transaction amount.
+* `note`: [string] - A note for the transaction (optional).
 * `callback`: [function] - callback to be executed when the operation completes.
 
 ### Examples

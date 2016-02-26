@@ -29,7 +29,7 @@ exports.memberPaymentTransaction = (memberPaymentId, amount, note, callback) ->
   unless amount
     throw new TSArgsError 'teamsnap.memberPaymentTransaction', "must provide
      an `amount`"
-  if typeof note is function
+  if typeof note is 'function'
     callback = note
   params = memberPaymentId: memberPaymentId, amount: amount, note: note
 
