@@ -71,5 +71,5 @@ Creates a `memberPaymentTransaction`.
 ```javascript
 // ~~~~~
 // Creates memberPaymentTransaction.
-teamsnap.memberPaymentTransaction(1, 5.00, 'paid by check');
+teamsnap.memberPaymentTransaction(1, 5.00, 'paid cash');
 ```

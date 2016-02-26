@@ -5,7 +5,7 @@ describe 'Member Payments', ->
     memberPayment = {
       id: 1
       amountDue: 200.00
-      amountPaid: 100.00
+      amountPaid: 50.00
     }
     done()
 
@@ -26,4 +26,4 @@ describe 'Member Payments', ->
 
     it 'should adjust memberPayment.amoutPaid', ->
       teamsnap.memberPaymentTransaction memberPayment.id, 10.00, (err, result) ->
-        result.amountPaid.should.equal 90.00
+        result.amountPaid.should.equal 40.00

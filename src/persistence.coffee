@@ -193,7 +193,7 @@ modifySDK = (sdk) ->
   # 8. deleteTrackedItem needs to remove trackedItemStatuses
   # 9. deleteTeam needs to remove all related data except plan and sport
   # 10. deleteForumTopic needs to delete all related posts
-  # 11. memberEmailAddresses need to reload when invite is sent
+  # 11. memberEmailAddresses needs to reload when invite is sent
   # 12. teamFee and memberBalance needs to reload after transaction
 
   # Load related records when a member is created
