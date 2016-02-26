@@ -19,3 +19,17 @@ exports.saveMemberPayment = (memberPayment, callback) ->
     return @reject 'You must choose a member.', 'memberId', callback
 
   @saveItem memberPayment, callback
+
+exports.memberPaymentTransaction = (memberPaymentId, amount, callback) ->
+  unless @isItem memberPaymentId
+    throw new TSArgsError 'teamsnap.memberPaymentTransaction', "must provide
+     a `memberPaymentId`"
+  if @isItem memberPayment
+    memberPayment = memberPayment.id
+  unless amount
+    throw new TSArgsError 'teamsnap.memberPaymentTransaction', "must provide
+     an `amount`"
+  params = memberPaymentId: memberPaymentId, amount: amount
+  
+  @collections.memberPayments.exec('transaction', params)
+    .pop().callback callback
