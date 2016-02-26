@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### Feb 26, 2016 // Version 1.11.0
+- Adds `memberPaymentTransaction` method.
+- Adds persistence wrapper to `memberPaymentTransaction` to reload `teamFee` and `memberBalance`.
+---
+
 ### Feb 17, 2016 // Version 1.10.0
 - Adds `inviteMemberEmailAddresses` method.
 - Lock down dependencies while we investigate upgrading to latest and greatest.
