@@ -4,6 +4,7 @@
 
 - [loadMemberPayments](#loadMemberPayments)
 - [saveMemberPayment](#saveMemberPayment)
+- [memberPaymentTransaction](#memberPaymentTransaction)
 
 
 ---
@@ -46,4 +47,25 @@ Saves a `memberPayment` item.
 // ~~~~~
 // Saves memberPayment item.
 teamsnap.saveMemberPayment(memberPayment);
+```
+
+
+---
+
+
+<a id="memberPaymentTransaction"></a>
+## `memberPaymentTransaction(memberPaymentId, amount, note, callback)`
+Creates a `memberPaymentTransaction`.
+
+### Params
+* `memberPaymentId`: [id, object] - `memberPaymentId` or `memberPayment` item to be saved.
+* `amount`: [int] - `memberPayment.amountPaid`.
+* `note`: [string] - optional string.
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+// Creates memberPaymentTransaction.
+teamsnap.memberPaymentTransaction(1, 5.00, 'paid by check');
 ```

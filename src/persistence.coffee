@@ -193,6 +193,8 @@ modifySDK = (sdk) ->
   # 8. deleteTrackedItem needs to remove trackedItemStatuses
   # 9. deleteTeam needs to remove all related data except plan and sport
   # 10. deleteForumTopic needs to delete all related posts
+  # 11. memberEmailAddresses need to reload when invite is sent
+  # 12. teamFee and memberBalance needs to reload after transaction
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -681,6 +683,18 @@ modifySDK = (sdk) ->
           contactId = options.contactId
           sdk.loadContactEmailAddresses({contactId: contactId}).then -> result
     ).callback callback
+    
+
+  wrapMethod sdk, 'memberPaymentTransaction', (memberPaymentTransaction) ->
+    (memberPaymentId, amount, note, callback) ->
+      memberPaymentTransaction.call(this, memberPaymentId, amount, note).then((result) ->
+        memberId = result.memberId
+        teamFeeId = result.teamFeeId
+        promises.when(
+          sdk.loadMemberBalances(memberId: memberId)
+          sdk.loadTeamFees(id: teamFeeId)
+        ).then -> result
+      ).callback callback
 
 
 revertSDK = (sdk) ->
