@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### March 2, 2016 // Version 1.11.2
+- Adds error message to `memberPaymentTransaction` is `amount` is null.
+
+---
+
 ### March 2, 2016 // Version 1.11.1
 - Reloads `paymentNotes` in `saveMemberPayment` method in persistence wrapper.
 - Reloads `paymentNotes` in `memberPaymentTransaction` method in persistence wrapper.
