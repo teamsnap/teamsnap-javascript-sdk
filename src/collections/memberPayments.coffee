@@ -27,8 +27,7 @@ exports.memberPaymentTransaction = (memberPaymentId, amount, note, callback) ->
   if @isItem memberPaymentId
     memberPaymentId = memberPaymentId.id
   unless amount
-    throw new TSArgsError 'teamsnap.memberPaymentTransaction', "must provide
-     an `amount`"
+    return @reject 'You must add an amount.'
   if typeof note is 'function'
     callback = note
   params = memberPaymentId: memberPaymentId, amount: amount, note: note
