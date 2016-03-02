@@ -498,9 +498,11 @@ modifySDK = (sdk) ->
       saveMemberPayment.call(this, memberPayment).then((result) ->
         memberId = result.memberId
         teamFeeId = result.teamFeeId
+        teamId = result.teamId
         promises.when(
           sdk.loadMemberBalances(memberId: memberId)
           sdk.loadTeamFees(id: teamFeeId)
+          sdk.loadPaymentNotes(teamId: teamId)
         ).then -> result
       ).callback callback
 
