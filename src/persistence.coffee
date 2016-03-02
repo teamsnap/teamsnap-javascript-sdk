@@ -501,6 +501,7 @@ modifySDK = (sdk) ->
         promises.when(
           sdk.loadMemberBalances(memberId: memberId)
           sdk.loadTeamFees(id: teamFeeId)
+          sdk.loadPaymentNotes(memberPaymentId: memberPayment.id)
         ).then -> result
       ).callback callback
 
@@ -694,6 +695,7 @@ modifySDK = (sdk) ->
         promises.when(
           sdk.loadMemberBalances(memberId: memberId)
           sdk.loadTeamFees(id: teamFeeId)
+          sdk.loadPaymentNotes(memberPaymentId: memberPaymentId)
         ).then -> result
       ).callback callback
 

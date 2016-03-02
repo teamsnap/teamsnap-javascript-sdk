@@ -1,5 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### March 2, 2016 // Version 1.11.1
+- Reloads `paymentNotes` in `saveMemberPayment` method in persistence wrapper.
+- Reloads `paymentNotes` in `memberPaymentTransaction` method in persistence wrapper.
+
+---
+
 ### Feb 26, 2016 // Version 1.11.0
 - Adds `memberPaymentTransaction` method.
 - Adds persistence wrapper to `memberPaymentTransaction` to reload `teamFee` and `memberBalance`.
