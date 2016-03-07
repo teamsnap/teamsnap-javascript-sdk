@@ -323,7 +323,7 @@ Creates a list of importable members by current member's userId.
 
 ## Params
 * `userId`: [id] - `userId` of current member.
-* `includeArchivedTeams`: [bool] - include or exclude members from archived teams.
+* `includeArchivedTeams`: [bool] - include or exclude members from archived teams (optional).
 
 ### Examples
 ```javascript
