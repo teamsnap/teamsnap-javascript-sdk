@@ -15,7 +15,7 @@
 - [canEditTeam](#canEditTeam)
 - [canEditItem](#canEditItem)
 - [importMembersFromTeam](#importMembersFromTeam)
-- [importMembersFromTeam](#importMembersFromTeam)
+- [loadImportableMembers](#loadImportableMembers)
 
 
 ---
