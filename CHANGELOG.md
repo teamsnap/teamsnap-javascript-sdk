@@ -2,7 +2,7 @@
 
 ### March 7, 2016 // Version 1.12.0
 - Adds `importMembersFromTeam` method.
-- Add `loadImportableMembers` method.
+- Adds `loadImportableMembers` method.
 
 ---
 
