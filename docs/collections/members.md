@@ -14,6 +14,8 @@
 - [getMemberSort](#getMemberSort)
 - [canEditTeam](#canEditTeam)
 - [canEditItem](#canEditItem)
+- [importMembersFromTeam](#importMembersFromTeam)
+- [loadImportableMembers](#loadImportableMembers)
 
 
 ---
@@ -271,7 +273,7 @@ if(teamsnap.canEditTeam(member, team)){
 
 
 <a id="canEditItem"></a>
-## `canEditItem(meber, team, item)`
+## `canEditItem(member, team, item)`
 Returns true if a member has write permissions for a specific item on a team.
 
 ### Params
@@ -291,4 +293,41 @@ if(teamsnap.canEditItem(member, team, availability)){
 }else{
   // Getouttahere.
 }
+```
+
+
+---
+
+
+<a id="importMembersFromTeam"></a>
+## `importMembersFromTeam(memberIds, teamId)`
+Creates an import of members from a different team to a destination team.
+
+## Params
+* `memberIds`: [ids] - array of `memberIds` to be imported.
+* `teamId`: [id, object] - `teamId` or `team.id` of team to import members to.
+
+### Examples
+```javascript
+// ~~~~~
+// Imports members to destination team
+teamsnap.importMembersFromTeam([1, 2], 3);
+```
+
+---
+
+
+<a id="loadImportableMembers"></a>
+## `loadImportableMembers(userId, includeArchivedTeams)`
+Creates a list of importable members by current member's userId.
+
+## Params
+* `userId`: [id] - `userId` of current member.
+* `includeArchivedTeams`: [bool] - include or exclude members from archived teams (optional).
+
+### Examples
+```javascript
+// ~~~~~
+// Loads list of importable members by current member's userId
+teamsnap.loadImportableMembers(8, true);
 ```

@@ -1,5 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### March 7, 2016 // Version 1.12.0
+- Adds `importMembersFromTeam` method.
+- Adds `loadImportableMembers` method.
+
+---
+
 ### March 2, 2016 // Version 1.11.2
 - Adds error message to `memberPaymentTransaction` is `amount` is null.
 

@@ -145,3 +145,26 @@ exports.canEditItem = (member, team, item) ->
     item.href is member.href
   else
     item.links.member.href is member.href
+
+exports.importMembersFromTeam = (memberIds, teamId, callback) ->
+  unless memberIds
+    throw new TSArgsError 'teamsnap.importMembersFromTeam', 'must include
+    `memberIds`'
+  unless @isItem teamId
+    throw new TSArgsError 'teamsnap.importMembersFromTeam', "must provide
+     a teamId"
+  if @isItem teamId
+    teamId = teamId.id
+  params = sourceMemberIds: memberIds, destinationTeamId: teamId
+
+  @collections.members.exec 'importFromTeam', params, callback
+
+exports.loadImportableMembers = (userId, includeArchivedTeams, callback) ->
+  unless userId
+    throw new TSArgsError 'teamsnap.loadImportableMembers', "must provide
+     a userId"
+  if typeof includeArchivedTeams is 'function'
+    callback = includeArchivedTeams
+  params = userId: userId, includeArchivedTeams: includeArchivedTeams
+
+  @collections.members.queryItems 'importableMembers', params, callback
