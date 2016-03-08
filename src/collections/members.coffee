@@ -157,8 +157,7 @@ exports.importMembersFromTeam = (memberIds, teamId, callback) ->
     teamId = teamId.id
   params = sourceMemberIds: memberIds, destinationTeamId: teamId
 
-  @collections.members.exec('importFromTeam', params)
-    .pop().callback callback
+  @collections.members.exec 'importFromTeam', params, callback
 
 exports.loadImportableMembers = (userId, includeArchivedTeams, callback) ->
   unless userId
