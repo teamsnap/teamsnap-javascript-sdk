@@ -32,3 +32,14 @@ exports.deleteForumTopic = (forumTopic, callback) ->
       be provided'
 
   @deleteItem forumTopic, callback
+
+exports.getForumTopicPostsSort = ->
+  (itemA, itemB) ->
+    valueA = new Date(itemA.forumPosts.last().createdAt)
+    valueB = new Date(itemB.forumPosts.last().createdAt)
+    if valueA < valueB
+      -1
+    else if valueA is valueB
+      0
+    else
+      1

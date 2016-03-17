@@ -6,6 +6,7 @@
 - [createForumTopic](#createForumTopic)
 - [saveForumTopic](#saveForumTopic)
 - [deleteForumTopic](#deleteForumTopic)
+- [getForumTopicPostsSort](#getForumTopicPostsSort)
 
 
 ---
@@ -112,4 +113,22 @@ teamsnap.saveForumTopic(forumTopic).then(function(){
     // Poof! It's gone!
   });
 });
+```
+
+
+---
+
+
+<a id="getForumTopicPostsSort"></a>
+## `getForumTopicPostsSort()`
+Sorts an array of forumTopics by the date of the last forumPost.
+
+### Params
+_none_
+
+### Examples
+```javascript
+// ~~~~~
+// Sorts forumTopics by date of last forumPost.
+forumTopicArray.sort(teamsnap.getForumTopicPostsSort());
 ```

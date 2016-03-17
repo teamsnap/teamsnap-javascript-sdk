@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### March 17, 2016 // Version 1.13.0
+- Adds `getForumTopicPostsSort` method.
+
+---
+
 ### March 7, 2016 // Version 1.12.0
 - Adds `importMembersFromTeam` method.
 - Adds `loadImportableMembers` method.
