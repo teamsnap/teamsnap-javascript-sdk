@@ -1,5 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### March 21, 2016 // Version 1.12.1
+- Reloads `memberEmailAddresses` and `contactEmailAddresses` in `importMembersFromTeam` method
+  in persistence wrapper.
+
+---
+
 ### March 7, 2016 // Version 1.12.0
 - Adds `importMembersFromTeam` method.
 - Adds `loadImportableMembers` method.
