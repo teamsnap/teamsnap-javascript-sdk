@@ -707,9 +707,9 @@ modifySDK = (sdk) ->
       .then((result) ->
         memberIds = result.map (member) -> member.id
         promises.when(
-          sdk.loadMemberEmailAddresses({memberId: memberIds}).then -> result
-          sdk.loadContactEmailAddresses({memberId: memberIds}).then -> result
-        )
+          sdk.loadMemberEmailAddresses({memberId: memberIds})
+          sdk.loadContactEmailAddresses({memberId: memberIds})
+        ).then -> result
       ).callback callback
 
 revertSDK = (sdk) ->
