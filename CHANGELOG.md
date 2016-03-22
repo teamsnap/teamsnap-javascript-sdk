@@ -1,5 +1,12 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### March 22, 2016 // Version 1.13.0
+- Adds `loadMessages` method.
+- Adds `markMessageAsRead` method.
+- Adds `loadMessageData` method.
+
+---
+
 ### March 21, 2016 // Version 1.12.1
 - Reloads `memberEmailAddresses` and `contactEmailAddresses` in `importMembersFromTeam` method
   in persistence wrapper.
