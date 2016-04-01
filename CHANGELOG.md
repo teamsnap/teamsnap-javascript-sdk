@@ -1,5 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### April 1, 2016 // Version 1.13.1
+- Reloads `contacts`, `contactPhoneNumbers` and `memberPhoneNumbers` in `importMembersFromTeam` method
+  in persistence wrapper.
+
+---
+
 ### March 22, 2016 // Version 1.13.0
 - Adds `loadMessages` method.
 - Adds `markMessageAsRead` method.

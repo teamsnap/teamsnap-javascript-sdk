@@ -709,6 +709,9 @@ modifySDK = (sdk) ->
         promises.when(
           sdk.loadMemberEmailAddresses({memberId: memberIds})
           sdk.loadContactEmailAddresses({memberId: memberIds})
+          sdk.loadContacts({memberId: memberIds})
+          sdk.loadMemberPhoneNumbers({memberId: memberIds})
+          sdk.loadContactPhoneNumbers({memberId: memberIds})
         ).then -> result
       ).callback callback
 
