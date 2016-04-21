@@ -23,8 +23,11 @@ exports.saveBroadcastEmail = (broadcastEmail, callback) ->
   unless broadcastEmail.memberId
     return @reject 'You must provide a member id.', 'memberId', callback
   unless broadcastEmail.body?.trim()
-    return @reject 'You must provide the text alert body.',
-      'body', callback
+    return @reject 'You must provide the text alert body.', 'body', callback
+  unless broadcastEmail.isDraft
+    unless (Array.isArray(broadcastEmail.recipientIds) and
+    broadcastEmail.recipientIds.length > 0)
+      return @reject 'You must provide at least one recipient.', 'recipientIds'
 
   @saveItem broadcastEmail, callback
 

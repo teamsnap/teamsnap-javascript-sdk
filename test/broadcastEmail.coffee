@@ -44,11 +44,56 @@ describe 'Broadcast Emails', ->
       result.should.have.property('body', "Hello world")
       done()
 
+  it 'should not save a broadcast email with no recipients unless is a draft', (done) ->
+    email = teamsnap.createBroadcastEmail()
+    email.teamId = team.id
+    email.memberId = sender.id
+    email.body = "Hello world"
+    email.subject = "Subject!"
+    email.recipientIds = []
+    email.isDraft = false
+    teamsnap.saveBroadcastEmail(email).then (result) ->
+      result.type.should.not.equal('broadcastEmail')
+      done()
+    , (err) ->
+      expect(err).to.not.be.null
+      done()
+
+  it 'should not save a broadcast email if recipientIds is not an array', (done) ->
+    email = teamsnap.createBroadcastEmail()
+    email.teamId = team.id
+    email.memberId = sender.id
+    email.body = "Hello world"
+    email.subject = "Subject!"
+    email.recipientIds = '1,2'
+    email.isDraft = false
+    teamsnap.saveBroadcastEmail(email).then (result) ->
+      result.type.should.not.equal('broadcastEmail')
+      done()
+    , (err) ->
+      expect(err).to.not.be.null
+      done()
+
+  it 'should save a broadcast email with no recipients if it is a draft', (done) ->
+    email = teamsnap.createBroadcastEmail()
+    email.teamId = team.id
+    email.memberId = sender.id
+    email.body = "Hello world"
+    email.subject = "Subject!"
+    email.recipientIds = []
+    email.isDraft = true
+    teamsnap.saveBroadcastEmail(email).then (result) ->
+      result.type.should.equal('broadcastEmail')
+      done()
+    , (err) ->
+      expect(err).to.be.null
+      done()
+      
   it 'should be able to load all broadcast emails for a team', (done) ->
     teamsnap.loadBroadcastEmails {teamId: team.id}, (err, result) ->
       expect(err).to.be.null
       result.should.be.an('array')
-      result.should.have.property('length', 1)
+      expect(result.length).to.be.above(0)
       done()
 
   it 'should be able to load a single broadcast email', (done) ->
