@@ -2,7 +2,6 @@
 
 ### May 2, 2016 // Version 1.14.0
 - Adds `loadDivisionMessages` method.
-- Adds `markDivisionMessageAsRead` method.
 - Adds `loadDivisionMessageData` method.
 ---
 

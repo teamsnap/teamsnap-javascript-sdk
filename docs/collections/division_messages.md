@@ -3,7 +3,6 @@
 ## Methods
 
 - [loadDivisionMessages](#loadDivisionMessages)
-- [markDivisionMessageAsRead](#markDivisionMessageAsRead)
 
 
 ---
@@ -27,26 +26,4 @@ teamsnap.loadDivisionMessages(1);
 // ~~~~~
 // Loads divisionMessages for `userId: 1`.
 teamsnap.loadDivisionMessages({userId: 1});
-```
-
-
----
-
-
-<a id="markDivisionMessageAsRead"></a>
-## `markDivisionMessageAsRead(params)`
-Marks a `message` item as read.
-
-### Params
-* `params`: [int, object] - ID of the message, or the message object to mark as read.
-
-### Examples
-```javascript
-// ~~~~~
-// Marks a message as read.
-var message = teamsnap.markDivisionMessageAsRead(1);
-
-// ~~~~~
-// Marks a message as read.
-var message = teamsnap.markDivisionMessageAsRead(messageToMarkAsUnread);
 ```

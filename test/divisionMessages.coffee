@@ -33,7 +33,7 @@ describe 'DivisionMessages', ->
           i.messageId is alert.id and
           i.status is 'received'
         expect(messages[0].readAt).to.be.null
-        teamsnap.markDivisionMessageAsRead messages[0].id, (err, result) ->
+        teamsnap.markMessageAsRead messages[0].id, (err, result) ->
           console.log(err);
           expect(err).to.be.null
           expect(result.readAt).to.not.be.null
@@ -54,7 +54,7 @@ describe 'DivisionMessages', ->
           i.messageId is alert.id and
           i.status is 'received'
         expect(messages[0].readAt).to.be.null
-        teamsnap.markDivisionMessageAsRead messages[0], (err, result) ->
+        teamsnap.markMessageAsRead messages[0], (err, result) ->
           console.log(err);
           expect(err).to.be.null
           expect(result.readAt).to.not.be.null
