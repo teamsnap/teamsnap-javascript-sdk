@@ -1,5 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### May 2, 2016 // Version 1.14.0
+- Adds `loadDivisionMessages` method.
+- Adds `markDivisionMessageAsRead` method.
+- Adds `loadDivisionMessageData` method.
+---
+
 ### April 21, 2016 // Version 1.13.2
 - Adds error message to `broadcastEmail` if saving without recipients and the
   email is not a draft. Added tests for saving a broadcastEmail with no recipients.
