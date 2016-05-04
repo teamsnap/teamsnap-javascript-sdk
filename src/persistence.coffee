@@ -719,7 +719,8 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'saveBroadcastAlert', (saveBroadcastAlert) ->
     (broadcastAlert, callback) ->
       saveBroadcastAlert.call(this, broadcastAlert).then((result) ->
-        sdk.loadMessages({messageId: result.id})
+        sdk.loadMessageData({memberId: result.member.id})
+        sdk.loadMessages({messageSourceId: result.id})
         ).callback callback
 
 revertSDK = (sdk) ->
