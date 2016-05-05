@@ -1,8 +1,14 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### May 5, 2016 // Version 1.13.3
+- Reloads `messages` and `messageData` in `saveBroadcastAlert` method in persistence wrapper.
+
+---
+
 ### April 21, 2016 // Version 1.13.2
 - Adds error message to `broadcastEmail` if saving without recipients and the
   email is not a draft. Added tests for saving a broadcastEmail with no recipients.
+
 ---
 
 ### April 1, 2016 // Version 1.13.1

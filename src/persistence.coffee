@@ -197,6 +197,7 @@ modifySDK = (sdk) ->
   # 12. teamFee and memberBalance needs to reload after transaction
   # 13. memberEmailAddresses and contactEmailAddresses need to be reloaded
   # after importMembersFromTeam
+  # 14. messages and messageData need to reload after saveBroadcastAlert
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -714,6 +715,17 @@ modifySDK = (sdk) ->
           sdk.loadContactPhoneNumbers({memberId: memberIds})
         ).then -> result
       ).callback callback
+
+  wrapMethod sdk, 'saveBroadcastAlert', (saveBroadcastAlert) ->
+    (broadcastAlert, callback) ->
+      saveBroadcastAlert.call(this, broadcastAlert).then((result) ->
+        if result.member? or result.divisionMember?
+          params = {memberId: result.memberId}
+        else
+          params = {contactId: result.contactId}
+        sdk.loadMessageData(params)
+        sdk.loadMessages({messageSourceId: result.id})
+        ).callback callback
 
 revertSDK = (sdk) ->
   revertWrapMethod sdk, 'saveMember'
