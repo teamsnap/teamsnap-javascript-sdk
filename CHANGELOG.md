@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### May 4, 2016 // Version 1.13.3
+### May 5, 2016 // Version 1.13.3
 - Reloads `messages` and `messageData` in `saveBroadcastAlert` method in persistence wrapper.
 
 ---
