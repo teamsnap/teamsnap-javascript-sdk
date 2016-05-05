@@ -719,7 +719,7 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'saveBroadcastAlert', (saveBroadcastAlert) ->
     (broadcastAlert, callback) ->
       saveBroadcastAlert.call(this, broadcastAlert).then((result) ->
-        if result.member?
+        if result.member? or result.divisionMember?
           params = {memberId: result.memberId}
         else
           params = {contactId: result.contactId}
