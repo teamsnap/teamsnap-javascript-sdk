@@ -1,9 +1,7 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### May 23, 2016 // Version 1.13.4
+### May 24, 2016 // Version 1.13.4
 - Reloads `members` in `importMembersFromTeam` method in persistence wrapper.
-- Removes reloading of `contacts`, `contactPhoneNumbers` and `memberPhoneNumbers`
-  in `importMembersFromTeam` method in persistence wrapper.
 
 ---
 
