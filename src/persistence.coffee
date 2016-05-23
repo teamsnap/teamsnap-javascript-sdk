@@ -195,8 +195,7 @@ modifySDK = (sdk) ->
   # 10. deleteForumTopic needs to delete all related posts
   # 11. memberEmailAddresses need to reload when invite is sent
   # 12. teamFee and memberBalance needs to reload after transaction
-  # 13. memberEmailAddresses and contactEmailAddresses need to be reloaded
-  # after importMembersFromTeam
+  # 13. members need to be reloaded after importMembersFromTeam
   # 14. messages and messageData need to reload after saveBroadcastAlert
 
   # Load related records when a member is created
@@ -708,11 +707,7 @@ modifySDK = (sdk) ->
       .then((result) ->
         memberIds = result.map (member) -> member.id
         promises.when(
-          sdk.loadMemberEmailAddresses({memberId: memberIds})
-          sdk.loadContactEmailAddresses({memberId: memberIds})
-          sdk.loadContacts({memberId: memberIds})
-          sdk.loadMemberPhoneNumbers({memberId: memberIds})
-          sdk.loadContactPhoneNumbers({memberId: memberIds})
+          sdk.loadMembers({id: memberIds})
         ).then -> result
       ).callback callback
 
