@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### June 21, 2016 // Version 1.13.5
+- Reloads `messages` and `messageData` in `saveBroadcastEmail` method in persistence wrapper.
+
+---
+
 ### June 1, 2016 // Version 1.13.4
 - Reloads `members` in `importMembersFromTeam` method in persistence wrapper.
 

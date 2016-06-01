@@ -729,6 +729,17 @@ modifySDK = (sdk) ->
         sdk.loadMessages({messageSourceId: result.id})
         ).callback callback
 
+  wrapMethod sdk, 'saveBroadcastEmail', (saveBroadcastEmail) ->
+    (broadcastEmail, callback) ->
+      saveBroadcastEmail.call(this, broadcastEmail).then((result) ->
+        if result.member? or result.divisionMember?
+          params = {memberId: result.memberId}
+        else
+          params = {contactId: result.contactId}
+        sdk.loadMessageData(params)
+        sdk.loadMessages({messageSourceId: result.id})
+        ).callback callback
+
 revertSDK = (sdk) ->
   revertWrapMethod sdk, 'saveMember'
   revertWrapMethod sdk, 'deleteMember'

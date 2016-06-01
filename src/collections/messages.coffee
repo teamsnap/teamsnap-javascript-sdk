@@ -13,7 +13,8 @@ exports.markMessageAsRead = (params, callback) ->
   else if @isId params
     params = id: params
   else
-    throw new TSArgsError 'teamsnap.markMessageAsRead', 'a message `id` or `message` object must be provided'
+    throw new TSArgsError 'teamsnap.markMessageAsRead',
+      'a message `id` or `message` object must be provided'
 
   @collections.messages.exec('markMessageAsRead', params)
     .pop().callback callback
