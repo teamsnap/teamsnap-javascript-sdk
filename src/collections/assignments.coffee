@@ -21,8 +21,6 @@ exports.saveAssignment = (assignment, callback) ->
   unless @isItem assignment, 'assignment'
     throw new TSArgsError 'teamsnap.saveAssignment',
       "`assignment.type` must be 'assignment'"
-  unless assignment.memberId
-    return @reject 'You must choose a member.', 'memberId', callback
   unless assignment.eventId
     return @reject 'You must choose an event.', 'eventId', callback
   unless assignment.description?.trim()
