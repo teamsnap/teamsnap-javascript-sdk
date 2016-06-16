@@ -21,8 +21,6 @@ exports.saveAssignment = (assignment, callback) ->
   unless @isItem assignment, 'assignment'
     throw new TSArgsError 'teamsnap.saveAssignment',
       "`assignment.type` must be 'assignment'"
-  unless assignment.memberId
-    return @reject 'You must choose a member.', 'memberId', callback
   unless assignment.eventId
     return @reject 'You must choose an event.', 'eventId', callback
   unless assignment.description?.trim()
@@ -60,3 +58,34 @@ exports.getAssignmentSort = (reverse) ->
       else if valueA > valueB then 1
       else if valueA < valueB then -1
       else 0
+
+  exports.optOutOfAssignments = (assignmentId, callback) ->
+    unless assignmentId
+      throw new TSArgsError 'teamsnap.optOutOfAssignments', "must provide
+      an assignmentId"
+    params = assignmentId: assignmentId
+
+    @collections.assignments.exec('optOutOfAssignments', params)
+      .pop().callback callback
+
+  exports.volunteerForAssignments = (memberId, assignmentId, callback) ->
+    unless assignmentId
+      throw new TSArgsError 'teamsnap.volunteerForAssignments', "must provide
+      an assignmentId"
+
+    params = memberId: memberId, assignmentId: assignmentId
+
+    @collections.assignments.exec('volunteerForAssignments', params)
+      .pop().callback callback
+
+  exports.sendAssignmentEmails = (teamId, eventId, message, callback) ->
+    unless eventId
+      throw new TSArgsError 'teamsnap.sendAssignmentEmails', "must provide an
+      eventId"
+
+    params = teamId: teamId, eventId: eventId, message: message
+    @collections.assignments.exec('sendAssignmentEmails', params)
+      .pop().callback callback
+
+  exports.test = ->
+    console.log "test"
