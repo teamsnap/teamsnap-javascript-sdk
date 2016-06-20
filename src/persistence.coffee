@@ -199,6 +199,8 @@ modifySDK = (sdk) ->
   #contactEmailAddresses, contactPhoneNumbers need to be reloaded
   #after importMembersFromTeam
   # 14. messages and messageData need to reload after saveBroadcastAlert
+  # 15. member object needs to be removed from assignment and assignment
+  #reloaded when calling optOutOfAssignments
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -738,6 +740,12 @@ modifySDK = (sdk) ->
           params = {contactId: result.contactId}
         sdk.loadMessageData(params)
         sdk.loadMessages({messageSourceId: result.id})
+
+  wrapMethod sdk, 'optOutOfAssignments', (optOutOfAssignments) ->
+    (assignmentIds, callback) ->
+      optOutOfAssignments.call(this, assignmentIds).then((result) ->
+        delete result.member
+        sdk.loadAssignments({id: result.id})
         ).callback callback
 
 revertSDK = (sdk) ->

@@ -1,5 +1,16 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### June 23, 2016 // Version 1.15.0
+- Adds `optOutOfAssignments` method.
+- Adds `volunteerForAssignments` method.
+- Adds `sendAssignmentEmails` method.
+- Removes `memberId` validation in `saveAssignment` to save an assignment with
+  a null `memberId`.
+- Removes `member` object and reloads `loadAssignments` in `optOutOfAssignments`
+  method in persistence wrapper.
+
+---
+
 ### June 21, 2016 // Version 1.14.0
 - Adds `loadMemberPhotos` method.
 - Adds `loadMemberPhoto` method.

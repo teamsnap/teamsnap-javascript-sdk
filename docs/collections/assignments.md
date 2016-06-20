@@ -7,6 +7,9 @@
 - [saveAssignment](#saveAssignment)
 - [deleteAssignment](#deleteAssignment)
 - [getAssignmentSort](#getAssignmentSort)
+- [optOutOfAssignments](#optOutOfAssignments)
+- [volunteerForAssignments](#volunteerForAssignments)
+- [sendAssignmentEmails](#sendAssignmentEmails)
 
 
 ---
@@ -135,4 +138,65 @@ Sorts an array of assignments by member.
 // ~~~~~
 // Sorts assignments by member alphabetically
 assignmentArray.sort(teamsnap.getAssignmentSort());
+```
+
+
+---
+
+
+<a id="optOutOfAssignments"></a>
+## `optOutOfAssignments(assignmentIds, callback)`
+Unsets a member from `assignment`.
+
+### Params
+* `assignmentIds`: [ids] - assignment ids to unset a member from.
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+//Unsets a member from an `assignment`.
+teamsnap.optOutOfAssignments([9, 10]);
+```
+
+
+---
+
+
+
+<a id="volunteerForAssignments"></a>
+## `volunteerForAssignments(assignmentIds, memberId, callback)`
+Sets a member to an assignment with a null memberId.
+
+### Params
+* `assignmentIds`: [ids] - assignment ids to set a member.
+* `memberId`: [id] - id of member to be assigned.
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+//Sets a member to an assignment.
+teamsnap.volunteerForAssignments([4, 5], 1);
+```
+
+
+---
+
+
+<a id="sendAssignmentEmails"></a>
+## `sendAssignmentEmails(teamId, eventIds, message, callback)`
+Sends assignments emails for events to members on a team.
+
+### Params
+* `teamId`: [id] - team id.
+* `eventIds`: [ids] - array of ids for selected events.
+* `message`: [string] - message for email. (optional)
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+//Sends assignments emails for events to members on a team.
+teamsnap.sendAssignmentEmails(1, [2, 3], "message");
 ```

@@ -7,12 +7,10 @@ exports.loadAssignments = (params, callback) ->
 
   @loadItems 'assignment', params, callback
 
-
 exports.createAssignment = (data) ->
   @createItem data,
     type: 'assignment'
     description: ''
-
 
 exports.saveAssignment = (assignment, callback) ->
   unless assignment
@@ -29,14 +27,12 @@ exports.saveAssignment = (assignment, callback) ->
 
   @saveItem assignment, callback
 
-
 exports.deleteAssignment = (assignment, callback) ->
   unless assignment
     throw new TSArgsError 'teamsnap.deleteAssignment',
       '`assignment` must be provided'
 
   @deleteItem assignment, callback
-
 
 # Sorts assignments by their member, must have assignment.member set to
 # correctly sort
@@ -59,33 +55,34 @@ exports.getAssignmentSort = (reverse) ->
       else if valueA < valueB then -1
       else 0
 
-  exports.optOutOfAssignments = (assignmentId, callback) ->
-    unless assignmentId
-      throw new TSArgsError 'teamsnap.optOutOfAssignments', "must provide
-      an assignmentId"
-    params = assignmentId: assignmentId
+exports.optOutOfAssignments = (assignmentIds, callback) ->
+  unless assignmentIds
+    throw new TSArgsError 'teamsnap.optOutOfAssignments', 'must include
+    `assignmentIds`'
+  params = assignmentIds: assignmentIds
+  @collections.assignments.exec('optOutOfAssignments', params)
+  .pop().callback callback
 
-    @collections.assignments.exec('optOutOfAssignments', params)
-      .pop().callback callback
+exports.volunteerForAssignments = (assignmentIds, memberId, callback) ->
+  unless assignmentIds
+    throw new TSArgsError 'teamsnap.volunteerForAssignments', 'must include
+    `assignmentIds`'
+  unless @isItem memberId
+    throw new TSArgsError 'teamsnap.volunteerForAssignments', "must provide
+     a memberId"
+  if @isItem memberId
+    memberId = memberId.id
 
-  exports.volunteerForAssignments = (memberId, assignmentId, callback) ->
-    unless assignmentId
-      throw new TSArgsError 'teamsnap.volunteerForAssignments', "must provide
-      an assignmentId"
+  params = assignmentIds: assignmentIds, memberId: memberId
+  @collections.assignments.exec 'volunteerForAssignments', params, callback
 
-    params = memberId: memberId, assignmentId: assignmentId
+exports.sendAssignmentEmails = (teamId, eventIds, message, callback) ->
+  unless teamId
+    thrown new TSArgsError 'teamsnap.sendAssignmentEmails', "must provide
+    a `teamId`"
+  unless eventIds
+    throw new TSArgsError 'teamsnap.sendAssignmentEmails', "must provide
+    `eventIds`"
 
-    @collections.assignments.exec('volunteerForAssignments', params)
-      .pop().callback callback
-
-  exports.sendAssignmentEmails = (teamId, eventId, message, callback) ->
-    unless eventId
-      throw new TSArgsError 'teamsnap.sendAssignmentEmails', "must provide an
-      eventId"
-
-    params = teamId: teamId, eventId: eventId, message: message
-    @collections.assignments.exec('sendAssignmentEmails', params)
-      .pop().callback callback
-
-  exports.test = ->
-    console.log "test"
+  params = teamId: teamId, eventIds: eventIds, message: message
+  @collections.assignments.exec 'sendAssignmentEmails', params, callback
