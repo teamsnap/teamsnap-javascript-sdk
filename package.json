@@ -1,6 +1,6 @@
 {
   "name": "teamsnap.js",
-  "version": "1.13.5",
+  "version": "1.14.0",
   "description": "A JavaScript library for using the TeamSnap API.",
   "author": "Jacob Wright with TeamSnap (http://www.teamsnap.com)",
   "homepage": "https://github.com/teamsnap/teamsnap-javascript-sdk",

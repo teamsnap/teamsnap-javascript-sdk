@@ -1,5 +1,13 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### June 21, 2016 // Version 1.14.0
+- Adds `loadMemberPhotos` method.
+- Adds `loadMemberPhoto` method.
+- Adds `loadTeamPhotos` method.
+- Adds `loadTeamPhoto` method.
+
+---
+
 ### June 21, 2016 // Version 1.13.5
 - Reloads `messages` and `messageData` in `saveBroadcastEmail` method in persistence wrapper.
 
