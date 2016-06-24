@@ -146,22 +146,26 @@ assignmentArray.sort(teamsnap.getAssignmentSort());
 
 <a id="optOutOfAssignments"></a>
 ## `optOutOfAssignments(assignmentIds, callback)`
-Unsets a member from `assignment`.
+Unsets the current active member from `assignment`.
 
 ### Params
-* `assignmentIds`: [ids] - assignment ids to unset a member from.
+* `assignmentIds`: [string, object] - string of assignmentIds to unset the
+   current active member from. can also be an object.
 * `callback`: [function] - callback to be executed when the operation completes.
 
 ### Examples
 ```javascript
 // ~~~~~
-//Unsets a member from an `assignment`.
-teamsnap.optOutOfAssignments([9, 10]);
+//Unsets the current active member from an `assignment` based on `assignmentId` .
+teamsnap.optOutOfAssignments("1");
+
+// ~~~~~
+//Unsets the current active member from multiple `assignments` based on `assignmentIds` .
+teamsnap.optOutOfAssignments("1, 2, 3");
 ```
 
 
 ---
-
 
 
 <a id="volunteerForAssignments"></a>
@@ -169,15 +173,20 @@ teamsnap.optOutOfAssignments([9, 10]);
 Sets a member to an assignment with a null memberId.
 
 ### Params
-* `assignmentIds`: [ids] - assignment ids to set a member.
-* `memberId`: [id] - id of member to be assigned.
+* `assignmentIds`: [array, object] - list of assignment ids to set the current
+   active member to. Can also be an assignment object.
+* `memberId`: [int, object] - memberId or member object of current active member.
 * `callback`: [function] - callback to be executed when the operation completes.
 
 ### Examples
 ```javascript
 // ~~~~~
-//Sets a member to an assignment.
+//Sets the current active member to multiple assignments.
 teamsnap.volunteerForAssignments([4, 5], 1);
+
+// ~~~~~
+//Sets the current active member to one assignment.
+teamsnap.volunteerForAssignments([2], 1);
 ```
 
 
@@ -189,8 +198,9 @@ teamsnap.volunteerForAssignments([4, 5], 1);
 Sends assignments emails for events to members on a team.
 
 ### Params
-* `teamId`: [id] - team id.
-* `eventIds`: [ids] - array of ids for selected events.
+* `teamId`: [int] - teamId of current team.
+* `eventIds`: [array, object] - list of eventIds for selected events. Can also
+   be an event object.
 * `message`: [string] - message for email. (optional)
 * `callback`: [function] - callback to be executed when the operation completes.
 

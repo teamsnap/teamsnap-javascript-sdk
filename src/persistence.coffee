@@ -740,6 +740,7 @@ modifySDK = (sdk) ->
           params = {contactId: result.contactId}
         sdk.loadMessageData(params)
         sdk.loadMessages({messageSourceId: result.id})
+        ).callback callback
 
   wrapMethod sdk, 'optOutOfAssignments', (optOutOfAssignments) ->
     (assignmentIds, callback) ->

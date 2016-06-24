@@ -59,15 +59,19 @@ exports.optOutOfAssignments = (assignmentIds, callback) ->
   unless assignmentIds
     throw new TSArgsError 'teamsnap.optOutOfAssignments', 'must include
     `assignmentIds`'
+  if @isItem assignmentIds
+    assignmentIds = assignmentIds.id
   params = assignmentIds: assignmentIds
   @collections.assignments.exec('optOutOfAssignments', params)
   .pop().callback callback
 
 exports.volunteerForAssignments = (assignmentIds, memberId, callback) ->
   unless assignmentIds
-    throw new TSArgsError 'teamsnap.volunteerForAssignments', 'must include
-    `assignmentIds`'
-  unless @isItem memberId
+    throw new TSArgsError 'teamsnap.volunteerForAssignments', "must include
+    `assignmentIds`"
+  if @isItem assignmentIds
+    assignmentIds = assignmentIds.id
+  unless memberId
     throw new TSArgsError 'teamsnap.volunteerForAssignments', "must provide
      a memberId"
   if @isItem memberId
@@ -83,6 +87,8 @@ exports.sendAssignmentEmails = (teamId, eventIds, message, callback) ->
   unless eventIds
     throw new TSArgsError 'teamsnap.sendAssignmentEmails', "must provide
     `eventIds`"
+  if @isItem eventIds
+    eventIds = eventIds.id
 
   params = teamId: teamId, eventIds: eventIds, message: message
   @collections.assignments.exec 'sendAssignmentEmails', params, callback
