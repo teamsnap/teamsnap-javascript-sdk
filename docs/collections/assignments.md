@@ -7,6 +7,9 @@
 - [saveAssignment](#saveAssignment)
 - [deleteAssignment](#deleteAssignment)
 - [getAssignmentSort](#getAssignmentSort)
+- [optOutOfAssignments](#optOutOfAssignments)
+- [volunteerForAssignments](#volunteerForAssignments)
+- [sendAssignmentEmails](#sendAssignmentEmails)
 
 
 ---
@@ -135,4 +138,75 @@ Sorts an array of assignments by member.
 // ~~~~~
 // Sorts assignments by member alphabetically
 assignmentArray.sort(teamsnap.getAssignmentSort());
+```
+
+
+---
+
+
+<a id="optOutOfAssignments"></a>
+## `optOutOfAssignments(assignmentIds, callback)`
+Unsets the current active member from `assignment`.
+
+### Params
+* `assignmentIds`: [string, object] - string of assignmentIds to unset the
+   current active member from. Can also be an assignment object.
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+//Unsets the current active member from an `assignment` based on `assignmentId` .
+teamsnap.optOutOfAssignments("1");
+
+// ~~~~~
+//Unsets the current active member from multiple `assignments` based on `assignmentIds` .
+teamsnap.optOutOfAssignments("1, 2, 3");
+```
+
+
+---
+
+
+<a id="volunteerForAssignments"></a>
+## `volunteerForAssignments(assignmentIds, memberId, callback)`
+Sets a member to an assignment with a null memberId.
+
+### Params
+* `assignmentIds`: [array, object] - list of assignment ids to set the current
+   active member to. Can also be an assignment object.
+* `memberId`: [int, object] - memberId or member object of current active member.
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+//Sets the specified member to multiple assignments.
+teamsnap.volunteerForAssignments([4, 5], 1);
+
+// ~~~~~
+//Sets the specified member to one assignment.
+teamsnap.volunteerForAssignments([2], 1);
+```
+
+
+---
+
+
+<a id="sendAssignmentEmails"></a>
+## `sendAssignmentEmails(teamId, eventIds, message, callback)`
+Sends assignments emails for events to members on a team.
+
+### Params
+* `teamId`: [int] - teamId of current team.
+* `eventIds`: [array, object] - list of eventIds for selected events. Can also
+   be an event object.
+* `message`: [string] - message for email. (optional)
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+//Sends assignments emails for events to members on a team.
+teamsnap.sendAssignmentEmails(1, [2, 3], "message");
 ```
