@@ -150,7 +150,7 @@ Unsets the current active member from `assignment`.
 
 ### Params
 * `assignmentIds`: [string, object] - string of assignmentIds to unset the
-   current active member from. can also be an object.
+   current active member from. Can also be an assignment object.
 * `callback`: [function] - callback to be executed when the operation completes.
 
 ### Examples
@@ -181,11 +181,11 @@ Sets a member to an assignment with a null memberId.
 ### Examples
 ```javascript
 // ~~~~~
-//Sets the current active member to multiple assignments.
+//Sets the specified member to multiple assignments.
 teamsnap.volunteerForAssignments([4, 5], 1);
 
 // ~~~~~
-//Sets the current active member to one assignment.
+//Sets the specified member to one assignment.
 teamsnap.volunteerForAssignments([2], 1);
 ```
 
