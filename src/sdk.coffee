@@ -135,6 +135,7 @@ TeamSnap::getDefaultSort = ->
 
 
 TeamSnap::getCollectionForItem = (item) ->
+
   unless @collections
     throw new TSError 'You must auth() and loadCollections() before using any
     load*, save*, create*, or delete* methods.'
@@ -190,6 +191,7 @@ add require './collections/forumSubscriptions'
 add require './collections/forumTopics'
 add require './collections/leagueRegistrantDocuments'
 add require './collections/locations'
+add require './collections/memberAssignments'
 add require './collections/memberBalances'
 add require './collections/memberEmailAddresses'
 add require './collections/memberFiles'

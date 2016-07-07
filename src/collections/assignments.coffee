@@ -21,8 +21,6 @@ exports.saveAssignment = (assignment, callback) ->
   unless @isItem assignment, 'assignment'
     throw new TSArgsError 'teamsnap.saveAssignment',
       "`assignment.type` must be 'assignment'"
-  unless assignment.memberId
-    return @reject 'You must choose a member.', 'memberId', callback
   unless assignment.eventId
     return @reject 'You must choose an event.', 'eventId', callback
   unless assignment.description?.trim()
@@ -60,3 +58,16 @@ exports.getAssignmentSort = (reverse) ->
       else if valueA > valueB then 1
       else if valueA < valueB then -1
       else 0
+
+exports.sendAssignmentEmails = (teamId, eventIds, message, callback) ->
+  unless teamId
+    thrown new TSArgsError 'teamsnap.sendAssignmentEmails', "must provide
+    a `teamId`"
+  unless eventIds
+    throw new TSArgsError 'teamsnap.sendAssignmentEmails', "must provide
+    `eventIds`"
+  if @isItem eventIds
+    eventIds = eventIds.id
+
+  params = teamId: teamId, eventIds: eventIds, message: message
+  @collections.assignments.exec 'sendAssignmentEmails', params, callback

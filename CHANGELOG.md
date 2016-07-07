@@ -1,5 +1,18 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### July 7, 2016 // Version 1.15.0
+- Removes `memberId` validation from `saveAssignment` method.
+- Adds `sendAssignmentEmails` method.
+- Adds `loadMemberAssignments` method.
+- Adds `createMemberAssignment` method.
+- Adds `saveMemberAssignment` method.
+- Adds `removeMemberAssignment` method.
+- Adds `memberAssignment` type.
+- Reloads `assignments` in `saveMemberAssignment` method in persistence wrapper.
+- Reloads `assignments` in `removeMemberAssignment` method in persistence wrapper.
+
+---
+
 ### June 21, 2016 // Version 1.14.0
 - Adds `loadMemberPhotos` method.
 - Adds `loadMemberPhoto` method.
