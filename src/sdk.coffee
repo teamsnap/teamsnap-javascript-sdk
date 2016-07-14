@@ -135,7 +135,6 @@ TeamSnap::getDefaultSort = ->
 
 
 TeamSnap::getCollectionForItem = (item) ->
-
   unless @collections
     throw new TSError 'You must auth() and loadCollections() before using any
     load*, save*, create*, or delete* methods.'
