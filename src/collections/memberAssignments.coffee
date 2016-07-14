@@ -21,9 +21,9 @@ exports.saveMemberAssignment = (memberAssignment, callback) ->
 
   @saveItem memberAssignment, callback
 
-exports.removeMemberAssignment = (memberAssignment, callback) ->
+exports.deleteMemberAssignment = (memberAssignment, callback) ->
   unless memberAssignment
-    throw new TSArgsError 'teamsnap.removeMemberAssignment',
+    throw new TSArgsError 'teamsnap.deleteMemberAssignment',
       '`memberAssignment` must be provided'
 
   @deleteItem memberAssignment, callback
