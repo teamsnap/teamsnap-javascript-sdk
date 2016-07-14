@@ -5,7 +5,7 @@
 - [loadMemberAssignments](#loadMemberAssignments)
 - [createMemberAssignment](#createMemberAssignment)
 - [saveMemberAssignment](#saveMemberAssignment)
-- [removeMemberAssignment](#removeMemberAssignment)
+- [deleteMemberAssignment](#deleteMemberAssignment)
 
 
 ---
@@ -76,17 +76,17 @@ teamsnap.saveMemberAssignment(memberAsssignment);
 ---
 
 
-<a id="removeMemberAssignment"></a>
-## `removeMemberAssignment(memberAsssignment, callback)`
-Removes a member from a `memberAsssignment` item.
+<a id="deleteMemberAssignment"></a>
+## `deleteMemberAssignment(memberAsssignment, callback)`
+Deletes a member from an `assignment` item.
 
 ### Params
-* `memberAssignment`: [object] - memberAssignment item to remove member from.
+* `memberAssignment`: [object] - memberAssignment item to delete.
 * `callback`: [function] - callback to be executed when the operation completes.
 
 ### Examples
 ``` javascript
 // ~~~~~
-// Remove member from `memberAsssignment` item.
-teamsnap.removeMemberAssignment(memberAsssignment);
+// Delete member from `assignment` item.
+teamsnap.deleteMemberAssignment(memberAsssignment);
 ```
