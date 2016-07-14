@@ -6,10 +6,10 @@
 - Adds `loadMemberAssignments` method.
 - Adds `createMemberAssignment` method.
 - Adds `saveMemberAssignment` method.
-- Adds `removeMemberAssignment` method.
+- Adds `deleteMemberAssignment` method.
 - Adds `memberAssignment` type.
 - Reloads `assignments` in `saveMemberAssignment` method in persistence wrapper.
-- Reloads `assignments` in `removeMemberAssignment` method in persistence wrapper.
+- Reloads `assignments` in `deleteMemberAssignment` method in persistence wrapper.
 
 ---
 
