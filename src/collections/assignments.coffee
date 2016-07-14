@@ -60,7 +60,7 @@ exports.getAssignmentSort = (reverse) ->
       else 0
 
 exports.sendAssignmentEmails = (teamId, eventIds, message, callback) ->
-  unless teamId
+  unless @isId teamId
     thrown new TSArgsError 'teamsnap.sendAssignmentEmails', "must provide
     a `teamId`"
   unless eventIds
