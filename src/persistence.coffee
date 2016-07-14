@@ -200,7 +200,7 @@ modifySDK = (sdk) ->
   #after importMembersFromTeam
   # 14. messages and messageData need to reload after saveBroadcastAlert
   # 15. assignment needs to reload after saveMemberAssignment
-  # 16. assignment needs to reload after removeMemberAssignment
+  # 16. assignment needs to reload after deleteMemberAssignment
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -748,9 +748,9 @@ modifySDK = (sdk) ->
         sdk.loadAssignments({id: result.assignmentId})
         ).callback callback
 
-  wrapMethod sdk, 'removeMemberAssignment', (removeMemberAssignment) ->
+  wrapMethod sdk, 'deleteMemberAssignment', (deleteMemberAssignment) ->
     (memberAssignment, callback) ->
-      removeMemberAssignment.call(this, memberAssignment).then((result) ->
+      deleteMemberAssignment.call(this, memberAssignment).then((result) ->
         sdk.loadAssignments({id: memberAssignment.assignmentId}).then -> result
         ).callback callback
 
