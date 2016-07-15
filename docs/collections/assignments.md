@@ -7,6 +7,7 @@
 - [saveAssignment](#saveAssignment)
 - [deleteAssignment](#deleteAssignment)
 - [getAssignmentSort](#getAssignmentSort)
+- [sendAssignmentEmails](#sendAssignmentEmails)
 
 
 ---
@@ -136,3 +137,24 @@ Sorts an array of assignments by member.
 // Sorts assignments by member alphabetically
 assignmentArray.sort(teamsnap.getAssignmentSort());
 ```
+
+
+---
+
+
+<a id="sendAssignmentEmails"></a>
+## `sendAssignmentEmails(teamId, eventIds, message, callback)`
+Sends assignments emails for events to members on a team.
+
+### Params
+* `teamId`: [int] - teamId of current team.
+* `eventIds`: [array, object] - list of eventIds for selected events. Can also
+   be an event object.
+* `message`: [string] - message for email. (optional)
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+//Sends assignments emails for events to members on a team.
+teamsnap.sendAssignmentEmails(1, [2, 3], "message");

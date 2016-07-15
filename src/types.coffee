@@ -32,6 +32,7 @@ types = [
   'leagueRegistrantDocument'
   'location'
   'member'
+  'memberAssignment'
   'memberBalance'
   'memberEmailAddress'
   'memberFile'
