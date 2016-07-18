@@ -754,6 +754,12 @@ modifySDK = (sdk) ->
         sdk.loadAssignments({id: memberAssignment.assignmentId}).then -> result
         ).callback callback
 
+  wrapMethod sdk, 'saveAssignment', (saveAssignment) ->
+    (assignment, callback) ->
+      saveAssignment.call(this, assignment, callback).then((result) ->
+        sdk.loadMemberAssignments({id: result.id})
+        ).callback callback
+
 revertSDK = (sdk) ->
   revertWrapMethod sdk, 'saveMember'
   revertWrapMethod sdk, 'deleteMember'
