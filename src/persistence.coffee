@@ -201,6 +201,7 @@ modifySDK = (sdk) ->
   # 14. messages and messageData need to reload after saveBroadcastAlert
   # 15. assignment needs to reload after saveMemberAssignment
   # 16. assignment needs to reload after deleteMemberAssignment
+  # 17. memberAssignment needs to reload after saveAssignment
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -729,7 +730,7 @@ modifySDK = (sdk) ->
           params = {contactId: result.contactId}
         sdk.loadMessageData(params)
         sdk.loadMessages({messageSourceId: result.id})
-        ).callback callback
+      ).callback callback
 
   wrapMethod sdk, 'saveBroadcastEmail', (saveBroadcastEmail) ->
     (broadcastEmail, callback) ->
@@ -740,25 +741,25 @@ modifySDK = (sdk) ->
           params = {contactId: result.contactId}
         sdk.loadMessageData(params)
         sdk.loadMessages({messageSourceId: result.id})
-        ).callback callback
+      ).callback callback
 
   wrapMethod sdk, 'saveMemberAssignment', (saveMemberAssignment) ->
     (memberAssignment, callback) ->
       saveMemberAssignment.call(this, memberAssignment).then((result) ->
         sdk.loadAssignments({id: result.assignmentId})
-        ).callback callback
+      ).callback callback
 
   wrapMethod sdk, 'deleteMemberAssignment', (deleteMemberAssignment) ->
     (memberAssignment, callback) ->
       deleteMemberAssignment.call(this, memberAssignment).then((result) ->
         sdk.loadAssignments({id: memberAssignment.assignmentId}).then -> result
-        ).callback callback
+      ).callback callback
 
   wrapMethod sdk, 'saveAssignment', (saveAssignment) ->
     (assignment, callback) ->
       saveAssignment.call(this, assignment, callback).then((result) ->
         sdk.loadMemberAssignments({id: result.id})
-        ).callback callback
+      ).callback callback
 
 revertSDK = (sdk) ->
   revertWrapMethod sdk, 'saveMember'
