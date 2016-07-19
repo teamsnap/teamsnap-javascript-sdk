@@ -758,11 +758,7 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'deleteAssignment', (deleteAssignment) ->
     (assignment, callback) ->
       if assignment.memberAssignments.length
-        toRemove = []
-        assignment.memberAssignments.forEach (memberAssignment) ->
-          toRemove.push memberAssignment.member...
-          toRemove.push memberAssignment.event...
-          toRemove.push memberAssignment.assignment...
+        toRemove = assignment.memberAssignments
         linking.unlinkItems toRemove, lookup
 
       deleteAssignment.call(this, assignment).then((result) ->
@@ -779,9 +775,11 @@ modifySDK = (sdk) ->
     (memberAssignment, callback) ->
       deleteMemberAssignment.call(this, memberAssignment, callback)
       .then((result) ->
-        sdk.loadAssignments({id: memberAssignment.assignmentId}).then -> result
+        sdk.loadAssignments({id: memberAssignment.assignmentId})
+        .then (assignment) ->
+          assignment[0].member = null
+          return result
       ).callback callback
-
 
 revertSDK = (sdk) ->
   revertWrapMethod sdk, 'saveMember'
