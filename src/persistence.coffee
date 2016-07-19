@@ -187,7 +187,7 @@ modifySDK = (sdk) ->
   # 2. deleteContact needs to remove emails and phones
   # 3. saveEvent needs to load avails when new
   # 4. saveEvent needs to remove events in repeating event series
-  # 5. deleteEvent needs to remove avails and assignments
+  # 5. deleteEvent needs to remove avails, assignments and memberAssignments
   # 6. deleteEvent needs to remove other events when using include
   # 7. saveTrackedItem needs to load trackedItemStatuses when new
   # 8. deleteTrackedItem needs to remove trackedItemStatuses
@@ -199,9 +199,10 @@ modifySDK = (sdk) ->
   #contactEmailAddresses, contactPhoneNumbers need to be reloaded
   #after importMembersFromTeam
   # 14. messages and messageData need to reload after saveBroadcastAlert
-  # 15. assignment needs to reload after saveMemberAssignment
-  # 16. assignment needs to reload after deleteMemberAssignment
-  # 17. memberAssignment needs to reload after saveAssignment
+  # 15. memberAssignments need to load after saveAssignment
+  # 16. deleteAssignment needs to remove memberAssignments
+  # 17. assignments need to load after saveMemberAssignment
+  # 18. assignments need to load after deleteMemberAssignment
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -229,6 +230,7 @@ modifySDK = (sdk) ->
       toRemove.push member.memberPayments...
       toRemove.push member.memberStatistics...
       toRemove.push member.statisticData...
+      toRemove.push member.memberAssignments...
 
       linking.unlinkItems toRemove, lookup
       deleteMember.call(this, member, callback).then((result) ->
@@ -370,6 +372,11 @@ modifySDK = (sdk) ->
         toRemove.push event.assignments...
         toRemove.push event.availabilities...
         toRemove.push event.eventStatistics...
+
+      event.assignments.forEach (assignment) ->
+        if assignment.memberAssignments.length
+          assignments.memberAssignments.forEach (memberAssignment) ->
+            toRemove.push memberAssignment...
 
       linking.unlinkItems toRemove, lookup
       deleteEvent.call(this, event, include, notify, notifyAs, callback)
@@ -692,7 +699,6 @@ modifySDK = (sdk) ->
           sdk.loadContactEmailAddresses({contactId: contactId}).then -> result
     ).callback callback
 
-
   wrapMethod sdk, 'memberPaymentTransaction', (memberPaymentTransaction) ->
     (memberPaymentId, amount, note, callback) ->
       memberPaymentTransaction.call(this, memberPaymentId, amount, note)
@@ -743,6 +749,26 @@ modifySDK = (sdk) ->
         sdk.loadMessages({messageSourceId: result.id})
       ).callback callback
 
+  wrapMethod sdk, 'saveAssignment', (saveAssignment) ->
+    (assignment, callback) ->
+      saveAssignment.call(this, assignment, callback).then((result) ->
+        sdk.loadMemberAssignments({assignmentId: result.id})
+      ).callback callback
+
+  wrapMethod sdk, 'deleteAssignment', (deleteAssignment) ->
+    (assignment, callback) ->
+      if assignment.memberAssignments.length
+        toRemove = []
+        assignment.memberAssignments.forEach (memberAssignment) ->
+          toRemove.push memberAssignment.member...
+          toRemove.push memberAssignment.event...
+          toRemove.push memberAssignment.assignment...
+        linking.unlinkItems toRemove, lookup
+
+      deleteAssignment.call(this, assignment).then((result) ->
+        sdk.loadEvents({eventId: assignment.eventId}).then -> result
+      ).callback callback
+
   wrapMethod sdk, 'saveMemberAssignment', (saveMemberAssignment) ->
     (memberAssignment, callback) ->
       saveMemberAssignment.call(this, memberAssignment).then((result) ->
@@ -751,15 +777,11 @@ modifySDK = (sdk) ->
 
   wrapMethod sdk, 'deleteMemberAssignment', (deleteMemberAssignment) ->
     (memberAssignment, callback) ->
-      deleteMemberAssignment.call(this, memberAssignment).then((result) ->
+      deleteMemberAssignment.call(this, memberAssignment, callback)
+      .then((result) ->
         sdk.loadAssignments({id: memberAssignment.assignmentId}).then -> result
       ).callback callback
 
-  wrapMethod sdk, 'saveAssignment', (saveAssignment) ->
-    (assignment, callback) ->
-      saveAssignment.call(this, assignment, callback).then((result) ->
-        sdk.loadMemberAssignments({id: result.id})
-      ).callback callback
 
 revertSDK = (sdk) ->
   revertWrapMethod sdk, 'saveMember'

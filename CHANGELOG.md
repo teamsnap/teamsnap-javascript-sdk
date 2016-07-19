@@ -1,7 +1,12 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### July 18, 2016 // Version 1.15.1
+### July 19, 2016 // Version 1.15.1
 - Reloads `memberAssignments` in `saveAssignment` method in persistence wrapper.
+- Reloads `assignments` in `saveMemberAssignment` method in persistence wrapper.
+- Reloads `assignments` in `deleteMemberAssignment` method in persistence wrapper.
+- Removes `memberAssignments` in `deleteAssignment` method in persistence wrapper.
+- Removes `memberAssignments` in `deleteMember` method in persistence wrapper.
+- Removes `memberAssignments` in `deleteEvent` method in persistence wrapper.
 
 ---
 
