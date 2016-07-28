@@ -59,15 +59,18 @@ exports.getAssignmentSort = (reverse) ->
       else if valueA < valueB then -1
       else 0
 
-exports.sendAssignmentEmails = (teamId, eventIds, message, callback) ->
+exports.sendAssignmentEmails = (teamId, eventIds, message, sendingMemberId, callback) ->
   unless @isId teamId
-    thrown new TSArgsError 'teamsnap.sendAssignmentEmails', "must provide
+    throw new TSArgsError 'teamsnap.sendAssignmentEmails', "must provide
     a `teamId`"
   unless eventIds
     throw new TSArgsError 'teamsnap.sendAssignmentEmails', "must provide
     `eventIds`"
   if @isItem eventIds
     eventIds = eventIds.id
+  unless @isId sendingMemberId
+    throw new TSArgsError 'teamsnap.sendAssignmentEmails', "must provide
+    a `sendingMemberId`"
 
-  params = teamId: teamId, eventIds: eventIds, message: message
+  params = teamId: teamId, eventIds: eventIds, message: message, sendingMemberId: sendingMemberId
   @collections.assignments.exec 'sendAssignmentEmails', params, callback

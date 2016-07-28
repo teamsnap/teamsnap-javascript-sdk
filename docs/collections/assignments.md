@@ -143,7 +143,7 @@ assignmentArray.sort(teamsnap.getAssignmentSort());
 
 
 <a id="sendAssignmentEmails"></a>
-## `sendAssignmentEmails(teamId, eventIds, message, callback)`
+## `sendAssignmentEmails(teamId, eventIds, message, sendingMemberId, callback)`
 Sends assignments emails for events to members on a team.
 
 ### Params
@@ -151,10 +151,11 @@ Sends assignments emails for events to members on a team.
 * `eventIds`: [array, object] - list of eventIds for selected events. Can also
    be an event object.
 * `message`: [string] - message for email. (optional)
+* `sendingMemberId`: [int] - memberId of member sending the email.
 * `callback`: [function] - callback to be executed when the operation completes.
 
 ### Examples
 ```javascript
 // ~~~~~
 //Sends assignments emails for events to members on a team.
-teamsnap.sendAssignmentEmails(1, [2, 3], "message");
+teamsnap.sendAssignmentEmails(1, [2, 3], 10, "message");
