@@ -67,8 +67,14 @@ exports.bulkLoad = (teamId, types, callback) ->
     types.splice types.indexOf('availability'), 1
 
   params = teamId: teamId, types: types.map(@underscoreType).join(',')
-  if loadParams?.scopeTo?
-    params.scopeTo = @underscoreType(loadParams.scopeTo)
+  if loadParams?
+    if loadParams.scopeTo?
+      params.scopeTo = @underscoreType(loadParams.scopeTo)
+    # Check loadParams for filters
+    for key, value of loadParams
+      if key.indexOf('__') isnt -1
+        params[key] = value
+
   @collections.root.queryItems 'bulkLoad', params, callback
 
 

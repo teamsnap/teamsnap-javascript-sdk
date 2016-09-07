@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### September 7, 2016 // Version 1.15.3
+- Ensure bulkLoad filters are properly being parsed.
+
+---
+
 ### July 28, 2016 // Version 1.15.2
 - Adds `sendingMemberId` to `sendAssignmentEmails` method.
 
