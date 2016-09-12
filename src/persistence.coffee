@@ -375,7 +375,7 @@ modifySDK = (sdk) ->
 
       event.assignments.forEach (assignment) ->
         if assignment.memberAssignments.length
-          assignments.memberAssignments.forEach (memberAssignment) ->
+          assignment.memberAssignments.forEach (memberAssignment) ->
             toRemove.push memberAssignment...
 
       linking.unlinkItems toRemove, lookup

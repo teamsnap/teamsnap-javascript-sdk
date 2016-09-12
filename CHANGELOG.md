@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### September 12, 2016 // Version 1.15.4
+- Fix typo in `deleteEvent` method in persistence wrapper.
+
+---
+
 ### September 7, 2016 // Version 1.15.3
 - Ensure bulkLoad filters are properly being parsed.
 
