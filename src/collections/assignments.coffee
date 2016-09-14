@@ -74,3 +74,15 @@ exports.sendAssignmentEmails = (teamId, eventIds, message, sendingMemberId, call
 
   params = teamId: teamId, eventIds: eventIds, message: message, sendingMemberId: sendingMemberId
   @collections.assignments.exec 'sendAssignmentEmails', params, callback
+
+exports.reorderAssignments = (eventId, assignmentIds, callback) ->
+  unless @isId eventId
+    throw new TSArgsError 'teamsnap.reorderAssignments', '`eventId`
+      must be provided'
+  unless assignmentIds and Array.isArray assignmentIds
+    throw new TSArgsError 'teamsnap.reorderAssignments', 'You must provide
+      an array of ordered Assignments IDs'
+
+  params = eventId: eventId, sortedIds: assignmentIds
+  @collections.assignments.exec('reorderAssignments', params)
+    .callback callback
