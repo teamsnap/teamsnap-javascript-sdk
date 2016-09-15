@@ -8,7 +8,6 @@
 - [deleteAssignment](#deleteAssignment)
 - [getAssignmentSort](#getAssignmentSort)
 - [sendAssignmentEmails](#sendAssignmentEmails)
-- [reorderAssignments](#reorderAssignments)
 
 
 ---
@@ -160,24 +159,3 @@ Sends assignments emails for events to members on a team.
 // ~~~~~
 //Sends assignments emails for events to members on a team.
 teamsnap.sendAssignmentEmails(1, [2, 3], 10, "message");
-```
-
-
----
-
-
-<a id="reorderAssignments"></a>
-## `reorderAssignments(eventId, assignmentIds, callback)`
-Command to reorder `assignments` items based on an array of `assignmentIds`.
-
-### Params
-* `eventId`: [int] - an `eventId`.
-* `assignmentIds`: [array] - an array of sorted `assignmentId`s.
-* `callback`: [function] - callback to be executed when the operation completes.
-
-### Examples
-```javascript
-// ~~~~~
-// Reorders assignment items.
-teamsnap.reorderAssignments(123, [4,5,8,7,6]);
-```
