@@ -1,10 +1,5 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### September 14, 2016 // Version 1.16.0
-- Adds `reorderAssignments` method to `assignments`.
-
----
-
 ### September 12, 2016 // Version 1.15.4
 - Fix typo in `deleteEvent` method in persistence wrapper.
 
