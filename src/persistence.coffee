@@ -734,8 +734,8 @@ modifySDK = (sdk) ->
           params = {memberId: result.memberId}
         else
           params = {contactId: result.contactId}
-        sdk.loadMessageData(params)
         sdk.loadMessages({messageSourceId: result.id})
+        sdk.loadMessageData(params)
       ).callback callback
 
   wrapMethod sdk, 'saveBroadcastEmail', (saveBroadcastEmail) ->
@@ -745,8 +745,8 @@ modifySDK = (sdk) ->
           params = {memberId: result.memberId}
         else
           params = {contactId: result.contactId}
-        sdk.loadMessageData(params)
         sdk.loadMessages({messageSourceId: result.id})
+        sdk.loadMessageData(params)
       ).callback callback
 
   wrapMethod sdk, 'saveAssignment', (saveAssignment) ->
@@ -779,6 +779,17 @@ modifySDK = (sdk) ->
         .then (assignment) ->
           assignment[0].member = null
           return result
+      ).callback callback
+
+  wrapMethod sdk, 'markMessageAsRead', (markMessageAsRead) ->
+    (messageId, callback) ->
+      markMessageAsRead.call(this, messageId, callback).then((result) ->
+        if result.member? or result.divisionMember?
+          params = {memberId: result.memberId}
+        else
+          params = {contactId: result.contactId}
+        sdk.loadMessages({id: result.messageId})
+        sdk.loadMessageData(params)
       ).callback callback
 
 revertSDK = (sdk) ->
