@@ -203,6 +203,7 @@ modifySDK = (sdk) ->
   # 16. deleteAssignment needs to remove memberAssignments
   # 17. assignments need to load after saveMemberAssignment
   # 18. assignments need to load after deleteMemberAssignment
+  # 19. messages and messageData need to reload after markMessageAsRead
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
