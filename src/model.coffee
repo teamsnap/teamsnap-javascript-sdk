@@ -92,6 +92,9 @@ class ScopedCollection extends Collection
   file: (commandName, params, progress, callback) ->
     @commands.fileExec @_request, commandName, params, progress, callback
 
+  # Query a command on the collection with the given parameters
+  search: (commandName, params, callback) ->
+    @commands.loadItems @_request, commandName, params, callback
 
 # A representation of a Collection+JSON item
 class Item

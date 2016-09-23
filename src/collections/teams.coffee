@@ -125,6 +125,13 @@ exports.resetStatistics = (teamId, callback) ->
   @collections.teams.exec('resetStatistics', params)
   .callback callback
 
+exports.teamsDivisionSearch = (params, callback) ->
+  unless params.divisionId
+    throw new TSArgsError 'teamsnap.teamsDivisionSearch',
+      "`divisionId` must be provided"
+
+  @collections.teams.search('divisionSearch', params, callback)
+
 # Converts memberId or memberIds into an array
 cleanArray = (obj, prop) ->
   plural = prop + 's'
