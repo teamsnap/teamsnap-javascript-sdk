@@ -203,6 +203,7 @@ modifySDK = (sdk) ->
   # 16. deleteAssignment needs to remove memberAssignments
   # 17. assignments need to load after saveMemberAssignment
   # 18. assignments need to load after deleteMemberAssignment
+  # 19. messages and messageData need to reload after markMessageAsRead
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -779,6 +780,18 @@ modifySDK = (sdk) ->
         .then (assignment) ->
           assignment[0].member = null
           return result
+      ).callback callback
+
+  wrapMethod sdk, 'markMessageAsRead', (markMessageAsRead) ->
+    (messageId, callback) ->
+      markMessageAsRead.call(this, messageId, callback).then((result) ->
+        if result.member? or result.divisionMember?
+          params = {memberId: result.memberId}
+        else
+          params = {contactId: result.contactId}
+        params.messageType = 'alert,email'
+        sdk.loadMessages({id: result.messageId})
+        sdk.loadMessageData(params)
       ).callback callback
 
 revertSDK = (sdk) ->
