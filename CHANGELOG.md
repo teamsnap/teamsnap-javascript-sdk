@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### September 26, 2016 // Version 1.16.1
+### September 27, 2016 // Version 1.16.1
 - Reloads `messages` and `messageData` in `markMessageAsRead` method in persistence wrapper.
 
 ---
