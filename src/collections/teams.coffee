@@ -130,7 +130,7 @@ exports.teamsDivisionSearch = (params, callback) ->
     throw new TSArgsError 'teamsnap.teamsDivisionSearch',
       "`divisionId` must be provided"
 
-  @collections.teams.search('divisionSearch', params, callback)
+  @collections.teams.queryItems('divisionSearch', params, callback)
 
 # Converts memberId or memberIds into an array
 cleanArray = (obj, prop) ->
