@@ -4,6 +4,7 @@
 
 - [loadMessages](#loadMessages)
 - [markMessageAsRead](#markMessageAsRead)
+- [bulkDeleteMessages](#bulkDeleteMessages)
 
 
 ---
@@ -49,4 +50,22 @@ var message = teamsnap.markMessageAsRead(1);
 // ~~~~~
 // Marks a message as read.
 var message = teamsnap.markMessageAsRead(messageToMarkAsUnread);
+```
+
+---
+
+
+<a id="bulkDeleteMessages"></a>
+## `bulkDeleteMessages(params)`
+Deletes an array of `message` items.
+
+### Params
+* `params`: [array] - An array of message items.
+
+### Examples
+```javascript
+// ~~~~~
+// Deletes an array of messages.
+var messages = [message1, message2, message3]
+teamsnap.bulkDeleteMessages(messages);
 ```

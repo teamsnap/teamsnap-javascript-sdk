@@ -18,3 +18,18 @@ exports.markMessageAsRead = (params, callback) ->
 
   @collections.messages.exec('markMessageAsRead', params)
     .pop().callback callback
+
+exports.bulkDeleteMessages = (params, callback) ->
+  if !Array.isArray params
+    throw new TSArgsError 'teamsnap.bulkDeleteMessages',
+      'an array of `messages` must be provided'
+
+  requestParams = { id: [] }
+  for msg in params
+    unless @isItem msg, 'message'
+      throw new TSArgsError 'teamsnap.bulkDeleteMessages',
+        "Items in params array must have a 'message' `type`"
+    id = msg.id
+    requestParams.id.push id
+
+  @collections.messages.exec('bulkDelete', requestParams).callback callback
