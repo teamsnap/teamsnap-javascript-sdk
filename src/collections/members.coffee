@@ -97,6 +97,13 @@ exports.disableMember = (memberId, callback) ->
   @collections.members.exec('disableMember', params)
     .pop().callback callback
 
+exports.divisionSearchMembers = (params, callback) ->
+  unless params.divisionId
+    throw new TSArgsError 'teamsnap.divisionSearchMembers',
+      "`divisionId` must be provided"
+
+  @collections.members.queryItems('divisionSearch', params, callback)
+
 
 # Helper to output a member's name, forward or reverse (reverse will use comma)
 exports.memberName = (member, reverse, forSort) ->
