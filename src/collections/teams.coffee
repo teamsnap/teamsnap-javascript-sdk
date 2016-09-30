@@ -43,7 +43,6 @@ exports.deleteTeam = (team, callback) ->
   @deleteItem team, callback
 
 
-
 # Loads all items associated with a team, optionally limited by the types array
 exports.bulkLoad = (teamId, types, callback) ->
   if typeof teamId is 'object'
@@ -95,6 +94,7 @@ exports.invite = (options = {}) ->
 
   @collections.teams.exec('invite', options)
 
+
 exports.updateTimeZone = (options = {}) ->
 
   unless options.timeZone
@@ -111,6 +111,7 @@ exports.updateTimeZone = (options = {}) ->
 
   @collections.teams.exec('updateTimeZone', options)
 
+
 exports.resetStatistics = (teamId, callback) ->
   unless teamId
     throw new TSArgsError 'teamsnap.resetStatistics',
@@ -125,12 +126,14 @@ exports.resetStatistics = (teamId, callback) ->
   @collections.teams.exec('resetStatistics', params)
   .callback callback
 
-exports.teamsDivisionSearch = (params, callback) ->
+
+exports.divisionSearchTeams = (params, callback) ->
   unless params.divisionId
-    throw new TSArgsError 'teamsnap.teamsDivisionSearch',
+    throw new TSArgsError 'teamsnap.divisionSearchTeams',
       "`divisionId` must be provided"
 
   @collections.teams.queryItems('divisionSearch', params, callback)
+
 
 # Converts memberId or memberIds into an array
 cleanArray = (obj, prop) ->

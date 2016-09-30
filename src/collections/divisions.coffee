@@ -1,4 +1,3 @@
-# load all the divisions the current user has access to
 exports.loadDivisions = (params = {}, callback) ->
   if typeof params is 'function'
     callback = params
@@ -10,16 +9,18 @@ exports.loadDivisions = (params = {}, callback) ->
       params.userId = me.id
       @loadItems 'division', params, callback
 
-# load a single division
+
 exports.loadDivision = (divisionId, callback) ->
   unless @isId divisionId
     throw new TSArgsError 'teamsnap.loadDivision', 'divisionId must be provided'
   @loadItem 'division', id: divisionId, callback
 
-exports.createDivision = (division) ->
+
+exports.createDivision = (data) ->
   @createItem data,
     type: 'division'
     name: ''
+
 
 exports.saveDivision = (division, callback) ->
   unless division
@@ -31,6 +32,7 @@ exports.saveDivision = (division, callback) ->
 
   @saveItem division, callback
 
+
 exports.deleteDivision = (division, callback) ->
   unless division
     throw new TSArgsError 'teamsnap.deleteDivision',
@@ -38,15 +40,18 @@ exports.deleteDivision = (division, callback) ->
 
   @deleteItem division, callback
 
+
 exports.ancestorDivisions = (divisionId, callback) ->
   unless @isId divisionId
     throw new TSArgsError 'teamsnap.loadDivision', 'divisionId must be provided'
   @collections.divisions.queryItems('ancestors', id: divisionId, callback)
 
+
 exports.descendantDivisions = (divisionId, callback) ->
   unless @isId divisionId
     throw new TSArgsError 'teamsnap.loadDivision', 'divisionId must be provided'
   @collections.divisions.queryItems('descendants', id: divisionId, callback)
+
 
 exports.childrenDivisions = (divisionId, callback) ->
   unless @isId divisionId

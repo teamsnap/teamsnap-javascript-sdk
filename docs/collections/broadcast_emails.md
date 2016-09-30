@@ -6,6 +6,7 @@
 - [createBroadcastEmail](#createBroadcastEmail)
 - [saveBroadcastEmail](#saveBroadcastEmail)
 - [deleteBroadcastEmail](#deleteBroadcastEmail)
+- [bulkDeleteBroadcastEmails](#bulkDeleteBroadcastEmails)
 
 
 ---
@@ -115,3 +116,25 @@ teamsnap.saveBroadcastEmail(broadcastEmail).then(function(){
   });
 });
 ```
+
+
+---
+
+
+<a id="bulkDeleteBroadcastEmails"></a>
+## `bulkDeleteBroadcastEmails(broadcastEmailIds, callback)`
+Bulk deletes a list of `broadcastEmail` item.
+
+### Params
+* `broadcastEmailIds`: [array] - An array of broadcastEmailIds to be deleted.
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+// Deletes a broadcastEmail item.
+teamsnap.bulkDeleteBroadcastEmails([1,2,3])
+```
+
+
+---

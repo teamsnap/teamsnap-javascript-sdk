@@ -16,6 +16,7 @@
 - [canEditItem](#canEditItem)
 - [importMembersFromTeam](#importMembersFromTeam)
 - [loadImportableMembers](#loadImportableMembers)
+- [divisionSearchMembers](#divisionSearchMembers)
 
 
 ---
@@ -331,3 +332,24 @@ Creates a list of importable members by current member's userId.
 // Loads list of importable members by current member's userId
 teamsnap.loadImportableMembers(8, true);
 ```
+
+
+---
+
+
+<a id="divisionSearchMembers"></a>
+## `divisionSearchMembers(params)`
+Search for members in a division.
+
+### Params
+* `params`: [object] - params to search, must include `divisionId`
+
+### Examples
+```javascript
+// ~~~~~
+// Return all the active members in a division
+teamsnap.divisionSearchMembers({divisionId: 1, isActive: true});
+```
+
+
+---
