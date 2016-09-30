@@ -1,3 +1,4 @@
+
 describe 'Divisions', ->
   newDivision = null
   rootDivision = null
@@ -7,22 +8,24 @@ describe 'Divisions', ->
     rootDivision = teamsnap.createDivision
       name: 'Root Division'
       sportId: 1
-      locationCountry: 'United States'
-      locationPostalCode: 80302
+      country: 'United States'
+      postalCode: 80302
       timeZone: 'America/Denver'
-
-    childDivision = teamsnap.createDivision
-      name: 'Child Division'
-      sportId: 1
-      parentId: rootDivision.id
-      locationCountry: 'United States'
-      locationPostalCode: 80302
-      timeZone: 'America/Denver'
-
-  after (done) ->
-    teamsnap.deleteDivision rootDivision, (err, result) ->
+      parentId: 1
+    teamsnap.saveDivision rootDivision, (err, result) ->
       expect(err).to.be.null
-      done()
+
+      childDivision = teamsnap.createDivision
+        name: 'Child Division'
+        sportId: 1
+        parentId: rootDivision.id
+        country: 'United States'
+        postalCode: 80302
+        timeZone: 'America/Denver'
+        parentId: rootDivision.id
+      teamsnap.saveDivision childDivision, (err, result) ->
+        expect(err).to.be.null
+        done()
 
   after (done) ->
     teamsnap.deleteDivision childDivision, (err, result) ->
@@ -34,14 +37,26 @@ describe 'Divisions', ->
       teamsnap.deleteDivision newDivision, (err, result) ->
         expect(err).to.be.null
         done()
+    else
+      done()
+
+  after (done) ->
+    teamsnap.deleteDivision rootDivision, (err, result) ->
+      expect(err).to.be.null
+      done()
 
   it 'should be able to create a new division', (done) ->
     newDivision = teamsnap.createDivision
-      name: 'New Test Team'
+      name: 'New Test Division'
       sportId: 1
-      locationCountry: 'United States'
-      locationPostalCode: 80302
+      country: 'United States'
+      postalCode: 80302
       timeZone: 'America/Denver'
+      parentId: rootDivision.id
+
+    teamsnap.saveDivision newDivision,  (err, result) ->
+      expect(err).to.be.null
+      done()
 
   it 'should be able to load all divisions', (done) ->
     teamsnap.loadDivisions (err, result) ->
@@ -49,21 +64,16 @@ describe 'Divisions', ->
       result.should.be.an('array')
       done()
 
-    teamsnap.saveDivision newDivision, (err, result) ->
-      expect(err).to.be.null
-      result.should.have.property('type', 'division')
-      result.should.have.property('id')
-      result.should.equal(newDivision)
-      done()
-
   it 'should be able to load a division', (done) ->
-    teamsnap.loadDivision newDivision.id, (err, result) ->
+    teamsnap.loadDivision rootDivision.id, (err, result) ->
       expect(err).to.be.null
-      result.should.be.an('array')
+      result.should.be.an('object')
+      done()
 
   it 'should be able to delete a division', (done) ->
     teamsnap.deleteDivision newDivision, (err, result) ->
       expect(err).to.be.null
+      newDivision = null
       done()
 
   it 'should be able to return a divisions ancestors', (done) ->
