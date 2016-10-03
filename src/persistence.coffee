@@ -796,10 +796,27 @@ modifySDK = (sdk) ->
       ).callback callback
 
   wrapMethod sdk, 'bulkDeleteMessages', (bulkDeleteMessages) ->
-    (params, callback) ->
-      toRemove = params
+    (messages, callback) ->
+      if Array.isArray messages
+        toRemove = messages
+      else if typeof messages is 'object' and @isItem messages, 'message'
+        toRemove = [messages]
+      else
+        throw new TSArgsError 'teamsnap.bulkDeleteMessages',
+          'Must provide an `array` of message `ids` or a `message` object to
+            call `bulkDeleteMessages` using the persistene layer'
+
+      messageIds = []
+      for message in toRemove
+        unless @isItem message, 'message'
+          throw new TSArgsError 'teamsnap.bulkDeleteMessages',
+            "Items in messages array must have a 'message' `type`"
+        messageIds.push message.id
+
+      toRemove = messages
       linking.unlinkItems toRemove, lookup
-      bulkDeleteMessages.call(this, params).then((result) ->
+
+      bulkDeleteMessages.call(this, messageIds).then((result) ->
         return result
       ).fail((err) ->
         linking.linkItems toRemove, lookup
