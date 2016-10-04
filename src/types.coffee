@@ -23,7 +23,6 @@ types = [
   'divisionMemberPhoneNumber'
   'divisionMemberPreferences'
   'divisionTeamStanding'
-  'division'
   'event'
   'eventStatistic'
   'facebookPage'

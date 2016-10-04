@@ -88,7 +88,7 @@ describe 'Broadcast Emails', ->
     , (err) ->
       expect(err).to.be.null
       done()
-
+      
   it 'should be able to load all broadcast emails for a team', (done) ->
     teamsnap.loadBroadcastEmails {teamId: team.id}, (err, result) ->
       expect(err).to.be.null
@@ -107,11 +107,6 @@ describe 'Broadcast Emails', ->
 
   it 'should be able to delete a broadcast email', (done) ->
     teamsnap.deleteBroadcastEmail email, (err, result) ->
-      expect(err).to.be.null
-      done()
-
-  it 'should be able to bulk delete broadcast email', (done) ->
-    teamsnap.bulkDeleteBroadcastEmails [email.id], (err, result) ->
       expect(err).to.be.null
       done()
 
