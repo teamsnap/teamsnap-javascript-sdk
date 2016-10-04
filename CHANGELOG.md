@@ -1,5 +1,14 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### September 30, 2016 // Version 1.17.0
+- Add `divisions` endpoint.
+- Update validations on `broadcastEmail`.`saveBroadcastEmail`.
+- Add `bulkDeleteBroadcastEmails` method.
+- Add `divisionLoadMembers` method.
+- Add `divisionLoadTeams` method.
+
+---
+
 ### September 27, 2016 // Version 1.16.1
 - Reloads `messages` and `messageData` in `markMessageAsRead` method in persistence wrapper.
 

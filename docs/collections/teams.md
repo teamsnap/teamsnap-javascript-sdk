@@ -11,6 +11,7 @@
 - [invite](#invite)
 - [updateTimeZone](#updateTimeZone)
 - [resetStatistics](#resetStatistics)
+- [divisionLoadTeams](#divisionLoadTeams)
 
 
 ---
@@ -245,3 +246,25 @@ Resets a team's statistic data (statistics and statistic groups remain).
 // Update timezone to "Denver" / MST.
 teamsnap.resetStatistics(1);
 ```
+
+
+---
+
+
+<a id="divisionLoadTeams"></a>
+## `divisionLoadTeams(params)`
+Search for teams in a division.
+
+### Params
+* `params`: [object] - params to search, must include `divisionId`
+
+### Examples
+```javascript
+// ~~~~~
+// Return all the active teams in a division
+teamsnap.divisionLoadTeams({divisionId: 1, isActive: true});
+```
+
+
+---
+
