@@ -6,9 +6,9 @@
 - [loadDivision](#loadDivision)
 - [createDivision](#createDivision)
 - [deleteDivision](#deleteDivision)
-- [ancestorDivisions](#ancestorDivisions)
-- [descendantDivisions](#descendantDivisions)
-- [childrenDivisions](#childrenDivisions)
+- [loadAncestorDivisions](#loadAncestorDivisions)
+- [loadDescendantDivisions](#loadDescendantDivisions)
+- [loadChildDivisions](#loadChildDivisions)
 
 ---
 <a id="loadDivisions"></a>
@@ -143,54 +143,54 @@ teamsnap.saveDivision(division).then(function(){
 ---
 
 
-<a id="ancestorDivisions"></a>
-## `ancestorDivisions(divisionId, callback)`
+<a id="loadAncestorDivisions"></a>
+## `loadAncestorDivisions(divisionId, callback)`
 Returns the ancestor `division` items.
 
 ### Params
-* `divisionId`: [int] - an divisionId.
+* `divisionId`: [int] - a divisionId.
 * `callback`: [function] - callback to be executed when the operation completes.
 ### Examples
 ```javascript
 // ~~~~~
 // Returns the ancestor divisions.
-var divisions = teamsnap.ancestorDivisions(1);
+var divisions = teamsnap.loadAncestorDivisions(1);
 ```
 
 
 ---
 
 
-<a id="descendantDivisions"></a>
-## `descendantDivisions(divisionId, callback)`
+<a id="loadDescendantDivisions"></a>
+## `loadDescendantDivisions(divisionId, callback)`
 Returns the descendant `division` items.
 
 ### Params
-* `divisionId`: [int] - an divisionId.
+* `divisionId`: [int] - a divisionId.
 * `callback`: [function] - callback to be executed when the operation completes.
 ### Examples
 ```javascript
 // ~~~~~
-// Returns the ancestor divisions.
-var divisions = teamsnap.descendantDivisions(1);
+// Returns the descendant divisions.
+var divisions = teamsnap.loadDescendantDivisions(1);
 ```
 
 
 ---
 
 
-<a id="childrenDivisions"></a>
-## `childrenDivisions(divisionId, callback)`
+<a id="loadChildDivisions"></a>
+## `loadChildDivisions(divisionId, callback)`
 Returns the child `division` items.
 
 ### Params
-* `divisionId`: [int] - an divisionId.
+* `divisionId`: [int] - a divisionId.
 * `callback`: [function] - callback to be executed when the operation completes.
 ### Examples
 ```javascript
 // ~~~~~
-// Returns the ancestor divisions.
-var divisions = teamsnap.childrenDivisions(1);
+// Returns the child divisions.
+var divisions = teamsnap.loadChildDivisions(1);
 ```
 
 

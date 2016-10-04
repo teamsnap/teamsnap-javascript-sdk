@@ -50,4 +50,6 @@ exports.bulkDeleteBroadcastEmails = (broadcastEmailIds, callback) ->
     throw new TSArgsError 'teamsnap.broadcastEmailIds',
       'You must provide an array of broadcastEmail IDs'
 
-  @collections.broadcastEmails.exec('bulkDelete', id: broadcastEmailIds, callback)
+  @collections.broadcastEmails.exec(
+    'bulkDelete', id: broadcastEmailIds, callback
+  )

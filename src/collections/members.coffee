@@ -97,9 +97,9 @@ exports.disableMember = (memberId, callback) ->
   @collections.members.exec('disableMember', params)
     .pop().callback callback
 
-exports.searchDivisionMembers = (params, callback) ->
+exports.divisionLoadMembers = (params, callback) ->
   unless params.divisionId
-    throw new TSArgsError 'teamsnap.searchDivisionMembers',
+    throw new TSArgsError 'teamsnap.divisionLoadMembers',
       "`divisionId` must be provided"
 
   @collections.members.queryItems('divisionSearch', params, callback)

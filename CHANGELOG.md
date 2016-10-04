@@ -4,8 +4,8 @@
 - Add `divisions` endpoint.
 - Update validations on `broadcastEmail`.`saveBroadcastEmail`.
 - Add `bulkDeleteBroadcastEmails` method.
-- Add `searchDivisionMembers` method.
-- Add `searchDivisionTeams` method.
+- Add `divisionLoadMembers` method.
+- Add `divisionLoadTeams` method.
 
 ---
 

@@ -127,9 +127,9 @@ exports.resetStatistics = (teamId, callback) ->
   .callback callback
 
 
-exports.searchDivisionTeams = (params, callback) ->
+exports.divisionLoadTeams = (params, callback) ->
   unless params.divisionId
-    throw new TSArgsError 'teamsnap.searchDivisionTeams',
+    throw new TSArgsError 'teamsnap.divisionLoadTeams',
       "`divisionId` must be provided"
 
   @collections.teams.queryItems('divisionSearch', params, callback)

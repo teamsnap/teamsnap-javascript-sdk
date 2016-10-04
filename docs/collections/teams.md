@@ -11,7 +11,7 @@
 - [invite](#invite)
 - [updateTimeZone](#updateTimeZone)
 - [resetStatistics](#resetStatistics)
-- [divisionSearchTeams](#divisionSearchTeams)
+- [divisionLoadTeams](#divisionLoadTeams)
 
 
 ---
@@ -251,8 +251,8 @@ teamsnap.resetStatistics(1);
 ---
 
 
-<a id="divisionSearchTeams"></a>
-## `divisionSearchTeams(params)`
+<a id="divisionLoadTeams"></a>
+## `divisionLoadTeams(params)`
 Search for teams in a division.
 
 ### Params
@@ -262,7 +262,7 @@ Search for teams in a division.
 ```javascript
 // ~~~~~
 // Return all the active teams in a division
-teamsnap.divisionSearchTeams({divisionId: 1, isActive: true});
+teamsnap.divisionLoadTeams({divisionId: 1, isActive: true});
 ```
 
 

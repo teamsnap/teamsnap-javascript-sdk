@@ -16,7 +16,7 @@
 - [canEditItem](#canEditItem)
 - [importMembersFromTeam](#importMembersFromTeam)
 - [loadImportableMembers](#loadImportableMembers)
-- [divisionSearchMembers](#divisionSearchMembers)
+- [divisionLoadMembers](#divisionLoadMembers)
 
 
 ---
@@ -337,8 +337,8 @@ teamsnap.loadImportableMembers(8, true);
 ---
 
 
-<a id="divisionSearchMembers"></a>
-## `divisionSearchMembers(params)`
+<a id="divisionLoadMembers"></a>
+## `divisionLoadMembers(params)`
 Search for members in a division.
 
 ### Params
@@ -348,7 +348,7 @@ Search for members in a division.
 ```javascript
 // ~~~~~
 // Return all the active members in a division
-teamsnap.divisionSearchMembers({divisionId: 1, isActive: true});
+teamsnap.divisionLoadMembers({divisionId: 1, isActive: true});
 ```
 
 

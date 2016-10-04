@@ -41,19 +41,22 @@ exports.deleteDivision = (division, callback) ->
   @deleteItem division, callback
 
 
-exports.ancestorDivisions = (divisionId, callback) ->
+exports.loadAncestorDivisions = (divisionId, callback) ->
   unless @isId divisionId
-    throw new TSArgsError 'teamsnap.loadDivision', 'divisionId must be provided'
+    throw new TSArgsError 'teamsnap.loadAncestorDivisions',
+      'divisionId must be provided'
   @collections.divisions.queryItems('ancestors', id: divisionId, callback)
 
 
-exports.descendantDivisions = (divisionId, callback) ->
+exports.loadDescendantDivisions = (divisionId, callback) ->
   unless @isId divisionId
-    throw new TSArgsError 'teamsnap.loadDivision', 'divisionId must be provided'
+    throw new TSArgsError 'teamsnap.loadDescendantDivisions',
+      'divisionId must be provided'
   @collections.divisions.queryItems('descendants', id: divisionId, callback)
 
 
-exports.childrenDivisions = (divisionId, callback) ->
+exports.loadChildDivisions = (divisionId, callback) ->
   unless @isId divisionId
-    throw new TSArgsError 'teamsnap.loadDivision', 'divisionId must be provided'
+    throw new TSArgsError 'teamsnap.loadChildDivisions',
+      'divisionId must be provided'
   @collections.divisions.queryItems('children', id: divisionId, callback)

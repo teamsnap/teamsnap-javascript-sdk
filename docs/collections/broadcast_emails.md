@@ -123,7 +123,7 @@ teamsnap.saveBroadcastEmail(broadcastEmail).then(function(){
 
 <a id="bulkDeleteBroadcastEmails"></a>
 ## `bulkDeleteBroadcastEmails(broadcastEmailIds, callback)`
-Bulk deletes a list of `broadcastEmail` item.
+Bulk deletes a list of `broadcastEmail` items.
 
 ### Params
 * `broadcastEmailIds`: [array] - An array of broadcastEmailIds to be deleted.
@@ -132,7 +132,7 @@ Bulk deletes a list of `broadcastEmail` item.
 ### Examples
 ```javascript
 // ~~~~~
-// Deletes a broadcastEmail item.
+// Deletes multiple broadcastEmail items.
 teamsnap.bulkDeleteBroadcastEmails([1,2,3])
 ```
 

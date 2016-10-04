@@ -19,6 +19,7 @@ An APIv3 endpoint’s name is generally derived from its `Collection+JSON` colle
 - [Division Members](./collections/division_members.md)
 - [Division Members Preferences](./collections/division_members_preferences.md)
 - [Division Team Standings](./collections/division_team_standings.md)
+- [Divisions](./collections/divisions.md)
 - [Events](./collections/events.md)
 - [Event Statistics](./collections/event_statistics.md)
 - [Facebook Pages](./collections/facebook_pages.md)

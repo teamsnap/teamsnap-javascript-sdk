@@ -76,19 +76,19 @@
 #       done()
 
 #   it 'should be able to return a divisions ancestors', (done) ->
-#     teamsnap.ancestorDivisions childDivision.id, (err, result) ->
+#     teamsnap.loadAncestorDivisions childDivision.id, (err, result) ->
 #       expect(err).to.be.null
 #       result.should.be.an('array')
 #       done()
 
 #   it 'should be able to return a divisions descendants', (done) ->
-#     teamsnap.descendantDivisions rootDivision.id, (err, result) ->
+#     teamsnap.loadDescendantDivisions rootDivision.id, (err, result) ->
 #       expect(err).to.be.null
 #       result.should.be.an('array')
 #       done()
 
 #   it 'should be able to return a divisions children', (done) ->
-#     teamsnap.childrenDivisions rootDivision.id, (err, result) ->
+#     teamsnap.loadChildDivisions rootDivision.id, (err, result) ->
 #       expect(err).to.be.null
 #       result.should.be.an('array')
 #       done()
