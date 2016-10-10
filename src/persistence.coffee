@@ -801,22 +801,10 @@ modifySDK = (sdk) ->
         toRemove = messages
       else if typeof messages is 'object' and @isItem messages, 'message'
         toRemove = [messages]
-      else
-        throw new TSArgsError 'teamsnap.bulkDeleteMessages',
-          'Must provide an `array` of message `ids` or a `message` object to
-            call `bulkDeleteMessages` using the persistene layer'
+      if toRemove?
+        linking.unlinkItems toRemove, lookup
 
-      messageIds = []
-      for message in toRemove
-        unless @isItem message, 'message'
-          throw new TSArgsError 'teamsnap.bulkDeleteMessages',
-            "Items in messages array must have a 'message' `type`"
-        messageIds.push message.id
-
-      toRemove = messages
-      linking.unlinkItems toRemove, lookup
-
-      bulkDeleteMessages.call(this, messageIds).then((result) ->
+      bulkDeleteMessages.call(this, messages).then((result) ->
         return result
       ).fail((err) ->
         linking.linkItems toRemove, lookup

@@ -1,7 +1,7 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
 
-### October 10, 2016 // Version 1.17.1
+### October 10, 2016 // Version 1.18.0
 - Adds `bulkDeleteMessages` method.
 
 ---

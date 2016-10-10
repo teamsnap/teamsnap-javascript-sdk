@@ -58,9 +58,12 @@ var message = teamsnap.markMessageAsRead(messageToMarkAsUnread);
 <a id="bulkDeleteMessages"></a>
 ## `bulkDeleteMessages(params)`
 Deletes an array of `message` items.
+If you want to use the persistence layer, a message item or an array of message
+items must be passed. Persistence won't work with an id or array of ids.
 
 ### Params
-* `params`: [array] - An array of message items.
+* `params`: [int, array, object] - An array of message items or ids or a single message item or id
+* `callback`: [function] - callback to be executed when the operation completes.
 
 ### Examples
 ```javascript
@@ -68,4 +71,14 @@ Deletes an array of `message` items.
 // Deletes an array of messages.
 var messages = [message1, message2, message3]
 teamsnap.bulkDeleteMessages(messages);
+
+// Deletes a single message.
+teamsnap.bulkDeleteMessages(message1);
+
+// Deletes multiple messages by id
+var messages = [1, 2, 3]
+teamsnap.bulkDeleteMessages(messages);
+
+// Deletes a single message by id.
+teamsnap.bulkDeleteMessages(1);
 ```
