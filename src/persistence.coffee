@@ -204,6 +204,7 @@ modifySDK = (sdk) ->
   # 17. assignments need to load after saveMemberAssignment
   # 18. assignments need to load after deleteMemberAssignment
   # 19. messages and messageData need to reload after markMessageAsRead
+  # 20. messages need to be unlinked after bulkDeleteMessages
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -792,6 +793,24 @@ modifySDK = (sdk) ->
         params.messageType = 'alert,email'
         sdk.loadMessages({id: result.messageId})
         sdk.loadMessageData(params)
+      ).callback callback
+
+  wrapMethod sdk, 'bulkDeleteMessages', (bulkDeleteMessages) ->
+    (messages, callback) ->
+      if Array.isArray(messages) and messages.length and
+      @isItem(messages[0], 'message')
+        toRemove = messages
+      else if typeof messages is 'object' and @isItem messages, 'message'
+        toRemove = [messages]
+      if toRemove?
+        linking.unlinkItems toRemove, lookup
+
+      bulkDeleteMessages.call(this, messages).then((result) ->
+        return result
+      ).fail((err) ->
+        if toRemove?
+          linking.linkItems toRemove, lookup
+        err
       ).callback callback
 
 revertSDK = (sdk) ->

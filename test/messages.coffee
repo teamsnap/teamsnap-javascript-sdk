@@ -59,3 +59,20 @@ describe 'Messages', ->
           expect(err).to.be.null
           expect(result.readAt).to.not.be.null
           done()
+
+
+  it 'should be able to delete multiple emails', (done) ->
+    emails = []
+    email = teamsnap.createBroadcastEmail()
+    email.teamId = team.id
+    email.memberId = sender.id
+    email.body = "Hello world"
+    email.subject = "Subject!"
+    email.recipientIds = [recipient.id]
+    teamsnap.saveBroadcastEmail email, (err, result) ->
+      emails.push result
+      teamsnap.saveBroadcastEmail email, (err, result) ->
+        emails.push result
+        teamsnap.bulkDeleteMessages emails, (err,result) ->
+          expect(err).to.be.null
+          done()

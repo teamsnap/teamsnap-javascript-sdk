@@ -1,5 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+
+### October 10, 2016 // Version 1.18.0
+- Adds `bulkDeleteMessages` method.
+
+---
+
 ### September 30, 2016 // Version 1.17.0
 - Add `divisions` endpoint.
 - Update validations on `broadcastEmail`.`saveBroadcastEmail`.
