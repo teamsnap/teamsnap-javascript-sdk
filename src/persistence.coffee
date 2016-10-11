@@ -808,7 +808,8 @@ modifySDK = (sdk) ->
       bulkDeleteMessages.call(this, messages).then((result) ->
         return result
       ).fail((err) ->
-        linking.linkItems toRemove, lookup
+        if toRemove?
+          linking.linkItems toRemove, lookup
         err
       ).callback callback
 
