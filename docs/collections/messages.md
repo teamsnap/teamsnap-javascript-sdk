@@ -57,9 +57,9 @@ var message = teamsnap.markMessageAsRead(messageToMarkAsUnread);
 
 <a id="bulkDeleteMessages"></a>
 ## `bulkDeleteMessages(params)`
-Deletes an array of `message` items.
-If you want to use the persistence layer, a message item or an array of message
-items must be passed. Persistence won't work with an id or array of ids.
+Deletes a single 'message' item or an array of `message` items.
+
+_Note: While apiv3 expects an array of ids, you must pass an array of message objects to take advantage of the persistence layer's unlinking feature. If you don't need this automatic unlinking of items, it is perfectly acceptable to just use an array of ids.
 
 ### Params
 * `params`: [int, array, object] - An array of message items or ids or a single message item or id

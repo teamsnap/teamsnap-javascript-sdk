@@ -797,7 +797,8 @@ modifySDK = (sdk) ->
 
   wrapMethod sdk, 'bulkDeleteMessages', (bulkDeleteMessages) ->
     (messages, callback) ->
-      if Array.isArray messages
+      if Array.isArray(messages) and messages.length and
+      @isItem(messages[0], 'message')
         toRemove = messages
       else if typeof messages is 'object' and @isItem messages, 'message'
         toRemove = [messages]
