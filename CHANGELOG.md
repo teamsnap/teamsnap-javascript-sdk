@@ -1,5 +1,9 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### Oct 5, 2016 // Version 1.19.0
+- Add `divisionPreferences` endpoint.
+
+---
 
 ### October 10, 2016 // Version 1.18.0
 - Adds `bulkDeleteMessages` method.

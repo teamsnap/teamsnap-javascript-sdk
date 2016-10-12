@@ -23,6 +23,7 @@ types = [
   'divisionMemberPhoneNumber'
   'divisionMemberPreferences'
   'divisionTeamStanding'
+  'divisionPreferences'
   'division'
   'event'
   'eventStatistic'
@@ -92,6 +93,7 @@ singularLookup = {}
 pluralLookup =
   memberPreferences: 'membersPreferences'
   divisionMemberPreferences: 'divisionMembersPreferences'
+  divisionPreferences: 'divisionsPreferences'
   opponentResults: 'opponentsResults'
   statisticDatum: 'statisticData'
   messageDatum: 'messageData'
