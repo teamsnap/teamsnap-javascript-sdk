@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### Oct 12, 2016 // Version 1.19.1
+- Reloads `messageData` in `bulkDeleteMessages` method in persistence wrapper.
+
+---
+
 ### Oct 5, 2016 // Version 1.19.0
 - Add `divisionPreferences` endpoint.
 

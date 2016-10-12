@@ -800,13 +800,23 @@ modifySDK = (sdk) ->
       if Array.isArray(messages) and messages.length and
       @isItem(messages[0], 'message')
         toRemove = messages
+        teamId = messages[0].teamId
       else if typeof messages is 'object' and @isItem messages, 'message'
         toRemove = [messages]
+        teamId = messages.teamId
       if toRemove?
         linking.unlinkItems toRemove, lookup
 
       bulkDeleteMessages.call(this, messages).then((result) ->
-        return result
+        if teamId?
+          sdk.loadMessageData({teamId: teamId, messageType: 'alert,email'}).
+          then((result) ->
+            return result
+          ).fail((err) ->
+            err
+          )
+        else
+          return result
       ).fail((err) ->
         if toRemove?
           linking.linkItems toRemove, lookup
