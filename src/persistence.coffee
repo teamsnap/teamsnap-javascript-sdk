@@ -797,20 +797,32 @@ modifySDK = (sdk) ->
 
   wrapMethod sdk, 'bulkDeleteMessages', (bulkDeleteMessages) ->
     (messages, callback) ->
+      contactIds = []
+      memberIds = []
+      messageTypes = []
       if Array.isArray(messages) and messages.length and
       @isItem(messages[0], 'message')
         toRemove = messages
-        teamId = messages[0].teamId
       else if typeof messages is 'object' and @isItem messages, 'message'
         toRemove = [messages]
-        teamId = messages.teamId
       if toRemove?
         linking.unlinkItems toRemove, lookup
+        for message in toRemove
+          if message.contactId? and contactIds.indexOf(message.contactId) < 0
+            contactIds.push message.contactId
+          if message.memberId? and memberIds.indexOf(message.memberId) < 0
+            memberIds.push message.memberId
+          if messageTypes.indexOf(message.messageType) < 0
+            messageTypes.push message.messageType
 
       bulkDeleteMessages.call(this, messages).then((result) ->
-        if teamId?
-          sdk.loadMessageData({teamId: teamId, messageType: 'alert,email'}).
-          then((result) ->
+        if contactIds.length or memberIds.length
+          params = {}
+          if contactIds.length then params.contactId = contactIds.join()
+          if memberIds.length then params.memberId = memberIds.join()
+          if messageTypes.length then params.messageType = messageTypes.join()
+
+          sdk.loadMessageData(params).then((result) ->
             return result
           ).fail((err) ->
             err
