@@ -797,31 +797,28 @@ modifySDK = (sdk) ->
 
   wrapMethod sdk, 'bulkDeleteMessages', (bulkDeleteMessages) ->
     (messages, callback) ->
-      contactIds = []
-      memberIds = []
-      messageTypes = []
       if Array.isArray(messages) and messages.length and
       @isItem(messages[0], 'message')
         toRemove = messages
       else if typeof messages is 'object' and @isItem messages, 'message'
         toRemove = [messages]
       if toRemove?
+        if toRemove[0].contactId?
+          contactId = toRemove[0].contactId
+        else if toRemove[0].memberId?
+          memberId = toRemove[0].memberId
+        teamId = toRemove[0].teamId
         linking.unlinkItems toRemove, lookup
-        for message in toRemove
-          if message.contactId? and contactIds.indexOf(message.contactId) < 0
-            contactIds.push message.contactId
-          if message.memberId? and memberIds.indexOf(message.memberId) < 0
-            memberIds.push message.memberId
-          if messageTypes.indexOf(message.messageType) < 0
-            messageTypes.push message.messageType
 
       bulkDeleteMessages.call(this, messages).then((result) ->
-        if contactIds.length or memberIds.length
+        if toRemove?
           params = {}
-          if contactIds.length then params.contactId = contactIds.join()
-          if memberIds.length then params.memberId = memberIds.join()
-          if messageTypes.length then params.messageType = messageTypes.join()
-
+          if contactId?
+            params.contactId = contactId
+          else if memberId?
+            params.memberId = memberId
+          params.messageType = 'alert,email'
+          params.teamId = teamId
           sdk.loadMessageData(params).then((result) ->
             return result
           ).fail((err) ->
