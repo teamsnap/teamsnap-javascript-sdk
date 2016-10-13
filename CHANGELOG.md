@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### Oct 12, 2016 // Version 1.19.1
+### Oct 13, 2016 // Version 1.19.1
 - Reloads `messageData` in `bulkDeleteMessages` method in persistence wrapper.
 
 ---
