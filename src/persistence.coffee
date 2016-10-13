@@ -803,10 +803,29 @@ modifySDK = (sdk) ->
       else if typeof messages is 'object' and @isItem messages, 'message'
         toRemove = [messages]
       if toRemove?
+        if toRemove[0].contactId?
+          contactId = toRemove[0].contactId
+        else if toRemove[0].memberId?
+          memberId = toRemove[0].memberId
+        teamId = toRemove[0].teamId
         linking.unlinkItems toRemove, lookup
 
       bulkDeleteMessages.call(this, messages).then((result) ->
-        return result
+        if toRemove?
+          params = {}
+          if contactId?
+            params.contactId = contactId
+          else if memberId?
+            params.memberId = memberId
+          params.messageType = 'alert,email'
+          params.teamId = teamId
+          sdk.loadMessageData(params).then((result) ->
+            return result
+          ).fail((err) ->
+            err
+          )
+        else
+          return result
       ).fail((err) ->
         if toRemove?
           linking.linkItems toRemove, lookup
