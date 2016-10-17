@@ -17,6 +17,7 @@
 - [importMembersFromTeam](#importMembersFromTeam)
 - [loadImportableMembers](#loadImportableMembers)
 - [divisionLoadMembers](#divisionLoadMembers)
+- [bulkDeleteMembers](#bulkDeleteMembers)
 
 
 ---
@@ -353,3 +354,32 @@ teamsnap.divisionLoadMembers({divisionId: 1, isActive: true});
 
 
 ---
+
+
+<a id="bulkDeleteMembers"></a>
+## `bulkDeleteMembers(params)`
+Deletes a single 'member' item or an array of `member` items.
+
+_Note: While apiv3 expects an array of ids, you must pass an array of member objects to take advantage of the persistence layer's unlinking feature. If you don't need this automatic unlinking of items, it is perfectly acceptable to just use an array of ids._
+
+### Params
+* `params`: [int, array, object] - An array of member items or ids or a single member item or id
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+// Deletes an array of members.
+var members = [member1, member2, member3]
+teamsnap.bulkDeleteMembers(members);
+
+// Deletes a single member.
+teamsnap.bulkDeleteMembers(member1);
+
+// Deletes multiple members by id
+var members = [1, 2, 3]
+teamsnap.bulkDeleteMembers(members);
+
+// Deletes a single member by id.
+teamsnap.bulkDeleteMembers(1);
+```

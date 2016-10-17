@@ -175,3 +175,26 @@ exports.loadImportableMembers = (userId, includeArchivedTeams, callback) ->
   params = userId: userId, includeArchivedTeams: includeArchivedTeams
 
   @collections.members.queryItems 'importableMembers', params, callback
+
+exports.bulkDeleteMembers = (members, callback) ->
+  if Array.isArray members
+    if members.length is 0
+      throw new TSArgsError 'teamsnap.bulkDeleteMembers',
+        'The array of members to be deleted is empty.'
+    else if @isItem members[0], 'member'
+      members = memberId: members.map((member) -> member.id)
+    else if @isId members[0]
+      members = memberId: members
+    else
+      throw new TSArgsError 'teamsnap.bulkDeleteMembers',
+        'Must provide an `array` of member `ids` or `member` objects'
+  else if typeof members is 'object' and @isItem members, 'member'
+    members = memberId: members.id
+  else if @isId members
+    members = memberId: members
+  else
+    throw new TSArgsError 'teamsnap.bulkDeleteMembers',
+      'Must provide an `array` of member `ids`, an `id` or a `member` object'
+
+  @collections.members.exec('bulkDelete', members).callback callback
+
