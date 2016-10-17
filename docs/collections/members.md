@@ -18,6 +18,7 @@
 - [loadImportableMembers](#loadImportableMembers)
 - [divisionLoadMembers](#divisionLoadMembers)
 - [bulkDeleteMembers](#bulkDeleteMembers)
+- [moveMember](#moveMember)
 
 
 ---
@@ -360,8 +361,6 @@ teamsnap.divisionLoadMembers({divisionId: 1, isActive: true});
 ## `bulkDeleteMembers(params)`
 Deletes a single 'member' item or an array of `member` items.
 
-_Note: While apiv3 expects an array of ids, you must pass an array of member objects to take advantage of the persistence layer's unlinking feature. If you don't need this automatic unlinking of items, it is perfectly acceptable to just use an array of ids._
-
 ### Params
 * `params`: [int, array, object] - An array of member items or ids or a single member item or id
 * `callback`: [function] - callback to be executed when the operation completes.
@@ -382,4 +381,34 @@ teamsnap.bulkDeleteMembers(members);
 
 // Deletes a single member by id.
 teamsnap.bulkDeleteMembers(1);
+```
+
+---
+
+
+<a id="moveMember"></a>
+## `moveMember(params, callback)`
+Moves a single 'memberId' item or an array of `memberId` items to either divisionID or teamId.
+teamId must be inside the divisionId.
+
+### Params
+* `params`: [object] - An object with memberId, divisionId and optional teamId
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+// Moves an array of members.
+var members = [member1, member2, member3]
+teamsnap.moveMember({divisionId: 1, teamId: 1, memberId: members});
+
+// Moves a single member.
+teamsnap.moveMember({divisionId: division, teamId: team, memberId: member1});
+
+// Moves an array of memberIds
+var members = [1, 2, 3]
+teamsnap.moveMember({divisionId: division, memberId: members});
+
+// Deletes a single member by id.
+teamsnap.moveMember(1);
 ```

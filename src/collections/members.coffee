@@ -198,3 +198,32 @@ exports.bulkDeleteMembers = (members, callback) ->
 
   @collections.members.exec('bulkDelete', members).callback callback
 
+exports.moveMember = (params, callback) ->
+  unless params.memberId
+    throw new TSArgsError 'teamsnap.moveMember', 'params must include
+    `memberId`'
+  unless params.divisionId
+    throw new TSArgsError 'teamsnap.moveMember', 'params must include
+    `divisionId`'
+
+  if Array.isArray params.memberId
+    if params.memberId.length is 0
+      throw new TSArgsError 'teamsnap.moveMember',
+        'The array of memberId in params is empty.'
+    else if @isItem params.memberId[0], 'member'
+      params.memberId = params.memberId.map((member) -> member.id)
+  else if @isItem params.memberId, 'member'
+    params.memberId = params.memberId.id
+  else if @isId params.memberId
+    params.memberId = params.memberId
+  else
+    throw new TSArgsError 'teamsnap.moveMember',
+      'Must provide an `array` of member `ids` or `member` objects for memberId'
+
+  if @isItem params.divisionId, 'division'
+    params.divisionId = params.divisionId.id
+
+  if @isItem params.teamId, 'team'
+    params.teamId = params.teamId.id
+
+  @collections.members.exec('moveMember', params).callback callback
