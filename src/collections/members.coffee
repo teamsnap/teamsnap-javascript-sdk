@@ -105,6 +105,13 @@ exports.divisionLoadMembers = (params, callback) ->
   @collections.members.queryItems('divisionSearch', params, callback)
 
 
+exports.divisionAdvancedLoadMembers = (params, callback) ->
+  unless params.divisionId
+    throw new TSArgsError 'teamsnap.divisionAdvancedLoadMembers',
+      "`divisionId` must be provided"
+
+  @collections.members.queryItems('advancedDivisionSearch', params, callback)
+
 # Helper to output a member's name, forward or reverse (reverse will use comma)
 exports.memberName = (member, reverse, forSort) ->
   return '' unless member
