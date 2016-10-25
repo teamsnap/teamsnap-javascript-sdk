@@ -51,6 +51,7 @@ types = [
   'opponentResults'
   'paymentNote'
   'plan'
+  'registrationForm'
   'smsGateway'
   'sponsor'
   'statistic'
