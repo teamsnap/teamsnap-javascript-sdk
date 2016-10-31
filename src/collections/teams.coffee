@@ -45,17 +45,15 @@ exports.deleteTeam = (team, callback) ->
 
 # Loads all items associated with a team, optionally limited by the types array
 exports.bulkLoad = (teamId, types, callback) ->
-  if typeof teamId is 'object'
-    loadParams = teamId
+  if typeof teamId is 'object' and !Array.isArray(teamId)
     # Using params object (smartload)
-    unless @isId loadParams.teamId
-      throw new TSArgsError 'teamsnap.bulkLoad', 'teamId must be provided'
+    loadParams = teamId
     teamId = loadParams.teamId
     types = loadParams.types
-  else
-    # Using classic bulk_load
-    unless @isId teamId
-      throw new TSArgsError 'teamsnap.bulkLoad', 'teamId must be provided'
+
+  unless @isId(teamId) or
+  (Array.isArray(teamId) and @isId(teamId[0]))
+    throw new TSArgsError 'teamsnap.bulkLoad', 'teamId must be provided'
 
     if typeof types is 'function'
       callback = types
