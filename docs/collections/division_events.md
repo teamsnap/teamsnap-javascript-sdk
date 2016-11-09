@@ -21,6 +21,6 @@ Loads items from the `divisionEvents` collection based on given params.
 teamsnap.loadDivisionEvents(1);
 
 // ~~~~~
-// Loads all divisionEvents for `id: 1`.
+// Loads divisionEvent for `id: 1`.
 teamsnap.loadDivisionEvents({id: 1});
 ```
