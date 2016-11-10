@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### November 9, 2016 // Version 1.20.0
+### November 10, 2016 // Version 1.20.0
 - Adds `divisionEvents` endpoint.
 
 ---
