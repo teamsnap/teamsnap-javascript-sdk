@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### November 10, 2016 // Version 1.20.0
+- Adds `divisionEvents` endpoint.
+
+---
+
 ### Oct 13, 2016 // Version 1.19.1
 - Reloads `messageData` in `bulkDeleteMessages` method in persistence wrapper.
 
