@@ -86,3 +86,24 @@ exports.reorderAssignments = (eventId, assignmentIds, callback) ->
   params = eventId: eventId, sortedIds: assignmentIds
   @collections.assignments.exec('reorderAssignments', params)
     .callback callback
+
+exports.createBulkAssignments = (eventSet, description, teamId, createAsMemberId, callback) ->
+  unless eventSet
+    throw new TSArgsError 'teamsnap.createBulkAssignments',
+    " `eventSet` must be provided."
+  unless description.trim()
+    return @reject 'You must provide a description for the assignments.',
+      'description', callback
+  if @isItem teamId, 'team'
+    teamId = teamId.id
+  unless @isId teamId
+    throw new TSArgsError 'teamsnap.createBulkAssignments',
+    "`teamId` must be provided."
+  if @isItem createAsMemberId, 'member'
+    createAsMemberId = createAsMemberId.id
+  unless @isId createAsMemberId
+    throw new TSArgsError 'teamsnap.createBulkAssignments',
+    "`teamId` must be provided."
+
+  params = eventSet: eventSet, description: description, teamId: teamId, createAsMemberId: createAsMemberId
+  @collections.assignments.exec 'createBulkAssignments', params, callback

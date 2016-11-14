@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### November 14, 2016 // Version 1.20.1
+- Adds `createBulkAssignments` method.
+
+---
+
 ### November 10, 2016 // Version 1.20.0
 - Adds `divisionEvents` endpoint.
 
