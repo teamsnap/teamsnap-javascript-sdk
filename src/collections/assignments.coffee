@@ -94,16 +94,16 @@ exports.createBulkAssignments = (eventSet, description, teamId, createAsMemberId
   unless description.trim()
     return @reject 'You must provide a description for the assignments.',
       'description', callback
+  unless teamId
+    throw new TSArgsError 'teamsnap.createBulkAssignments', '`teamId` must be
+    provided.'
   if @isItem teamId, 'team'
-    teamId = teamId.id
-  unless @isId teamId
-    throw new TSArgsError 'teamsnap.createBulkAssignments',
-    "`teamId` must be provided."
+    teamId: teamId.team
+  unless createAsMemberId
+    throw new TSArgsError 'teamsnap.createBulkAssignments', '`createAsMemberId`
+    must be provided.'
   if @isItem createAsMemberId, 'member'
-    createAsMemberId = createAsMemberId.id
-  unless @isId createAsMemberId
-    throw new TSArgsError 'teamsnap.createBulkAssignments',
-    "`teamId` must be provided."
+    createAsMemberId: createAsMemberId.id
 
   params = eventSet: eventSet, description: description, teamId: teamId, createAsMemberId: createAsMemberId
   @collections.assignments.exec 'createBulkAssignments', params, callback
