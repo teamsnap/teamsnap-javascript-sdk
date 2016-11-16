@@ -45,6 +45,7 @@ types = [
   'memberPhoto'
   'memberPreferences'
   'memberStatistic'
+  'memberRegistrationSignup'
   'message'
   'messageDatum'
   'opponent'
