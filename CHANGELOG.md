@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### November 17, 2016 // Version 1.20.1
+### November 17, 2016 // Version 1.21.0
 - Adds `createBulkAssignments` method.
 - Reloads `assignments` in `createBulkAssignments` method in persistence layer.
 
