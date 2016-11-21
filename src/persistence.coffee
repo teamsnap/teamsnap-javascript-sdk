@@ -834,10 +834,11 @@ modifySDK = (sdk) ->
       ).callback callback
 
   wrapMethod sdk, 'createBulkAssignments', (createBulkAssignments) ->
-    (assignments, callback) ->
-      createBulkAssignments.call(this, assignments, callback).then((result) ->
+    (eventSet, description, teamId, createAsMemberId, callback) ->
+      createBulkAssignments.call(this, eventSet, description, teamId,
+      createAsMemberId, callback).then((result) ->
         assignmentIds = result.map (assignment) -> assignment.id
-        sdk.loadAssignment({id: assignmentIds}).then -> result
+        sdk.loadAssignments({id: assignmentIds}).then -> result
       ).callback callback
 
 revertSDK = (sdk) ->
