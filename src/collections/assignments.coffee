@@ -97,7 +97,7 @@ exports.reorderAssignments = (eventId, assignmentIds, callback) ->
 exports.createBulkAssignments = (eventSet, description, teamId, createAsMemberId, callback) ->
   unless eventSets.indexOf(eventSet) > -1
     throw new TSArgsError 'teamsnap.createBulkAssignments',
-    " `eventSet` must be provided."
+    " `eventSet` must be one of the following: " + eventSets.toString() + "." 
   unless description.trim()
     return @reject 'You must provide a description for the assignments.',
       'description', callback
