@@ -1,3 +1,8 @@
+exports.ASSIGNMENTS_ENABLED_FOR_CODE =
+  GamesAndEvents: 0
+  Games: 1
+  Events: 2
+
 
 exports.loadTeamsPreferences = (params, callback) ->
   if @isId params
