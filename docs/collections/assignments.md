@@ -9,6 +9,7 @@
 - [getAssignmentSort](#getAssignmentSort)
 - [sendAssignmentEmails](#sendAssignmentEmails)
 - [reorderAssignments](#reorderAssignments)
+- [createBulkAssignments](#createBulkAssignments)
 
 
 ---
@@ -180,4 +181,26 @@ Command to reorder `assignments` items based on an array of `assignmentIds`.
 // ~~~~~
 // Reorders assignment items.
 teamsnap.reorderAssignments(123, [4,5,8,7,6]);
+```
+
+
+---
+
+
+<a id="createBulkAssignments"></a>
+## `createBulkAssignments(eventSet, description, teamId, createAsMemberId, callback)`
+Command to create repeating `assignments` items based on `eventSet`.
+
+### Params
+* `eventSet`: [string] - `future_events`, `future_games` or `future_games_and_events`.
+* `description`: [string] - `description` for repeating assignments.
+* `teamId`: [int] - `teamId` of current team.
+* `createAsMemberId`: [int] - `memberId` of member who created the repeating assignments.
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+// Creates repeating assignments.
+teamsnap.createBulkAssignments("future_games", "test description" , 1, 2);
 ```

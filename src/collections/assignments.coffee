@@ -1,3 +1,10 @@
+eventSets = [
+  'future_games_and_events',
+  'future_games',
+  'future_events'
+]
+
+
 exports.loadAssignments = (params, callback) ->
   if @isId params
     params = teamId: params
@@ -86,3 +93,24 @@ exports.reorderAssignments = (eventId, assignmentIds, callback) ->
   params = eventId: eventId, sortedIds: assignmentIds
   @collections.assignments.exec('reorderAssignments', params)
     .callback callback
+
+exports.createBulkAssignments = (eventSet, description, teamId, createAsMemberId, callback) ->
+  unless eventSets.indexOf(eventSet) > -1
+    throw new TSArgsError 'teamsnap.createBulkAssignments',
+    " `eventSet` must be one of the following: " + eventSets.toString() + "." 
+  unless description.trim()
+    return @reject 'You must provide a description for the assignments.',
+      'description', callback
+  unless teamId
+    throw new TSArgsError 'teamsnap.createBulkAssignments', '`teamId` must be
+    provided.'
+  if @isItem teamId, 'team'
+    teamId: teamId.id
+  unless createAsMemberId
+    throw new TSArgsError 'teamsnap.createBulkAssignments', '`createAsMemberId`
+    must be provided.'
+  if @isItem createAsMemberId, 'member'
+    createAsMemberId: createAsMemberId.id
+
+  params = eventSet: eventSet, description: description, teamId: teamId, createAsMemberId: createAsMemberId
+  @collections.assignments.exec 'createBulkAssignments', params, callback
