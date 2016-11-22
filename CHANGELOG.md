@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### November 21, 2016 // Version 1.21.1
+### November 22, 2016 // Version 1.21.1
 - Adds ASSIGNMENTS_ENABLED_FOR_CODE to teamPreferences.
 
 ---
