@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### November 22, 2016 // Version 1.21.1
+- Adds ASSIGNMENTS_ENABLED_FOR_CODE to teamPreferences.
+
+---
+
 ### November 21, 2016 // Version 1.21.0
 - Adds `createBulkAssignments` method.
 - Reloads `assignments` in `createBulkAssignments` method in persistence layer.
