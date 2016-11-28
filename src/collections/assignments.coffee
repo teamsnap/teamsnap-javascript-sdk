@@ -1,4 +1,4 @@
-eventSets = [
+exports.EVENT_SETS = [
   'future_games_and_events',
   'future_games',
   'future_events'
@@ -95,9 +95,9 @@ exports.reorderAssignments = (eventId, assignmentIds, callback) ->
     .callback callback
 
 exports.createBulkAssignments = (eventSet, description, teamId, createAsMemberId, callback) ->
-  unless eventSets.indexOf(eventSet) > -1
+  unless this.EVENT_SETS.indexOf(eventSet) > -1
     throw new TSArgsError 'teamsnap.createBulkAssignments',
-    " `eventSet` must be one of the following: " + eventSets.toString() + "." 
+    " `eventSet` must be one of the following: " + eventSets.toString() + "."
   unless description.trim()
     return @reject 'You must provide a description for the assignments.',
       'description', callback
