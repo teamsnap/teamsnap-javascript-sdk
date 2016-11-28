@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### November 28, 2016 // Version 1.21.1
+### November 28, 2016 // Version 1.21.2
 - Adds exportability to `EVENT_SETS` in `assignments`.
 
 ---
