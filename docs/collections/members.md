@@ -358,11 +358,11 @@ teamsnap.divisionLoadMembers({divisionId: 1, isActive: true});
 
 
 <a id="bulkDeleteMembers"></a>
-## `bulkDeleteMembers(params)`
+## `bulkDeleteMembers(members)`
 Deletes a single 'member' item or an array of `member` items.
 
 ### Params
-* `params`: [int, array, object] - An array of member items or ids or a single member item or id
+* `members`: [array, object] - An array of member items or a single member item
 * `callback`: [function] - callback to be executed when the operation completes.
 
 ### Examples
@@ -374,25 +374,18 @@ teamsnap.bulkDeleteMembers(members);
 
 // Deletes a single member.
 teamsnap.bulkDeleteMembers(member1);
-
-// Deletes multiple members by id
-var members = [1, 2, 3]
-teamsnap.bulkDeleteMembers(members);
-
-// Deletes a single member by id.
-teamsnap.bulkDeleteMembers(1);
 ```
 
 ---
 
 
-<a id="moveMember"></a>
-## `moveMember(params, callback)`
-Moves a single 'memberId' item or an array of `memberId` items to either divisionID or teamId.
-teamId must be inside the divisionId.
+<a id="moveMemberToTeam"></a>
+## `moveMemberToTeam(params, callback)`
+Moves a single member item or an array of member items to either divisionID or teamId.
+teamId must be in or under the divisionId.
 
 ### Params
-* `params`: [object] - An object with memberId, divisionId and optional teamId
+* `params`: [object] - An object with member, divisionId and optional teamId
 * `callback`: [function] - callback to be executed when the operation completes.
 
 ### Examples
@@ -400,15 +393,8 @@ teamId must be inside the divisionId.
 // ~~~~~
 // Moves an array of members.
 var members = [member1, member2, member3]
-teamsnap.moveMember({divisionId: 1, teamId: 1, memberId: members});
+teamsnap.moveMemberToTeam({divisionId: 1, teamId: 1, member: members});
 
 // Moves a single member.
-teamsnap.moveMember({divisionId: division, teamId: team, memberId: member1});
-
-// Moves an array of memberIds
-var members = [1, 2, 3]
-teamsnap.moveMember({divisionId: division, memberId: members});
-
-// Deletes a single member by id.
-teamsnap.moveMember(1);
+teamsnap.moveMemberToTeam({divisionId: division, teamId: team, member: member1});
 ```

@@ -1,5 +1,13 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+
+### November 30, 2016 // Version 1.22.0
+- Add `bulkDeleteMembers`, `divisionAdvancedLoadMembers`, and `moveMemberToTeam` in `members`.
+- Add `registrationForms` collection.
+- Add `memberRegistrationSignups` collection.
+
+---
+
 ### November 30, 2016 // Version 1.21.3
 - Fixes `EVENT_SETS` in `createBulkAssignments` error message.
 

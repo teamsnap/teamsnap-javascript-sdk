@@ -188,44 +188,42 @@ exports.bulkDeleteMembers = (members, callback) ->
     if members.length is 0
       throw new TSArgsError 'teamsnap.bulkDeleteMembers',
         'The array of members to be deleted is empty.'
-    else if @isItem members[0], 'member'
+    else if members.every((member) => @isItem member, 'member')
       members = memberId: members.map((member) -> member.id)
-    else if @isId members[0]
-      members = memberId: members
     else
       throw new TSArgsError 'teamsnap.bulkDeleteMembers',
         'Must provide an `array` of member `ids` or `member` objects'
   else if typeof members is 'object' and @isItem members, 'member'
     members = memberId: members.id
-  else if @isId members
-    members = memberId: members
   else
     throw new TSArgsError 'teamsnap.bulkDeleteMembers',
-      'Must provide an `array` of member `ids`, an `id` or a `member` object'
+      'Must provide an `array` of members, or a `member` object'
 
   @collections.members.exec('bulkDelete', members).callback callback
 
-exports.moveMember = (params, callback) ->
-  unless params.memberId
-    throw new TSArgsError 'teamsnap.moveMember', 'params must include
-    `memberId`'
+exports.moveMemberToTeam = (params, callback) ->
+  unless params.member
+    throw new TSArgsError 'teamsnap.moveMemberToTeam', 'params must include
+    `member`'
   unless params.divisionId
-    throw new TSArgsError 'teamsnap.moveMember', 'params must include
+    throw new TSArgsError 'teamsnap.moveMemberToTeam', 'params must include
     `divisionId`'
 
-  if Array.isArray params.memberId
-    if params.memberId.length is 0
-      throw new TSArgsError 'teamsnap.moveMember',
-        'The array of memberId in params is empty.'
-    else if @isItem params.memberId[0], 'member'
-      params.memberId = params.memberId.map((member) -> member.id)
-  else if @isItem params.memberId, 'member'
-    params.memberId = params.memberId.id
-  else if @isId params.memberId
-    params.memberId = params.memberId
+  if Array.isArray params.member
+    if params.member.length is 0
+      throw new TSArgsError 'teamsnap.moveMemberToTeam',
+        'member in params is empty.'
+    else if params.member.every((member) => @isItem member, 'member')
+      params.memberId = params.member.map((member) -> member.id)
+    else
+      throw new TSArgsError 'teamsnap.moveMemberToTeam',
+        'Must provide an `array` of member objects or a
+          `member` object for member'
+  else if @isItem params.member, 'member'
+    params.memberId = params.member.id
   else
-    throw new TSArgsError 'teamsnap.moveMember',
-      'Must provide an `array` of member `ids` or `member` objects for memberId'
+    throw new TSArgsError 'teamsnap.moveMemberToTeam',
+      'Must provide an `array` of member objects or `member` objects for member'
 
   if @isItem params.divisionId, 'division'
     params.divisionId = params.divisionId.id
