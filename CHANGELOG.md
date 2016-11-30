@@ -1,7 +1,9 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### November 29, 2016 // Version 1.21.3
+### November 30, 2016 // Version 1.21.3
 - Fixes `EVENT_SETS` in `createBulkAssignments` error message.
+
+---
 
 ### November 28, 2016 // Version 1.21.2
 - Adds exportability to `EVENT_SETS` in `assignments`.
