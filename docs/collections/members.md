@@ -17,6 +17,8 @@
 - [importMembersFromTeam](#importMembersFromTeam)
 - [loadImportableMembers](#loadImportableMembers)
 - [divisionLoadMembers](#divisionLoadMembers)
+- [bulkDeleteMembers](#bulkDeleteMembers)
+- [moveMember](#moveMember)
 
 
 ---
@@ -353,3 +355,46 @@ teamsnap.divisionLoadMembers({divisionId: 1, isActive: true});
 
 
 ---
+
+
+<a id="bulkDeleteMembers"></a>
+## `bulkDeleteMembers(members)`
+Deletes a single 'member' item or an array of `member` items.
+
+### Params
+* `members`: [array, object] - An array of member items or a single member item
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+// Deletes an array of members.
+var members = [member1, member2, member3]
+teamsnap.bulkDeleteMembers(members);
+
+// Deletes a single member.
+teamsnap.bulkDeleteMembers(member1);
+```
+
+---
+
+
+<a id="moveMemberToTeam"></a>
+## `moveMemberToTeam(params, callback)`
+Moves a single member item or an array of member items to either divisionID or teamId.
+teamId must be in or under the divisionId.
+
+### Params
+* `params`: [object] - An object with member, divisionId and optional teamId
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+// Moves an array of members.
+var members = [member1, member2, member3]
+teamsnap.moveMemberToTeam({divisionId: 1, teamId: 1, member: members});
+
+// Moves a single member.
+teamsnap.moveMemberToTeam({divisionId: division, teamId: team, member: member1});
+```

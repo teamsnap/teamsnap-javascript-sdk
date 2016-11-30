@@ -206,6 +206,8 @@ modifySDK = (sdk) ->
   # 19. messages and messageData need to reload after markMessageAsRead
   # 20. messages need to be unlinked after bulkDeleteMessages
   # 21. assignments need to load after createBulkAssignments
+  # 22. bulkDeleteMembers needs to avails, trackedItemStatuses, assignments,
+  # emails, phones, contacts, contact emails, and contact phones
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -839,6 +841,30 @@ modifySDK = (sdk) ->
       createAsMemberId, callback).then((result) ->
         assignmentIds = result.map (assignment) -> assignment.id
         sdk.loadAssignments({id: assignmentIds}).then -> result
+      ).callback callback
+
+  wrapMethod sdk, 'bulkDeleteMembers', (bulkDeleteMembers) ->
+    (members, callback) ->
+      toRemove = []
+      members.forEach (member) ->
+        toRemove.push member.assignments...
+        toRemove.push member.availabilities...
+        member.contacts.forEach (contact) ->
+          toRemove.push contact.contactEmailAddresses...
+          toRemove.push contact.contactPhoneNumbers...
+          toRemove.push contact
+        toRemove.push member.trackedItemStatuses...
+        toRemove.push member.memberPayments...
+        toRemove.push member.memberStatistics...
+        toRemove.push member.statisticData...
+        toRemove.push member.memberAssignments...
+
+      linking.unlinkItems toRemove, lookup
+      bulkDeleteMembers.call(this, members, callback).then((result) ->
+        return result
+        ).fail((err) ->
+          linking.linkItems toRemove, lookup
+          err
       ).callback callback
 
 revertSDK = (sdk) ->
