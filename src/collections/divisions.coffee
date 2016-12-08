@@ -60,3 +60,9 @@ exports.loadChildDivisions = (divisionId, callback) ->
     throw new TSArgsError 'teamsnap.loadChildDivisions',
       'divisionId must be provided'
   @collections.divisions.queryItems('children', id: divisionId, callback)
+
+exports.loadActiveTrialDivisions = (userId, callback) ->
+  unless @isId userId
+    throw new TSArgsError 'teamsnap.loadActiveTrialsDivisions',
+      'userId must be provided'
+  @collections.divisions.queryItems('activeTrials', userId: userId, callback)

@@ -9,6 +9,7 @@
 - [loadAncestorDivisions](#loadAncestorDivisions)
 - [loadDescendantDivisions](#loadDescendantDivisions)
 - [loadChildDivisions](#loadChildDivisions)
+- [loadActiveTrialDivisions](#loadActiveTrialDivisions)
 
 ---
 <a id="loadDivisions"></a>
@@ -191,6 +192,24 @@ Returns the child `division` items.
 // ~~~~~
 // Returns the child divisions.
 var divisions = teamsnap.loadChildDivisions(1);
+```
+
+
+---
+
+
+<a id="loadActiveTrialDivisions"></a>
+## `loadActiveTrialDivisions(userId, callback)`
+Returns the active trial divisions for a given user id.
+
+### Params
+* `userId`: [int] - a userId.
+* `callback`: [function] - callback to be executed when the operation completes.
+### Examples
+```javascript
+// ~~~~~
+// Returns the active trial divisions for user.
+var activeTrials = teamsnap.loadActiveTrialDivisions(1);
 ```
 
 
