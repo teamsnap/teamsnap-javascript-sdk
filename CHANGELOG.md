@@ -1,6 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
 
+### December 9, 2016 // Version 1.23.0
+- Add `loadActiveTrialDivisions` in `divisions`.
+
+---
+
 ### November 30, 2016 // Version 1.22.0
 - Add `bulkDeleteMembers`, `divisionAdvancedLoadMembers`, and `moveMemberToTeam` in `members`.
 - Add `registrationForms` collection.
