@@ -1,4 +1,4 @@
-exports.config =
+module.exports =
   sourceMaps: false
   paths:
     public: 'lib'
@@ -22,7 +22,7 @@ exports.config =
             'test/js/test.min.js': /^test\//
 
   server:
-    indexPath: 'lib/test/index.html'
+    indexPath: 'test/index.html'
     port: 8000
 
   plugins:
@@ -124,3 +124,6 @@ exports.config =
         non_empty_constructor_needs_parens:
           name: "non_empty_constructor_needs_parens"
           level: "ignore"
+
+  npm:
+    enabled: false
