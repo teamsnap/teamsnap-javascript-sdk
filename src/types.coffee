@@ -100,6 +100,7 @@ pluralLookup =
   opponentResults: 'opponentsResults'
   statisticDatum: 'statisticData'
   messageDatum: 'messageData'
+  messageReplies: 'messagesReplies'
   teamMedium: 'teamMedia'
   teamPaypalPreferences: 'teamsPaypalPreferences'
   teamPreferences: 'teamsPreferences'
