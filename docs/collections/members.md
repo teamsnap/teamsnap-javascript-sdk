@@ -303,18 +303,22 @@ if(teamsnap.canEditItem(member, team, availability)){
 
 
 <a id="importMembersFromTeam"></a>
-## `importMembersFromTeam(memberIds, teamId)`
+## `importMembersFromTeam(memberIds, teamId, sendInvites)`
 Creates an import of members from a different team to a destination team.
 
 ## Params
 * `memberIds`: [ids] - array of `memberIds` to be imported.
 * `teamId`: [id, object] - `teamId` or `team.id` of team to import members to.
+* `sendInvites`: [bool] - send invites to imported members on team. (optional)
 
 ### Examples
 ```javascript
 // ~~~~~
-// Imports members to destination team
+// Imports members to destination team and does not send invites
 teamsnap.importMembersFromTeam([1, 2], 3);
+// ~~~~~
+// Imports members to destination team and send invites
+teamsnap.importMembersFromTeam([1, 2], 3, true);
 ```
 
 ---

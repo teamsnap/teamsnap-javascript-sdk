@@ -160,7 +160,7 @@ exports.canEditItem = (member, team, item) ->
   else
     item.links.member.href is member.href
 
-exports.importMembersFromTeam = (memberIds, teamId, callback) ->
+exports.importMembersFromTeam = (memberIds, teamId, sendInvites, callback) ->
   unless memberIds
     throw new TSArgsError 'teamsnap.importMembersFromTeam', 'must include
     `memberIds`'
