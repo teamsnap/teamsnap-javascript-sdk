@@ -169,7 +169,10 @@ exports.importMembersFromTeam = (memberIds, teamId, sendInvites, callback) ->
      a teamId"
   if @isItem teamId
     teamId = teamId.id
-  params = sourceMemberIds: memberIds, destinationTeamId: teamId
+  params =
+    sourceMemberIds: memberIds,
+    destinationTeamId: teamId,
+    sendInvites: sendInvites
 
   @collections.members.exec 'importFromTeam', params, callback
 
