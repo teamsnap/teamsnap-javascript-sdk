@@ -718,8 +718,8 @@ modifySDK = (sdk) ->
       ).callback callback
 
   wrapMethod sdk, 'importMembersFromTeam', (importMembersFromTeam) ->
-    (memberIds, teamId, callback) ->
-      importMembersFromTeam.call(this, memberIds, teamId)
+    (memberIds, teamId, sendInvites, callback) ->
+      importMembersFromTeam.call(this, memberIds, teamId, sendInvites)
       .then((result) ->
         memberIds = result.map (member) -> member.id
         promises.when(

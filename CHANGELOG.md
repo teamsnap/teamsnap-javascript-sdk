@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### February 27, 2017 // Version 1.23.2
+- Adds `sendInvites` to `importMembersFromTeam` method in persistence layer.
+
+---
+
 ### February 24, 2017 // Version 1.23.1
 - Adds `sendInvites` to `importMembersFromTeam`.
 
