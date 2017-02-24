@@ -169,6 +169,8 @@ exports.importMembersFromTeam = (memberIds, teamId, sendInvites, callback) ->
      a teamId"
   if @isItem teamId
     teamId = teamId.id
+  if typeof sendInvites is 'function'
+    callback = sendInvites
   params =
     sourceMemberIds: memberIds,
     destinationTeamId: teamId,
