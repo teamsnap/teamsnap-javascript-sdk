@@ -6,7 +6,7 @@
 ---
 
 ### February 24, 2017 // Version 1.23.1
-- Adds `sendInvites` to `importMembersFromTeam`.
+- Adds `sendInvites` to `importMembersFromTeam` method.
 
 ---
 
