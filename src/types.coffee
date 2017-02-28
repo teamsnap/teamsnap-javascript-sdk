@@ -48,6 +48,7 @@ types = [
   'memberRegistrationSignup'
   'message'
   'messageDatum'
+  'messageReplies'
   'opponent'
   'opponentResults'
   'paymentNote'
