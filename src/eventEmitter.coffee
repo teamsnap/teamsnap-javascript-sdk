@@ -23,7 +23,6 @@ emit = (data) ->
   eventFactory('teamsnap-sdk-event', data)
 
 requestResponse = (method, xhr) =>
-  return if method is 'get'
   data = xhr.data
   eventData = null
 
