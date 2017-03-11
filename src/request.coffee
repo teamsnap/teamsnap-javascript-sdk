@@ -3,6 +3,7 @@ if typeof XMLHttpRequest is 'undefined'
   global.XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 FormData = global.FormData or ->
 promises = require './promises'
+eventEmitter = require './eventEmitter'
 
 # Request
 sendRequest = (method, url, data, hooks, callback) ->
@@ -50,6 +51,7 @@ sendRequest = (method, url, data, hooks, callback) ->
           deferred.reject new RequestError(RequestError.VALIDATION_ERROR,
             errorMsg or 'The data was invalid'), xhr
         else
+          eventEmitter.requestResponse(method, xhr)
           deferred.resolve xhr
 
   xhr.send(data or null)
