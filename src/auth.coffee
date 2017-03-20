@@ -120,7 +120,7 @@ TeamSnap::hasSession = ->
   !!browserStore()
 
 # Destroy session with auth server and removes request object (if authed)
-TeamSnap::browserLogout = () ->
+TeamSnap::browserLogout = ->
   createAuthDialog(teamsnap.authUrl + '/logout')
   if @isAuthed
     @deleteAuth()
