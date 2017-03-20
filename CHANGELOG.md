@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### March 10, 2017 // Version 1.24.0
+### March 20, 2017 // Version 1.24.0
 - Add `browserLogout` method to end a session started with `startBrowserAuth`.
 
 ### February 27, 2017 // Version 1.23.2
