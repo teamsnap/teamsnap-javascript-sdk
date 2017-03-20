@@ -1,3 +1,9 @@
+types = require './types'
+
+camelize = (str) ->
+  str.replace /[-_]+(\w)/g, (_, char) ->
+    char.toUpperCase()
+
 # Detect customEvent constructor support
 hasCustomEventConstructor = (->
   try
@@ -22,7 +28,7 @@ eventFactory = (eventName, data) ->
 emit = (data) ->
   eventFactory('teamsnap-sdk-event', data)
 
-requestResponse = (method, xhr) =>
+requestResponse = (method, xhr) ->
   data = xhr.data
   eventData = null
 
@@ -54,7 +60,6 @@ requestResponse = (method, xhr) =>
             refIds: refIds
           }
     return eventData
-
   if Array.isArray(data)
     # loop over collections in array
     data.forEach (response) ->
@@ -62,7 +67,33 @@ requestResponse = (method, xhr) =>
       # (this shouldn't really happen very often)
       eventData = buildEventDataFromCollection(response.collection)
       emit(eventData) if eventData
+  else if data.collection.rel is 'bulk_load'
+    # When bulk_load, group items by collection and emit
+    # events for each collection
+    collections = {}
+    collectionItems = data.collection.items
+    if collectionItems?.length
+      collectionItems.forEach (item) ->
+        itemType = null
+        item.data.some (field) ->
+          if field.name is 'type'
+            itemType = camelize(field.value)
+            return true
+          else
+            return false
+        itemCollection = types.getPluralType(itemType)
+        unless collections.hasOwnProperty(itemCollection)
+          collections[itemCollection] = {
+            items: [],
+            rel: itemCollection,
+          }
+        collections[itemCollection].items.push(item)
 
+      Object.keys(collections).forEach (collectionName) ->
+        collection = collections[collectionName]
+
+        eventData = buildEventDataFromCollection(collection)
+        emit(eventData) if eventData
   else
     eventData = buildEventDataFromCollection(data.collection)
     emit(eventData) if eventData
