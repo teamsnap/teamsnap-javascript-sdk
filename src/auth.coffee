@@ -19,6 +19,19 @@ sdkRequest = request.create().hook (xhr, data) ->
     xhr.setRequestHeader('Content-Type', collectionJSONMime)
   xhr.withCredentials = true
 
+# Generates urls
+generateUrl = (endpoint, params) ->
+  queries = []
+  for key, value of params
+    if value
+      queries.push key + '=' + encodeURIComponent value
+  url = teamsnap.authUrl + '/oauth/' + endpoint
+
+  if queries.length
+    url = url + '?' + queries.join('&')
+
+  url.replace /%20/g, '+'
+
 
 # Need 3 types of authentications
 # 1. server-side app
@@ -106,21 +119,15 @@ TeamSnap::isAuthed = ->
 TeamSnap::hasSession = ->
   !!browserStore()
 
+# Destroy session with auth server and removes request object (if authed)
+TeamSnap::browserLogout = ->
+  createAuthDialog(teamsnap.authUrl + '/logout')
+  if @isAuthed
+    @deleteAuth()
 
 # Initializes teamsnap with clientId (and optionally secret on the server) to
 # allow authorization flows
 TeamSnap::init = (clientId, secret) ->
-
-  # Generates urls
-  generateUrl = (endpoint, params) ->
-    queries = []
-    for key, value of params
-      if value
-        queries.push key + '=' + encodeURIComponent value
-    url = teamsnap.authUrl + '/oauth/' + endpoint + '?' + queries.join('&')
-    url.replace /%20/g, '+'
-
-
   # Generates the auth url for a resource owner to auth a client
   generateAuthUrl = (type, redirect, scopes) ->
     scopes = if Array.isArray(scopes) then scopes.join ' ' else scopes
