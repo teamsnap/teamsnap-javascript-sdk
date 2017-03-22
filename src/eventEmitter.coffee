@@ -60,7 +60,21 @@ requestResponse = (method, xhr) ->
             refIds: refIds
           }
     return eventData
-  if Array.isArray(data)
+
+  if method.toUpperCase() is 'DELETE'
+    # Since `DELETE` requests have no response body, we need to get the
+    # collection / id from the request URL.
+    urlParts = xhr.responseURL.split('/')
+    refIds = [parseInt(urlParts[urlParts.length - 1])]
+    collection = urlParts[urlParts.length - 2]
+
+    eventData = {
+      method: method,
+      collection: collection,
+      refIds: refIds,
+    }
+    emit(eventData)
+  else if Array.isArray(data)
     # loop over collections in array
     data.forEach (response) ->
       # if items exist, return event for each item

@@ -51,8 +51,8 @@ sendRequest = (method, url, data, hooks, callback) ->
           deferred.reject new RequestError(RequestError.VALIDATION_ERROR,
             errorMsg or 'The data was invalid'), xhr
         else
-          eventEmitter.requestResponse(method, xhr)
           deferred.resolve xhr
+          eventEmitter.requestResponse(method, xhr)
 
   xhr.send(data or null)
   deferred.promise.callback callback
