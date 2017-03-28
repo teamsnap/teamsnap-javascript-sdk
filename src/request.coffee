@@ -3,10 +3,18 @@ if typeof XMLHttpRequest is 'undefined'
   global.XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 FormData = global.FormData or ->
 promises = require './promises'
+
+# -- THIS IS A BETA FEATURE AND IS SUBJECT TO CHANGE -- #
+# -- IT IS HIGHLY RECOMMENDED THIS IS NOT USED IN A PRODUCTION APPLICATION -- #
 eventEmitter = require './eventEmitter'
 
 # Request
 sendRequest = (method, url, data, hooks, callback) ->
+  # -- BETA -- #
+  if teamsnap?.useEventEmitter
+    requestId = method + (new Date).getTime()
+    eventEmitter.requestStart(requestId, method, url, data)
+  # -------- #
   # Query string
   if data and method.toUpperCase() is 'GET'
     query = []
@@ -36,6 +44,11 @@ sendRequest = (method, url, data, hooks, callback) ->
         if xhr.status >= 400
           errorMsg = xhr.data?.collection?.error?.message or ''
 
+          # -- BETA -- #
+          if teamsnap?.useEventEmitter
+            eventEmitter.requestError(requestId, method, url, data, errorMsg)
+          # -------- #
+
         if xhr.status is 0
           return promises.defer().promise if unloading
           deferred.reject new RequestError(RequestError.CONNECTION_ERROR,
@@ -52,7 +65,10 @@ sendRequest = (method, url, data, hooks, callback) ->
             errorMsg or 'The data was invalid'), xhr
         else
           deferred.resolve xhr
-          eventEmitter.requestResponse(method, xhr)
+          # -- BETA -- #
+          if teamsnap?.useEventEmitter
+            eventEmitter.requestResponse(requestId, method, xhr)
+          # -------- #
 
   xhr.send(data or null)
   deferred.promise.callback callback
