@@ -1,5 +1,9 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### March 29, 2017 // Version 1.25.0
+- **BETA** Add `eventEmitter` method which allows events to be triggered while interacting with the SDK. Since this is in BETA, it is subject to change and therefore should _not_ be used in
+production environments without extreme caution.
+
 ### March 20, 2017 // Version 1.24.0
 - Add `browserLogout` method to end a session started with `startBrowserAuth`.
 
