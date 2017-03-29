@@ -151,7 +151,7 @@ requestResponse = (requestId, method, xhr) ->
     data.forEach (response) ->
       # if items exist, return event for each item
       # (this shouldn't really happen very often)
-      type = types.getSingularType(collection.collection)
+      type = types.getSingularType(response.collection)
       # is this a valid collection?
       if type
         eventData = buildEventDataFromCollection(response.collection, method, refIds)
