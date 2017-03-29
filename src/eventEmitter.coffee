@@ -49,7 +49,7 @@ buildEventDataFromCollection = (collection, method, refIds) ->
       if refIds.length
         eventData = {
           method: method,
-          collection: collection.rel,
+          collection: camelize(collection.rel),
           refIds: refIds
         }
   return eventData
@@ -86,13 +86,14 @@ requestBuilder = (requestId, method, url, data, error) ->
     emit(eventData, eventName)
 
   else if lastUrlPart is 'search'
-    types = data.types
+    collectionName = camelize(urlParts[urlParts.length - 2])
+    type = types.getSingularType(collectionName)
 
-    types.forEach (type) ->
+    if type
       eventData = {
         requestId: requestId,
         method: method,
-        collection: urlParts[urlParts.length - 2],
+        collection: collectionName,
         data: data
       }
 
@@ -101,13 +102,14 @@ requestBuilder = (requestId, method, url, data, error) ->
       emit(eventData, eventName)
 
   else
-    type = types.getSingularType(lastUrlPart)
+    collectionName = camelize(lastUrlPart)
+    type = types.getSingularType(collectionName)
     # is this a valid collection?
     if type
       eventData = {
         requestId: requestId,
         method: method,
-        collection: lastUrlPart,
+        collection: collectionName,
         data: data
       }
 
@@ -133,7 +135,7 @@ requestResponse = (requestId, method, xhr) ->
     # collection / id from the request URL.
     urlParts = xhr.responseURL.split('/')
     refIds = [parseInt(urlParts[urlParts.length - 1])]
-    collection = urlParts[urlParts.length - 2]
+    collection = camelize(urlParts[urlParts.length - 2])
 
     type = types.getSingularType(collection)
     # is this a valid collection?
@@ -151,7 +153,8 @@ requestResponse = (requestId, method, xhr) ->
     data.forEach (response) ->
       # if items exist, return event for each item
       # (this shouldn't really happen very often)
-      type = types.getSingularType(response.collection)
+      collectionName = camelize(response.collection.rel)
+      type = types.getSingularType(collectionName)
       # is this a valid collection?
       if type
         eventData = buildEventDataFromCollection(response.collection, method, refIds)
@@ -191,7 +194,8 @@ requestResponse = (requestId, method, xhr) ->
             emit(eventData, 'request-response')
   else
     eventData = buildEventDataFromCollection(data.collection, method, refIds)
-    type = types.getSingularType(data.collection)
+    collectionName = camelize(data.collection.rel)
+    type = types.getSingularType(collectionName)
     # is this a valid collection?
     if type and eventData
       eventData.requestId = requestId
