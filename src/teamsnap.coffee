@@ -3,7 +3,7 @@ promises = require './promises'
 require './errors'
 
 class TeamSnap
-  version: '1.24.0'
+  version: '1.25.0'
   promises: promises
   when: promises.when
   TeamSnap: TeamSnap
@@ -13,6 +13,11 @@ class TeamSnap
   constructor: (@apiUrl = 'https://apiv3.teamsnap.com',
     @authUrl = 'https://auth.teamsnap.com') ->
 
+  # -- BETA -- #
+  # Subject to change, and not
+  # recommended for production use
+  useEventEmitter: false
+  # ---------- #
 
 
 module.exports = new TeamSnap()
