@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### April 7, 2017 // Version 1.25.4
+- Reloads `memberEmailAddresses` and `contactEmailAddresses` in `disableMember` in persistence layer.
+
+---
+
 ### March 29, 2017 // Version 1.25.2
 - Bug fix on `eventEmitter` method.
 

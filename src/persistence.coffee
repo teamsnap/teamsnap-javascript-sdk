@@ -208,6 +208,8 @@ modifySDK = (sdk) ->
   # 21. assignments need to load after createBulkAssignments
   # 22. bulkDeleteMembers needs to avails, trackedItemStatuses, assignments,
   # emails, phones, contacts, contact emails, and contact phones
+  # 23. memberEmailAddresses and contactEmailAddresses need to reload after
+  # disable member
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -865,6 +867,13 @@ modifySDK = (sdk) ->
         ).fail((err) ->
           linking.linkItems toRemove, lookup
           err
+      ).callback callback
+
+  wrapMethod sdk, 'disableMember', (disableMember) ->
+    (memberId, callback) ->
+      disableMember.call(this, memberId, callback).then((result) ->
+        sdk.loadMemberEmailAddresses({memberId: memberId})
+        sdk.loadContactEmailAddresses({memberId: memberId})
       ).callback callback
 
 revertSDK = (sdk) ->
