@@ -5,8 +5,18 @@
 
 ---
 
+### March 29, 2017 // Version 1.25.3
+- Bump minor version to publish to npm.
+
+---
+
 ### March 29, 2017 // Version 1.25.2
 - Bug fix on `eventEmitter` method.
+
+---
+
+### March 29, 2017 // Version 1.25.1
+- Bump minor version to publish to npm.
 
 ---
 
