@@ -872,8 +872,8 @@ modifySDK = (sdk) ->
   wrapMethod sdk, 'disableMember', (disableMember) ->
     (memberId, callback) ->
       disableMember.call(this, memberId, callback).then((result) ->
-        sdk.loadMemberEmailAddresses({memberId: memberId})
-        sdk.loadContactEmailAddresses({memberId: memberId})
+        sdk.loadMemberEmailAddresses({memberId: result.id})
+        sdk.loadContactEmailAddresses({memberId: result.id})
       ).callback callback
 
 revertSDK = (sdk) ->
