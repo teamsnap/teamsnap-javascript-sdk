@@ -208,6 +208,8 @@ modifySDK = (sdk) ->
   # 21. assignments need to load after createBulkAssignments
   # 22. bulkDeleteMembers needs to avails, trackedItemStatuses, assignments,
   # emails, phones, contacts, contact emails, and contact phones
+  # 23. memberEmailAddresses, contactEmailAddresses, memberPhoneNumbers, c
+  # contactPhoneNumbers and memberPrefs need to reload after disable member
 
   # Load related records when a member is created
   wrapSave sdk, 'saveMember', (member) ->
@@ -692,13 +694,21 @@ modifySDK = (sdk) ->
         err
       ).callback callback
 
-  # Reload memberEmailAddresses when invite is sent
+  # Reload memberEmailAddresses, contactEmailAddresses, memberPhoneNumbers,
+  # contactPhoneNumbers and memberPrefs when invite is sent
   wrapMethod sdk, 'invite', (invite) ->
     (options, callback) ->
       invite.call(this, options).then((result) ->
         if options.hasOwnProperty('memberId')
           memberId = options.memberId
-          sdk.loadMemberEmailAddresses({memberId: memberId}).then -> result
+          promises.when(
+            sdk.loadMemberEmailAddresses({memberId: memberId})
+            sdk.loadContactEmailAddresses({memberId: memberId})
+            sdk.loadMemberPhoneNumbers({memberId: memberId})
+            sdk.loadContactPhoneNumbers({memberId: memberId})
+            sdk.loadMembersPreferences({memberId: memberId})
+          ).then -> result
+          #sdk.loadMemberEmailAddresses({memberId: memberId}).then -> result
         else if options.hasOwnProperty('contactId')
           contactId = options.contactId
           sdk.loadContactEmailAddresses({contactId: contactId}).then -> result
@@ -865,6 +875,19 @@ modifySDK = (sdk) ->
         ).fail((err) ->
           linking.linkItems toRemove, lookup
           err
+      ).callback callback
+
+  wrapMethod sdk, 'disableMember', (disableMember) ->
+    (memberId, callback) ->
+      disableMember.call(this, memberId, callback).then((result) ->
+        memberId = result.id
+        promises.when(
+          sdk.loadMemberEmailAddresses({memberId: memberId})
+          sdk.loadContactEmailAddresses({memberId: memberId})
+          sdk.loadMemberPhoneNumbers({memberId: memberId})
+          sdk.loadContactPhoneNumbers({memberId: memberId})
+          sdk.loadMembersPreferences({memberId: memberId})
+        ).then -> result
       ).callback callback
 
 revertSDK = (sdk) ->
