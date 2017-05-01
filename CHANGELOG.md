@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### April 27, 2017 // Version 1.26.0
+### May 1, 2017 // Version 1.26.0
 - Reloads `memberEmailAddresses`, `contactEmailAddresses`, `memberPhoneNumbers`, `contactPhoneNumbers` and `memberPreferences` in `disableMember` in persistence layer.
 - Reloads `memberEmailAddresses`, `contactEmailAddresses`, `memberPhoneNumbers`, `contactPhoneNumbers` and `memberPreferences` in `invite` in persistence layer.
 
