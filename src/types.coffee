@@ -12,6 +12,7 @@ types = [
   'contactPhoneNumber'
   'customDatum'
   'customField'
+  'divisionAggregate'
   'leagueCustomDatum'
   'leagueCustomField'
   'divisionContact'
