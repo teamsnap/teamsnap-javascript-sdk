@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### May 9, 2017 // Version 1.28.0
+- Reloads `contacts` in `disableMember` in persistence layer.
+
+---
+
 ### May 9, 2017 // Version 1.27.0
 - Adds `loadDivisionAggregates` method.
 
