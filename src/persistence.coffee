@@ -887,6 +887,7 @@ modifySDK = (sdk) ->
           sdk.loadMemberPhoneNumbers({memberId: memberId})
           sdk.loadContactPhoneNumbers({memberId: memberId})
           sdk.loadMembersPreferences({memberId: memberId})
+          sdk.loadContacts({memberId: memberId})
         ).then -> result
       ).callback callback
 
