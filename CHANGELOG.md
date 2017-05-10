@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### May 19, 2017 // Version 1.30.0
+- Parse `persistentUuid` field as string in response from v3. While this is _technically_ a potentially breaking change for some, this field is mostly unusable since it is a `bigint` (and may produce values unsupported by  JS).
+
+---
+
 ### May 12, 2017 // Version 1.29.0
 - Adds `batchInvoices` collection.
 - Adds `invoiceLineItems` collection.
