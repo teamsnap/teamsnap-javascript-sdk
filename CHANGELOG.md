@@ -1,6 +1,12 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
 ### May 19, 2017 // Version 1.30.0
+- Handle `_teamsnapReturnCollection` flag in params for any `loadItems` method to return
+entire response `collection` instead of just `items`.
+
+---
+
+### May 19, 2017 // Version 1.30.0
 - Parse `persistentUuid` field as string in response from v3. While this is _technically_ a potentially breaking change for some, this field is mostly unusable since it is a `bigint` (and may produce values unsupported by  JS).
 
 ---
@@ -9,6 +15,7 @@
 - Adds `batchInvoices` collection.
 - Adds `invoiceLineItems` collection.
 
+---
 
 ### May 9, 2017 // Version 1.28.0
 - Reloads `contacts` in `disableMember` in persistence layer.
