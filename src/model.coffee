@@ -240,7 +240,13 @@ class MetaList
     if typeof params is 'function'
       callback = params
       params = undefined
-    @_request(request, 'get', rel, params, 'items').callback callback
+    # _teamsnapReturnCollection will return the entire `collection`
+    # in the response, rather than just the items
+    if params._teamsnapReturnCollection
+      type = 'complete'
+    else
+      type = 'items'
+    @_request(request, 'get', rel, params, type).callback callback
 
   # Load a link or query as a single item
   loadItem: (request, rel, params, callback) ->
@@ -310,11 +316,14 @@ class MetaList
             data[underscore(key)] = value
 
     request(method, entry.href, data).then (xhr) ->
-      items = if xhr.data?.collection?.items
-        Item.fromArray(request, xhr.data.collection.items)
+      if type is 'complete'
+        xhr.data
       else
-        []
-      if type is 'item' then items.pop() else items
+        items = if xhr.data?.collection?.items
+          Item.fromArray(request, xhr.data.collection.items)
+        else
+          []
+        if type is 'item' then items.pop() else items
 
 
 # Utility functions
