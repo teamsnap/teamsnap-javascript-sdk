@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### May 12, 2017 // Version 1.29.0
+- Adds `batchInvoices` collection.
+- Adds `invoiceLineItems` collection.
+
+
 ### May 9, 2017 // Version 1.28.0
 - Reloads `contacts` in `disableMember` in persistence layer.
 

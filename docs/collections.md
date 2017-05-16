@@ -7,6 +7,7 @@ An APIv3 endpoint’s name is generally derived from its `Collection+JSON` colle
 ## Methods By Collection
 - [Assignments](./collections/assignments.md)
 - [Availabilities](./collections/availabilities.md)
+- [Batch Invoices](./collections/batch_invoices.md)
 - [Broadcast Alerts](./collections/broadcast_alerts.md)
 - [Broadcast Email Attachments](./collections/broadcast_email_attachments.md)
 - [Broadcast Emails](./collections/broadcast_emails.md)
@@ -26,6 +27,7 @@ An APIv3 endpoint’s name is generally derived from its `Collection+JSON` colle
 - [Forum Posts](./collections/forum_posts.md)
 - [Forum Subscriptions](./collections/forum_subscriptions.md)
 - [Forum Topics](./collections/forum_topics.md)
+- [Invoice Line Items](./collections/invoice_line_items.md)
 - [League Custom Data](./collections/league_custom_data.md)
 - [League Custom Fields](./collections/league_custom_fields.md)
 - [League Registrant Documents](./league_registrant_documents/xxx.md)
