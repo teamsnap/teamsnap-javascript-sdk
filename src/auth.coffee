@@ -105,7 +105,7 @@ TeamSnap::auth = (token, options) ->
   @request.hook (xhr) ->
     xhr.setRequestHeader 'Authorization', 'Bearer ' + token
     
-    if options.optionalRequestHeaders and options.optionalRequestHeaders.length
+    if options?.optionalRequestHeaders?.length
       for option in options.optionalRequestHeaders
         xhr.setRequestHeader option.headerName, option.headerValue
   this
