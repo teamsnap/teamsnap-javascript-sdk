@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### May 19, 2017 // Version 1.30.0
+### May 19, 2017 // Version 1.31.0
 - Handle `_teamsnapReturnCollection` flag in params for any `loadItems` method to return
 entire response `collection` instead of just `items`.
 
