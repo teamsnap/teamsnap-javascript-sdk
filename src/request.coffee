@@ -3,6 +3,7 @@ if typeof XMLHttpRequest is 'undefined'
   global.XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 FormData = global.FormData or ->
 promises = require './promises'
+stringent = require './stringent'
 
 # -- THIS IS A BETA FEATURE AND IS SUBJECT TO CHANGE -- #
 # -- IT IS HIGHLY RECOMMENDED THIS IS NOT USED IN A PRODUCTION APPLICATION -- #
@@ -37,7 +38,7 @@ sendRequest = (method, url, data, hooks, callback) ->
         deferred.progress(xhr)
       when 4
         try
-          xhr.data = JSON.parse(xhr.responseText)
+          xhr.data = JSON.parse(stringent(xhr.responseText))
         catch
           xhr.data = null
 
