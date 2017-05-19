@@ -1,5 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### May 19, 2017 // Version 1.32.0
+- Adds `options` to `auth` method to allow for additional params in the request.
+- Sets `options.optionalRequestHeaders` for TeamSnap API feature flags.
+
+---
+
 ### May 19, 2017 // Version 1.31.0
 - Handle `_teamsnapReturnCollection` flag in params for any `loadItems` method to return
 entire response `collection` instead of just `items`.
