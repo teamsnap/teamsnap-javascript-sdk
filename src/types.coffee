@@ -5,6 +5,7 @@ types = [
   'assignment'
   'availability'
   'batchInvoice'
+  'batchInvoiceLineItem'
   'broadcastAlert'
   'broadcastEmail'
   'broadcastEmailAttachment'
