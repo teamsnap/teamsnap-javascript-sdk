@@ -23,8 +23,8 @@ To see a list of all available search params you can run:
 ### Examples
 ```javascript
 // ~~~~~
-// Loads all invoiceLineItems for `batchInvoiceId 1`.
-teamsnap.loadInvoiceLineItems({batchInvoiceId: 1});
+// Loads all invoiceLineItems for `invoiceId 1`.
+teamsnap.loadInvoiceLineItems({invoiceId: 1});
 ```
 
 
@@ -45,8 +45,8 @@ Creates a new `invoiceLineItem` item.
 var invoiceLineItem = teamsnap.createInvoiceLineItem();
 
 // ~~~~~
-// Creates a new invoiceLineItem item with `batchInvoiceId: 1` and `quantity: '1', amount: 1.00`.
-var invoiceLineItem = teamsnap.createInvoiceLineItem({batchInvoiceId: 1, quantity: '1', amount: 1.00});
+// Creates a new invoiceLineItem item with `invoiceId: 1` and `quantity: 1, amount: 1.00`.
+var invoiceLineItem = teamsnap.createInvoiceLineItem({invoiceId: 1, quantity: 1, amount: 1.00});
 ```
 
 
@@ -70,8 +70,8 @@ teamsnap.saveInvoiceLineItem(invoiceLineItem);
 // ~~~~~
 // Creates a new invoiceLineItem then saves it.
 var invoiceLineItem = teamsnap.createInvoiceLineItem({
-  batchInvoiceId: 1,
-  quantity: '1',
+  invoiceId: 1,
+  quantity: 1,
   amount: 1.00
 });
 
@@ -99,8 +99,8 @@ teamsnap.deleteInvoiceLineItem(invoiceLineItem);
 // ~~~~~
 // Creates a new invoiceLineItem, saves, then deletes it.
 var invoiceLineItem = teamsnap.createInvoiceLineItem({
-  batchInvoiceId: 1,
-  quantity: '1',
+  invoiceId: 1,
+  quantity: 1,
   amount: 1.00
 });
 

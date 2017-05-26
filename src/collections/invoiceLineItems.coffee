@@ -1,4 +1,3 @@
-# Load invoiceLineItems by divisionId or query parameters
 exports.loadInvoiceLineItems = (params, callback) ->
   unless params and typeof params is 'object'
     throw new TSArgsError 'teamsnap.loadInvoiceLineItems',
@@ -19,14 +18,14 @@ exports.saveInvoiceLineItem = (invoiceLineItem, callback) ->
   unless @isItem invoiceLineItem, 'invoiceLineItem'
     throw new TSArgsError 'teamsnap.saveInvoiceLineItem',
       "`invoiceLineItem.type` must be 'invoiceLineItem'"
-  unless invoiceLineItem.batchInvoiceId
-    return @reject 'You must choose a batchInvoiceId.', 'batchInvoiceId',
+  unless invoiceLineItem.invoiceId
+    return @reject 'You must choose a invoiceId.', 'invoiceId',
       callback
   unless invoiceLineItem.quantity
     return @reject 'You must provide a quantity.', 'quantity',
       callback
   unless invoiceLineItem.amount
-    return @reject 'You must provide a amount.', 'amount',
+    return @reject 'You must provide an amount.', 'amount',
       callback
 
   @saveItem invoiceLineItem, callback

@@ -1,10 +1,16 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### May 26, 2017 // Version 1.34.0
+- Adds `batchInvoiceLineItems` collection.
+
+---
+
 ### May 23, 2017 // Version 1.33.0
 - Adds `invoices` collection.
 - Adds `invoiceTransactions` collection.
 
 ---
+
 ### May 19, 2017 // Version 1.32.0
 - Adds `options` to `auth` method to allow for additional params in the request.
 - Sets `options.optionalRequestHeaders` for TeamSnap API feature flags.
