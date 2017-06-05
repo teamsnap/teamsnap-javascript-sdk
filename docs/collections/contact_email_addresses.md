@@ -6,6 +6,7 @@
 - [createContactEmailAddress](#createContactEmailAddress)
 - [saveContactEmailAddress](#saveContactEmailAddress)
 - [deleteContactEmailAddress](#deleteContactEmailAddress)
+- [inviteContactEmailAddresses](#inviteContactEmailAddresses)
 
 
 ---
@@ -115,5 +116,41 @@ teamsnap.saveContactEmailAddress(contactEmailAddress).then(function(){
   teamsnap.deleteContactEmailAddress(contactEmailAddress).then(function(){
     // Poof! It's gone!
   });
+});
+```
+<a id="inviteContactEmailAddresses"></a>
+## `inviteContactEmailAddresses(params, callback)`
+Invite contactEmailAddresses to a team
+
+### Params
+* `options`: [object] - Object that contains additional data:
+  * `contactEmailAddressIds`: [string] A comma separated list of ids
+  * `teamId`: [int] Id of Team
+  * `memberId`: [int] Id of member associated with `contactEmailAddressIds`
+  * `introduction`: [string] Introduction text for invitation (optional)
+
+### Examples
+```javascript
+// ~~~~~
+// Invites a ContactEmailAddress.
+teamsnap.inviteContactEmailAddresses(params);
+
+// ~~~~~
+// Creates a new contactEmailAddress and invites it to the team.
+var contactEmailAddress = teamsnap.createContactEmailAddress({
+  contactId: 1,
+  email: 'contact@example.com',
+  receivesTeamEmails: true
+});
+
+var options = {
+  contactEmailAddressIds: [1, 2, 3]
+  teamId: 1,
+  memberId: 2,
+  notifyAsMemberId: 1,
+};
+
+teamsnap.inviteContactEmailAddresses(options).then(function() {
+  // contactEmailAddress has been invited!
 });
 ```
