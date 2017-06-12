@@ -36,18 +36,21 @@ exports.deleteContactEmailAddress = (contactEmailAddress, callback) ->
   @deleteItem contactEmailAddress, callback
 
 
-exports.inviteContactEmailAddresses = (options, callback) ->
-  unless options.teamId
+exports.inviteContactEmailAddresses = (params, callback) ->
+  unless params and typeof params is 'object'
+    throw new TSArgsError 'teamsnap.inviteContactEmailAddresses', 'must provide
+    a params object'
+    
+  unless params.teamId
     throw new TSArgsError 'teamsnap.inviteContactEmailAddresses',
-      'options.teamId is required.'
+      'params.teamId is required.'
 
-  unless options.memberId
+  unless params.memberId
     throw new TSArgsError 'teamsnap.inviteContactEmailAddresses',
-      'options.memberId is required.'
+      'params.memberId is required.'
 
-  unless options.contactEmailAddressIds
+  unless params.contactEmailAddressIds
     throw new TSArgsError 'teamsnap.inviteContactEmailAddresses',
-      'options.contactEmailAddressIds is required.'
+      'params.contactEmailAddressIds is required.'
 
-  @collections.contactEmailAddresses
-    .exec('invite', options).pop().callback callback
+  @collections.contactEmailAddresses.exec('invite', params) callback
