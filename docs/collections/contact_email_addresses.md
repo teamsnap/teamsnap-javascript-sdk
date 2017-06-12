@@ -127,7 +127,6 @@ Invite contactEmailAddresses to a team
   * `contactEmailAddressIds`: [string] A comma separated list of ids
   * `teamId`: [int] Id of Team
   * `memberId`: [int] Id of member associated with `contactEmailAddressIds`
-  * `introduction`: [string] Introduction text for invitation (optional)
 
 ### Examples
 ```javascript
@@ -143,14 +142,13 @@ var contactEmailAddress = teamsnap.createContactEmailAddress({
   receivesTeamEmails: true
 });
 
-var options = {
+var params = {
   contactEmailAddressIds: [1, 2, 3]
   teamId: 1,
-  memberId: 2,
-  notifyAsMemberId: 1,
+  memberId: 2
 };
 
-teamsnap.inviteContactEmailAddresses(options).then(function() {
+teamsnap.inviteContactEmailAddresses(params).then(function() {
   // contactEmailAddress has been invited!
 });
 ```
