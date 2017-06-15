@@ -264,11 +264,12 @@ modifySDK = (sdk) ->
         err
       ).callback callback
 
-  # Reload member when saving memberEmailAddress
+  # Reloads member and contactEmailAddresses when saving memberEmailAddress
   wrapMethod sdk, 'saveMemberEmailAddress', (saveMemberEmailAddress) ->
     (emailAddress, callback) ->
       saveMemberEmailAddress.call(this, emailAddress, callback).then((result) ->
-        sdk.loadMembers({id: emailAddress.memberId}).then -> result
+        sdk.loadMembers({id: emailAddress.memberId})
+        sdk.loadContactEmailAddresses({memberId: emailAddress.memberId}).then -> result
       ).callback callback
 
   # Reload member when deleting memberEmailAddress
