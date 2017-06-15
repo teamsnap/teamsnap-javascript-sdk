@@ -123,7 +123,7 @@ teamsnap.saveContactEmailAddress(contactEmailAddress).then(function(){
 Invite contactEmailAddresses to a team
 
 ### Params
-* `options`: [object] - Object that contains additional data:
+* `params`: [params] - Object that contains additional data:
   * `contactEmailAddressIds`: [string] A comma separated list of ids
   * `teamId`: [int] Id of Team
   * `memberId`: [int] Id of member associated with `contactEmailAddressIds`
