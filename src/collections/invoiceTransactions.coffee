@@ -25,7 +25,7 @@ exports.saveInvoiceTransaction = (invoiceTransaction, callback) ->
 
 exports.deleteInvoiceTransaction = (invoiceTransaction, callback) ->
   unless invoiceTransaction
-    throw new TSArgsError 'teamsnap.deleteinvoiceTransaction',
+    throw new TSArgsError 'teamsnap.deleteInvoiceTransaction',
       '`invoiceTransaction` must be provided'
 
   @deleteItem invoiceTransaction, callback

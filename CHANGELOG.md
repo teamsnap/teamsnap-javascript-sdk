@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### June 21, 2017 // Version 1.36.0
+- Adds create, delete and save methods to `invoiceTransactions` collection.
+
+---
+
 ### June 15, 2017 // Version 1.35.0
 - Adds `inviteContactEmailAddresses` method.
 - Reloads `contactEmailAddresses` in `saveMemberEmailAddress` in persistence layer.
