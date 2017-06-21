@@ -1,7 +1,7 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
 ### June 21, 2017 // Version 1.36.0
-- Adds create, delete and save methods to `invoiceTransactions` collection.
+- Adds create and save methods to `invoiceTransactions` collection.
 
 ---
 
