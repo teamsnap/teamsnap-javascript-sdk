@@ -18,7 +18,7 @@ exports.saveInvoiceTransaction = (invoiceTransaction, callback) ->
     throw new TSArgsError 'teamsnap.saveInvoiceTransaction',
       "`invoiceTransaction.type` must be 'invoiceTransaction'"
   unless invoiceTransaction.invoiceId
-    return @reject 'You must provide a invoice.', 'invoiceId', callback
+    return @reject 'You must provide an invoice.', 'invoiceId', callback
 
   @saveItem invoiceTransaction, callback
 

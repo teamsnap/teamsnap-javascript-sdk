@@ -94,7 +94,7 @@ Deletes a `invoiceTransaction` item.
 ### Examples
 ```javascript
 // ~~~~~
-// Deletes a invoiceTransaction item.
+// Deletes an invoiceTransaction item.
 teamsnap.deleteInvoiceTransaction(invoiceTransaction);
 
 // ~~~~~

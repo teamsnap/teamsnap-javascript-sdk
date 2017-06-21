@@ -19,7 +19,7 @@ exports.saveInvoiceLineItem = (invoiceLineItem, callback) ->
     throw new TSArgsError 'teamsnap.saveInvoiceLineItem',
       "`invoiceLineItem.type` must be 'invoiceLineItem'"
   unless invoiceLineItem.invoiceId
-    return @reject 'You must choose a invoiceId.', 'invoiceId',
+    return @reject 'You must choose an invoiceId.', 'invoiceId',
       callback
   unless invoiceLineItem.quantity
     return @reject 'You must provide a quantity.', 'quantity',
