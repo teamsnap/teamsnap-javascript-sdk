@@ -93,7 +93,7 @@ Deletes a `invoiceLineItem` item.
 ### Examples
 ```javascript
 // ~~~~~
-// Deletes a invoiceLineItem item.
+// Deletes an invoiceLineItem item.
 teamsnap.deleteInvoiceLineItem(invoiceLineItem);
 
 // ~~~~~
