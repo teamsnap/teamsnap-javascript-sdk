@@ -19,13 +19,9 @@ exports.saveInvoiceTransaction = (invoiceTransaction, callback) ->
       "`invoiceTransaction.type` must be 'invoiceTransaction'"
   unless invoiceTransaction.invoiceId
     return @reject 'You must provide an invoice.', 'invoiceId', callback
+  unless invoiceTransaction.kind
+    return @reject 'You must provide a kind of invoice.', 'kind', callback
+  unless invoiceTransaction.amount
+    return @reject 'You must provide an amount.', 'amount', callback
 
   @saveItem invoiceTransaction, callback
-
-
-exports.deleteInvoiceTransaction = (invoiceTransaction, callback) ->
-  unless invoiceTransaction
-    throw new TSArgsError 'teamsnap.deleteInvoiceTransaction',
-      '`invoiceTransaction` must be provided'
-
-  @deleteItem invoiceTransaction, callback

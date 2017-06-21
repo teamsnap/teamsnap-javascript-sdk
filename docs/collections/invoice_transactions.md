@@ -5,7 +5,6 @@
 - [loadInvoiceTransactions](#loadInvoiceTransactions)
 - [createInvoiceTransaction](#createInvoiceTransaction)
 - [saveInvoiceTransaction](#saveInvoiceTransaction)
-- [deleteInvoiceTransaction](#deleteInvoiceTransaction)
 
 ---
 <a id="loadInvoiceTransactions"></a>
@@ -47,7 +46,8 @@ var invoiceTransaction = teamsnap.createInvoiceTransaction();
 // Creates a new invoiceTransaction item with `invoiceId: 1`.
 var invoiceTransaction = teamsnap.createInvoiceTransaction({
   invoiceId: 1,
-  ...additionalFields
+  kind: 'check',
+  amount: 1.00
 });
 ```
 
@@ -73,41 +73,9 @@ teamsnap.saveInvoiceTransaction(invoiceTransaction);
 // Creates a new invoiceTransaction then saves it.
 var invoiceTransaction = teamsnap.createInvoiceTransaction({
   invoiceId: 1,
-  ...additionalFields
+  kind: 'check',
+  amount: 1.00
 });
 
 teamsnap.saveInvoiceTransaction(invoiceTransaction);
-```
-
-
----
-
-
-<a id="deleteInvoiceTransaction"></a>
-## `deleteInvoiceTransaction(invoiceTransaction, callback)`
-Deletes a `invoiceTransaction` item.
-
-### Params
-* `invoiceTransaction`: [object] - an item to be deleted.
-* `callback`: [function] - callback to be executed when the operation completes.
-
-### Examples
-```javascript
-// ~~~~~
-// Deletes an invoiceTransaction item.
-teamsnap.deleteInvoiceTransaction(invoiceTransaction);
-
-// ~~~~~
-// Creates a new invoiceTransaction, saves, then deletes it.
-var invoiceTransaction = teamsnap.createInvoiceTransaction({
-  invoiceId: 1,
-  ...additionalFields
-});
-
-teamsnap.saveInvoiceTransaction(invoiceTransaction).then(function(savedItem){
-  // Save complete, now delete.
-  teamsnap.deleteInvoiceTransaction(savedItem).then(function(){
-    // Poof! It's gone!
-  });
-});
 ```
