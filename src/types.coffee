@@ -31,7 +31,6 @@ types = [
   'division'
   'event'
   'eventStatistic'
-  'facebookPage'
   'forumPost'
   'forumSubscription'
   'forumTopic'
