@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### June 26, 2017 // Version 1.37.0
+- Removes `facebookPage` from types.
+
+---
+
 ### June 21, 2017 // Version 1.36.0
 - Adds create and save methods to `invoiceTransactions` collection.
 
