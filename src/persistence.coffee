@@ -210,7 +210,7 @@ modifySDK = (sdk) ->
   # emails, phones, contacts, contact emails, and contact phones
   # 23. memberEmailAddresses, contactEmailAddresses, memberPhoneNumbers,
   # contactPhoneNumbers and memberPrefs need to reload after disable member
-  # 24. contacts should be reloaded on invite
+  # 24. contacts and contactEmailAddresses should be reloaded on invite
 
 
   # Load related records when a member is created
