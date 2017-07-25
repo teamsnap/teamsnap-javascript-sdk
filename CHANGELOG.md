@@ -1,10 +1,5 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### July 24, 2017 // Version 1.38.0
-- Reloads `contacts` and `contactEmailAddresses` in `inviteContactEmailAddresses` in persistence layer.
-
----
-
 ### June 26, 2017 // Version 1.37.0
 - Removes `facebookPage` from types.
 
