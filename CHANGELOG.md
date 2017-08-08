@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### August 8, 2017 // Version 1.39.0
+- Adds `registrationLineItems` and `registrationLineItemOptions` collections.
+
+---
+
 ### July 25, 2017 // Version 1.38.0
 - Reloads `contacts` and `contactEmailAddresses` in `inviteContactEmailAddresses` in persistence layer.
 

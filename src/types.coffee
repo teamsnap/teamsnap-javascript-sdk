@@ -58,6 +58,8 @@ types = [
   'paymentNote'
   'plan'
   'registrationForm'
+  'registrationLineItemOption'
+  'registrationLineItem'
   'smsGateway'
   'sponsor'
   'statistic'
