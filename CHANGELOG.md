@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### August 15, 2017 // Version 1.41.0
+### August 15, 2017 // Version 1.40.0
 - Updates collections to match apiv3
   - registrationLineItems -> registrationFormLineItems
   - registrationLineItemOptions -> registrationFormLineItemOptions
