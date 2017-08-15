@@ -10,7 +10,7 @@
 Loads items from the `registrationFormItems` collection based on given params.
 
 ### Params
-* `params`: [int, object] - can be either a `divisionId` or an object with query parameters.
+* `params`: [object] - can be either a `divisionId` or an object with query parameters.
 * `callback`: [function] - callback to be executed when the operation completes.
 
 To see a list of all available search params you can run:
