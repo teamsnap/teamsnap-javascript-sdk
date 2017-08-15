@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### August 14, 2017 // Version 1.39.1
+- Adds types `registrationLineItems` and `registrationLineItemOptions` to `sdk.coffee`.
+
+---
+
 ### August 8, 2017 // Version 1.39.0
 - Adds `registrationLineItems` and `registrationLineItemOptions` collections.
 
