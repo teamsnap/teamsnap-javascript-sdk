@@ -222,6 +222,9 @@ modifySDK = (sdk) ->
       sdk.loadMemberPayments memberId: member.id
       sdk.loadMemberBalances memberId: member.id
       sdk.loadTeamFees teamId: member.teamId
+      sdk.loadContacts memberId: member.id
+      sdk.loadContactEmailAddresses memberId: member.id
+      sdk.loadContactPhoneNumbers memberId: member.id
     )
 
   # Remove related records when a member is deleted

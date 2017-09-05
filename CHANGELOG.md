@@ -1,5 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### September 5, 2017 // Version 1.41.0
+- Reloads `contacts`, `contactEmailAddresses` and `contactPhoneNumbers`
+in `saveMember` in persistence layer.
+
+---
+
 ### August 15, 2017 // Version 1.40.0
 - Updates collections to match apiv3
   - registrationLineItems -> registrationFormLineItems
