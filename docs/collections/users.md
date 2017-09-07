@@ -63,3 +63,23 @@ Saves a `user` item.
 // Saves user item.
 teamsnap.saveUser(user);
 ```
+
+
+---
+
+
+<a id="sendEmailValidation"></a>
+## `sendEmailValidation(userId, callback)`
+Sends an email validation link to the User's email. Will not send a new email if
+the user has already validated their email address.
+
+### Params
+* `userId`: [int, object] - `userId` or `user` item for whom the validation email is to be sent.
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+// Sends email validation email to user with `userId: 1`.
+teamsnap.sendEmailValidation(1);
+```
