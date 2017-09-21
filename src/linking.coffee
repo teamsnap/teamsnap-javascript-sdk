@@ -41,10 +41,24 @@ linkItem = (item, lookup) ->
 
 linkItemWith = (item, other) ->
   plural = types.getPluralType item.type
+
+  findItemIndex = (items) ->
+    itemIndex = -1
+    items.some((otherItem, index) ->
+      if otherItem.href is item.href
+        itemIndex = index
+        true
+    )
+    itemIndex
+
   if plural and other.links.has plural
     other[plural] = [] unless other[plural]
     unless other[plural].indexOf(item) isnt -1
-      other[plural].push item
+      foundItemPosition = findItemIndex(other[plural])
+      if foundItemPosition > -1
+        other[plural][foundItemPosition] = item
+      else
+        other[plural].push item
   else
     other.links.each (rel, href) ->
       if href is item.href
