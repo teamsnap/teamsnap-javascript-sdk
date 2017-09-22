@@ -25,4 +25,4 @@ exports.saveUser = (user, callback) ->
 
 
 exports.sendEmailValidation = (callback) ->
-  @collections.users.exec('sendEmailValidation', userId).pop().callback callback
+  @collections.users.exec('sendEmailValidation').pop().callback callback
