@@ -1,5 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### September 21, 2017 // Version 1.42.0
+- Better object compare on `linkItemWith` to allow for new objects (especially helpful
+  when using Redux).
+
+---
+
 ### September 5, 2017 // Version 1.41.0
 - Reloads `contacts`, `contactEmailAddresses` and `contactPhoneNumbers`
 in `saveMember` in persistence layer.
