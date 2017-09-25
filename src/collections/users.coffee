@@ -22,3 +22,7 @@ exports.saveUser = (user, callback) ->
     return @reject 'You must provide an email for the user.', 'email', callback
 
   @saveItem user, callback
+
+
+exports.sendEmailValidation = (callback) ->
+  @collections.users.exec('sendEmailValidation').pop().callback callback

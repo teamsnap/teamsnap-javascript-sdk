@@ -63,3 +63,21 @@ Saves a `user` item.
 // Saves user item.
 teamsnap.saveUser(user);
 ```
+
+
+---
+
+
+<a id="sendEmailValidation"></a>
+## `sendEmailValidation(callback)`
+Sends an email validation link to the User's email.
+
+### Params
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+// Sends email validation email to current user.
+teamsnap.sendEmailValidation();
+```

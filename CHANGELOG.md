@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### September 22, 2017 // Version 1.43.0
+- Add `sendEmailValidation` command to `Users`.
+
+---
+
 ### September 21, 2017 // Version 1.42.0
 - Better object compare on `linkItemWith` to allow for new objects (especially helpful
   when using Redux).
