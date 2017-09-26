@@ -902,6 +902,7 @@ modifySDK = (sdk) ->
         inviteContactEmailAddresses.call(this, params, callback)
         .then((result) ->
           memberId = params.memberId
+          sdk.loadMembers({id: memberId})
           sdk.loadContacts({memberId: memberId})
           sdk.loadContactEmailAddresses({memberId: memberId})
         ).callback callback

@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### September 26, 2017 // Version 1.44.0
+- Reloads `members` in `inviteContactEmailAddresses` in persistence layer.
+
+---
+
 ### September 22, 2017 // Version 1.43.0
 - Add `sendEmailValidation` command to `Users`.
 
