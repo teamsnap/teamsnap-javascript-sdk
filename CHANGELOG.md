@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### September 29, 2017 // Version 1.44.1
+- Bug Fix: Check for presence of href during linking.
+
+---
+
 ### September 26, 2017 // Version 1.44.0
 - Reloads `members` in `inviteContactEmailAddresses` in persistence layer.
 
