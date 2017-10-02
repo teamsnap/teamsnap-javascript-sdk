@@ -44,11 +44,12 @@ linkItemWith = (item, other) ->
 
   findItemIndex = (items) ->
     itemIndex = -1
-    items.some((otherItem, index) ->
-      if otherItem.href is item.href
-        itemIndex = index
-        true
-    )
+    if item.href?
+      items.some((otherItem, index) ->
+        if otherItem.href is item.href
+          itemIndex = index
+          true
+      )
     itemIndex
 
   if plural and other.links.has plural
