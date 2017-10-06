@@ -905,6 +905,18 @@ modifySDK = (sdk) ->
           sdk.loadMembers({id: memberId})
           sdk.loadContacts({memberId: memberId})
           sdk.loadContactEmailAddresses({memberId: memberId})
+          sdk.loadContactPhoneNumbers({memberId: memberId})
+        ).callback callback
+
+  wrapMethod sdk, 'saveContact',
+    (saveContact) ->
+      (contact, callback) ->
+        saveContact.call(this, contact, callback)
+        .then((result) ->
+          contactId = contact.id
+          sdk.loadMembers({id: contact.memberId})
+          sdk.loadContactEmailAddresses({contactId: contactId})
+          sdk.loadContactPhoneNumbers({contactId: contactId})
         ).callback callback
 
 revertSDK = (sdk) ->

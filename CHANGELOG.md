@@ -1,5 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### October 6, 2017 // Version 1.45.0
+- Reloads `contactPhoneNumbers` in `inviteContactEmailAddresses` in persistence layer.
+- Reloads `contactEmailAddresses`, `contactPhoneNumbers` and `members` in `saveContact` in persistence layer.
+
+---
+
 ### September 29, 2017 // Version 1.44.1
 - Bug Fix: Check for presence of href during linking.
 
