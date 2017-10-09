@@ -3,6 +3,7 @@
 ### October 6, 2017 // Version 1.45.0
 - Reloads `contactPhoneNumbers` in `inviteContactEmailAddresses` in persistence layer.
 - Reloads `contactEmailAddresses`, `contactPhoneNumbers` and `members` in `saveContact` in persistence layer.
+- Reloads `contactPhoneNumbers` in `saveMemberPhoneNumber` in persistence layer.
 
 ---
 

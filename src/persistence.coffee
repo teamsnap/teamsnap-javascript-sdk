@@ -289,7 +289,9 @@ modifySDK = (sdk) ->
     (phoneNumber, callback) ->
       saveMemberPhoneNumber.call(this, phoneNumber, callback)
       .then((result) ->
-        sdk.loadMembers({id: phoneNumber.memberId}).then -> result
+        sdk.loadMembers({id: phoneNumber.memberId})
+        sdk.loadContactPhoneNumbers({memberId: phoneNumber.memberId})
+        .then -> result
       ).callback callback
 
   # Reload member when deleting memberPhoneNumber
