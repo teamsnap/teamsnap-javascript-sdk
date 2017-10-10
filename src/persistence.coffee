@@ -289,7 +289,10 @@ modifySDK = (sdk) ->
     (phoneNumber, callback) ->
       saveMemberPhoneNumber.call(this, phoneNumber, callback)
       .then((result) ->
-        sdk.loadMembers({id: phoneNumber.memberId}).then -> result
+        promises.when(
+          sdk.loadMembers({id: phoneNumber.memberId})
+          sdk.loadContactPhoneNumbers({memberId: phoneNumber.memberId})
+        ).then -> result
       ).callback callback
 
   # Reload member when deleting memberPhoneNumber
@@ -902,9 +905,25 @@ modifySDK = (sdk) ->
         inviteContactEmailAddresses.call(this, params, callback)
         .then((result) ->
           memberId = params.memberId
-          sdk.loadMembers({id: memberId})
-          sdk.loadContacts({memberId: memberId})
-          sdk.loadContactEmailAddresses({memberId: memberId})
+          promises.when(
+            sdk.loadMembers({id: memberId})
+            sdk.loadContacts({memberId: memberId})
+            sdk.loadContactEmailAddresses({memberId: memberId})
+            sdk.loadContactPhoneNumbers({memberId: memberId})
+          ).then -> result
+        ).callback callback
+
+  wrapMethod sdk, 'saveContact',
+    (saveContact) ->
+      (contact, callback) ->
+        saveContact.call(this, contact, callback)
+        .then((result) ->
+          contactId = contact.id
+          promises.when(
+            sdk.loadMembers({id: contact.memberId})
+            sdk.loadContactEmailAddresses({contactId: contactId})
+            sdk.loadContactPhoneNumbers({contactId: contactId})
+          ).then -> result
         ).callback callback
 
 revertSDK = (sdk) ->
