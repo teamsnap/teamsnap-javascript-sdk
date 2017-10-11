@@ -69,10 +69,11 @@ teamsnap.saveUser(user);
 
 
 <a id="sendEmailValidation"></a>
-## `sendEmailValidation(callback)`
+## `sendEmailValidation(params, callback)`
 Sends an email validation link to the User's email.
 
 ### Params
+* `params`: [int] - is the `teamId` to redirect back to.
 * `callback`: [function] - callback to be executed when the operation completes.
 
 ### Examples

@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### October 18, 2017 // Version 1.49.0
+- Adds teamId param to `sendEmailValidation` command.
+
+---
+
 ### October 17, 2017 // Version 1.48.0
 - Adds support for `teamStores` collection.
 - Adds `loadTeamStores` method.
