@@ -78,6 +78,9 @@ generateUrl = (endpoint, params) ->
 
 # Return an authed SDK object for use with a single authorized user
 TeamSnap::auth = (token, options) ->
+  if options?.features?
+    this.features = options.features
+
   if typeof token is 'function'
     callback = token
     token = null
@@ -104,7 +107,7 @@ TeamSnap::auth = (token, options) ->
 
   @request.hook (xhr) ->
     xhr.setRequestHeader 'Authorization', 'Bearer ' + token
-    
+
     if options?.optionalRequestHeaders?.length
       for option in options.optionalRequestHeaders
         xhr.setRequestHeader option.headerName, option.headerValue
