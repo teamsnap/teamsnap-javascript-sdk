@@ -2,6 +2,9 @@
 
 ### October 16, 2017 // Version 1.47.0
  - Removes reloading `contactEmailAddresses` in `saveMemberEmailAddress` in persistence layer.
+ - Conditionally exclude `memberEmailAddresses` and `memberPhoneNumbers` from reloading in
+   `disableMember` and `importMembersFromTeam` in persistence layer.
+ - Bug Fix: Remove check for null features when setting `features` in `auth`
 
  ---
 

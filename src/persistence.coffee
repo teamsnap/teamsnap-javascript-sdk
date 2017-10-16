@@ -745,10 +745,12 @@ modifySDK = (sdk) ->
         promises.when(
           sdk.loadMembers({id: memberIds})
           sdk.loadContacts({memberId: memberIds})
-          sdk.loadMemberEmailAddresses({memberId: memberIds})
           sdk.loadContactEmailAddresses({memberId: memberIds})
-          sdk.loadMemberPhoneNumbers({memberId: memberIds})
           sdk.loadContactPhoneNumbers({memberId: memberIds})
+
+          unless sdk.features.combinedContactCards
+            sdk.loadMemberEmailAddresses({memberId: memberIds})
+            sdk.loadMemberPhoneNumbers({memberId: memberIds})
         ).then -> result
       ).callback callback
 
@@ -892,12 +894,14 @@ modifySDK = (sdk) ->
       disableMember.call(this, memberId, callback).then((result) ->
         memberId = result.id
         promises.when(
-          sdk.loadMemberEmailAddresses({memberId: memberId})
           sdk.loadContactEmailAddresses({memberId: memberId})
-          sdk.loadMemberPhoneNumbers({memberId: memberId})
           sdk.loadContactPhoneNumbers({memberId: memberId})
           sdk.loadMembersPreferences({memberId: memberId})
           sdk.loadContacts({memberId: memberId})
+
+          unless sdk.features.combinedContactCards
+            sdk.loadMemberEmailAddresses({memberId: memberId})
+            sdk.loadMemberPhoneNumbers({memberId: memberId})
         ).then -> result
       ).callback callback
 
