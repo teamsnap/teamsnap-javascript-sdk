@@ -710,11 +710,14 @@ modifySDK = (sdk) ->
         if options.hasOwnProperty('memberId')
           memberId = options.memberId
           promises.when(
-            sdk.loadMemberEmailAddresses({memberId: memberId})
             sdk.loadContactEmailAddresses({memberId: memberId})
-            sdk.loadMemberPhoneNumbers({memberId: memberId})
             sdk.loadContactPhoneNumbers({memberId: memberId})
             sdk.loadMembersPreferences({memberId: memberId})
+
+            # If CCC is enabled, do not reload these collections
+            unless sdk.features.combinedContactCards is true
+              sdk.loadMemberEmailAddresses({memberId: memberId})
+              sdk.loadMemberPhoneNumbers({memberId: memberId})
           ).then -> result
           #sdk.loadMemberEmailAddresses({memberId: memberId}).then -> result
         else if options.hasOwnProperty('contactId')
