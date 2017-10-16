@@ -1,7 +1,7 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
 ### October 16, 2017 // Version 1.46.0
-- Removes reloading `contactPhoneNumbers` in `saveMemberPhoneNumber` in persistence layer.
+- Removes reloading `contactEmailAddresses` in `saveMemberEmailAddress` in persistence layer.
 
 ---
 
