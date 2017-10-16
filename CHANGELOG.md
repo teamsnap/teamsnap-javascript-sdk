@@ -1,9 +1,16 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### October 16, 2017 // Version 1.47.0
+ - Removes reloading `contactEmailAddresses` in `saveMemberEmailAddress` in persistence layer.
+
+ ---
+
 ### October 16, 2017 // Version 1.46.0
 - Pass `features` to SDK via `auth`'s `options` param.
 - Conditionally exclude `memberEmailAddress` and `memberPhoneNumber` from being
   reloaded on `invite` in persistence layer, based on new `features` options.
+
+---
 
 ### October 10, 2017 // Version 1.45.0
 - Reloads `contactPhoneNumbers` in `inviteContactEmailAddresses` in persistence layer.
