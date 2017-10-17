@@ -1,5 +1,11 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### October 17, 2017 // Version 1.48.0
+- Adds support for `teamStores` collection.
+- Adds `loadTeamStores` method.
+
+---
+
 ### October 16, 2017 // Version 1.47.0
  - Removes reloading `contactEmailAddresses` in `saveMemberEmailAddress` in persistence layer.
  - Conditionally exclude `memberEmailAddresses` and `memberPhoneNumbers` from reloading in
