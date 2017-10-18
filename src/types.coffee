@@ -78,6 +78,7 @@ types = [
   'teamPublicSite'
   'teamResults'
   'teamStatistic'
+  'teamStore'
   'timeZone'
   'trackedItem'
   'trackedItemStatus'
