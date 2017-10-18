@@ -69,15 +69,18 @@ teamsnap.saveUser(user);
 
 
 <a id="sendEmailValidation"></a>
-## `sendEmailValidation(callback)`
-Sends an email validation link to the User's email.
+## `sendEmailValidation(params, callback)`
+Sends an email validation link to the User's email. A `teamId` or params object with a `teamId`
+is required to redirect the user back to the current team when following the validation
+link provided in the email.
 
 ### Params
+* `params`: [int, object] - can be either a `teamId` or an object with query parameters.
 * `callback`: [function] - callback to be executed when the operation completes.
 
 ### Examples
 ```javascript
 // ~~~~~
-// Sends email validation email to current user.
-teamsnap.sendEmailValidation();
+// Sends email validation email to current user (and redirects to `teamId: 1`).
+teamsnap.sendEmailValidation({teamId: 1});
 ```
