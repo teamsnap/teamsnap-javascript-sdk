@@ -24,10 +24,9 @@ exports.saveUser = (user, callback) ->
   @saveItem user, callback
 
 
-exports.sendEmailValidation = (params, callback) ->
-  unless params?
-    throw new TSArgsError 'teamsnap.sendEmailValidation', 'must provide an object with params'
-  unless params.teamId? and @isId params.teamId
-    throw new TSArgsError 'teamsnap.sendEmailValidation', 'must provide a teamId'
-  
+exports.sendEmailValidation = (params = {}, callback) ->
+  if Object.keys(params).length and !(params.teamId? and @isId params.teamId)
+    throw new TSArgsError 'teamsnap.sendEmailValidation', 'if a params object is
+      used, it must contain a teamId'
+
   @collections.users.exec('sendEmailValidation', params).pop().callback callback
