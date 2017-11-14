@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### November 14, 2017 // Version 1.50.0
+- Adds support for `advertisements` collection.
+
+---
+
 ### October 18, 2017 // Version 1.49.0
 - Adds teamId param to `sendEmailValidation` command.
 
