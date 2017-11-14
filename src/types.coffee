@@ -2,6 +2,7 @@ teamsnap = exports
 
 types = [
   'user'
+  'advertisement'
   'assignment'
   'availability'
   'batchInvoice'
