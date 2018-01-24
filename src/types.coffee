@@ -73,6 +73,7 @@ types = [
   'teamMedium'
   'teamMediumComment'
   'teamMediaGroup'
+  'teamName'
   'teamPaypalPreferences'
   'teamPhoto'
   'teamPreferences'
