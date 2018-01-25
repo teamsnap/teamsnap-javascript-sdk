@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### January 25, 2017 // Version 1.51.0
+- Update to run on node `>=7` and npm `>=3`
+
+---
+
 ### November 14, 2017 // Version 1.50.0
 - Adds support for `advertisements` collection.
 
