@@ -1,6 +1,8 @@
 # TeamSnap JavaScript SDK CHANGELOG
+### Feb 9, 2018 // Version 1.52.0
+- Add `teamNames` collection.
 
-### January 25, 2017 // Version 1.51.0
+### January 25, 2018 // Version 1.51.0
 - Update to run on node `>=7` and npm `>=3`
 
 ---

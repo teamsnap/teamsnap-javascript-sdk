@@ -58,6 +58,7 @@ An APIv3 endpoint’s name is generally derived from its `Collection+JSON` colle
 - [Team Media](./collections/team_media.md)
 - [Team Media Groups](./collections/team_media_groups.md)
 - [Team Medium Comments](./collections/team_medium_comments.md)
+- [Team Names](./collections/team_names.md)
 - [Team Public Sites](./collections/team_public_sites.md)
 - [Team Statistics](./collections/team_statistics.md)
 - [Teams](./collections/teams.md)
