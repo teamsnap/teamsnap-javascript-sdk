@@ -927,6 +927,7 @@ modifySDK = (sdk) ->
           contactId = contact.id
           promises.when(
             sdk.loadMembers({id: contact.memberId})
+            sdk.loadContacts({memberId: contact.memberId})
             sdk.loadContactEmailAddresses({contactId: contactId})
             sdk.loadContactPhoneNumbers({contactId: contactId})
           ).then -> result
