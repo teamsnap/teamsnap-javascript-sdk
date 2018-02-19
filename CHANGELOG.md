@@ -2,10 +2,10 @@
 
 ### February 19, 2018 // Version 1.53.0
 - Reloads `contacts` for member in `saveContact` in persistence layer.
-- Reloads `contacts` in `saveContactEmailAddress` in persistence layer.
-- Reloads `contacts` in `deleteContactEmailAddress` in persistence layer.
-- Reloads `contacts` in `saveContactPhoneNumber` in persistence layer.
-- Reloads `contacts` in `deleteContactPhoneNumber` in persistence layer.
+- Reloads `contacts` for member in `saveContactEmailAddress` in persistence layer.
+- Reloads `contacts` for member in `deleteContactEmailAddress` in persistence layer.
+- Reloads `contacts` for member in `saveContactPhoneNumber` in persistence layer.
+- Reloads `contacts` for member in `deleteContactPhoneNumber` in persistence layer.
 
 --
 

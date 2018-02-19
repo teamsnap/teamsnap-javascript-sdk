@@ -309,7 +309,7 @@ modifySDK = (sdk) ->
       .then((result) ->
         promises.when(
           sdk.loadMembers({id: emailAddress.memberId})
-          sdk.loadContacts({id: emailAddress.contactId})
+          sdk.loadContacts({memberId: emailAddress.memberId})
         ).then -> result
       ).callback callback
 
@@ -320,7 +320,7 @@ modifySDK = (sdk) ->
       .then((result) ->
         promises.when(
           sdk.loadMembers({id: emailAddress.memberId})
-          sdk.loadContacts({id: emailAddress.contactId})
+          sdk.loadContacts({memberId: emailAddress.memberId})
         ).then -> result
       ).callback callback
 
@@ -331,7 +331,7 @@ modifySDK = (sdk) ->
       .then((result) ->
         promises.when(
           sdk.loadMembers({id: phoneNumber.memberId})
-          sdk.loadContacts({id: phoneNumber.contactId})
+          sdk.loadContacts({memberId: phoneNumber.memberId})
         ).then -> result
       ).callback callback
 
@@ -342,7 +342,7 @@ modifySDK = (sdk) ->
       .then((result) ->
         promises.when(
           sdk.loadMembers({id: phoneNumber.memberId})
-          sdk.loadContacts({id: phoneNumber.contactId})
+          sdk.loadContacts({memberId: phoneNumber.memberId})
         ).then -> result
       ).callback callback
 
