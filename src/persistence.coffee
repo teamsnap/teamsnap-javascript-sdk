@@ -307,7 +307,10 @@ modifySDK = (sdk) ->
     (emailAddress, callback) ->
       saveContactEmailAddress.call(this, emailAddress, callback)
       .then((result) ->
-        sdk.loadMembers({id: emailAddress.memberId}).then -> result
+        promises.when(
+          sdk.loadMembers({id: emailAddress.memberId})
+          sdk.loadContacts({id: emailAddress.contactId})
+        ).then -> result
       ).callback callback
 
   # Reload member when deleting contactEmailAddress
@@ -315,7 +318,10 @@ modifySDK = (sdk) ->
     (emailAddress, callback) ->
       deleteContactEmailAddress.call(this, emailAddress, callback)
       .then((result) ->
-        sdk.loadMembers({id: emailAddress.memberId}).then -> result
+        promises.when(
+          sdk.loadMembers({id: emailAddress.memberId})
+          sdk.loadContacts({id: emailAddress.contactId})
+        ).then -> result
       ).callback callback
 
   # Reload member when saving contactPhoneNumber
@@ -323,7 +329,10 @@ modifySDK = (sdk) ->
     (phoneNumber, callback) ->
       saveContactPhoneNumber.call(this, phoneNumber, callback)
       .then((result) ->
-        sdk.loadMembers({id: phoneNumber.memberId}).then -> result
+        promises.when(
+          sdk.loadMembers({id: phoneNumber.memberId})
+          sdk.loadContacts({id: phoneNumber.contactId})
+        ).then -> result
       ).callback callback
 
   # Reload member when deleting contactPhoneNumber
@@ -331,7 +340,10 @@ modifySDK = (sdk) ->
     (phoneNumber, callback) ->
       deleteContactPhoneNumber.call(this, phoneNumber, callback)
       .then((result) ->
-        sdk.loadMembers({id: phoneNumber.memberId}).then -> result
+        promises.when(
+          sdk.loadMembers({id: phoneNumber.memberId})
+          sdk.loadContacts({id: phoneNumber.contactId})
+        ).then -> result
       ).callback callback
 
   # Load availabilities for the new event
