@@ -1,6 +1,18 @@
 # TeamSnap JavaScript SDK CHANGELOG
+
+### February 19, 2018 // Version 1.53.0
+- Reloads `contacts` for member in `saveContact` in persistence layer.
+- Reloads `contacts` for member in `saveContactEmailAddress` in persistence layer.
+- Reloads `contacts` for member in `deleteContactEmailAddress` in persistence layer.
+- Reloads `contacts` for member in `saveContactPhoneNumber` in persistence layer.
+- Reloads `contacts` for member in `deleteContactPhoneNumber` in persistence layer.
+
+--
+
 ### Feb 9, 2018 // Version 1.52.0
 - Add `teamNames` collection.
+
+---
 
 ### January 25, 2018 // Version 1.51.0
 - Update to run on node `>=7` and npm `>=3`
