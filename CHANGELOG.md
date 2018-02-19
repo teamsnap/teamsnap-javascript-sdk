@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### February 19, 2018 // Version 1.54.0
+- Adds support for `forecast` type and `loadForecasts` method
+
+--
+
 ### February 19, 2018 // Version 1.53.0
 - Reloads `contacts` for member in `saveContact` in persistence layer.
 - Reloads `contacts` for member in `saveContactEmailAddress` in persistence layer.
