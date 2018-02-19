@@ -58,12 +58,14 @@ sendRequest = (method, url, data, hooks, callback) ->
           console.error "TeamSnap API error: #{errorMsg}" if global.console
           deferred.reject new RequestError(RequestError.SERVER_ERROR, 'Error
             with the server'), xhr, errorMsg
-        else if xhr.status > 400
+        else if xhr.status > 400 and not 410
           deferred.reject new RequestError(RequestError.CLIENT_ERROR, 'There
             was an error with the request'), xhr, errorMsg
         else if xhr.status is 400
           deferred.reject new RequestError(RequestError.VALIDATION_ERROR,
             errorMsg or 'The data was invalid'), xhr
+        else if xhr.status is 410
+          deferred.resolve xhr
         else
           deferred.resolve xhr
           # -- BETA -- #
