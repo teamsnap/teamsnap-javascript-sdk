@@ -32,6 +32,7 @@ types = [
   'division'
   'event'
   'eventStatistic'
+  'forecast'
   'forumPost'
   'forumSubscription'
   'forumTopic'

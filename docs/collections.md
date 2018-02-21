@@ -24,6 +24,7 @@ An APIv3 endpoint’s name is generally derived from its `Collection+JSON` colle
 - [Events](./collections/events.md)
 - [Event Statistics](./collections/event_statistics.md)
 - [Facebook Pages](./collections/facebook_pages.md)
+- [Forecasts](./collections/forecasts.md)
 - [Forum Posts](./collections/forum_posts.md)
 - [Forum Subscriptions](./collections/forum_subscriptions.md)
 - [Forum Topics](./collections/forum_topics.md)
