@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### March 9, 2018 // Version 1.55.0
+- Adds support for `partnerPreferences` type and `loadPartnersPreferences` method
+
+--
+
 ### February 19, 2018 // Version 1.54.0
 - Adds support for `forecast` type and `loadForecasts` method
 
