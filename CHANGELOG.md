@@ -1,5 +1,10 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### March 16, 2018 // Version 1.56.0
+- Adds `loadPersonas` method from `members` collection queries.
+
+--
+
 ### March 9, 2018 // Version 1.55.0
 - Adds support for `partnerPreferences` type and `loadPartnersPreferences` method
 
