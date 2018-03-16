@@ -6,6 +6,7 @@
 - [createMember](#createMember)
 - [saveMember](#saveMember)
 - [deleteMember](#deleteMember)
+- [loadPersonas](#loadPersonas)
 - [uploadMemberPhoto](#uploadMemberPhoto)
 - [removeMemberPhoto](#removeMemberPhoto)
 - [generateMemberThumbnail](#generateMemberThumbnail)
@@ -126,6 +127,24 @@ teamsnap.saveMember(member).then(function(){
   });
 });
 ```
+
+
+---
+
+
+<a id="loadPersonas"></a>
+## `loadPersonas(userId, callback)`
+Loads member `personas` for a given `userId`.
+
+### Params
+* `params`: [int, object] - can be either a `userId` or `user` object.
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+// Loads personas for `userId: 1`.
+teamsnap.loadPersonas(1);
 
 
 ---

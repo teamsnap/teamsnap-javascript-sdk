@@ -34,6 +34,14 @@ exports.deleteMember = (member, callback) ->
 
   @deleteItem member, callback
 
+exports.loadPersonas = (userId, callback) ->
+  if @isItem userId, 'user'
+    userId = userId.id
+  unless userId
+    throw new TSArgsError 'teamsnap.loadPersonas',
+      "`userId` must be provided"
+  params = userId: userId
+  @collections.members.queryItems('personas', params, callback)
 
 # Member photo
 exports.uploadMemberPhoto = (memberId, file, callback) ->
