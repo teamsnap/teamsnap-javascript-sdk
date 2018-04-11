@@ -2,6 +2,7 @@
 
 ### May 10, 2018 // Version 1.58.0
 - Allow `divisionId` for `broadcastAlerts` collection.
+- Add `bulkDeleteBroadcastAlerts` for `broadcastAlerts` collection.
 
 --
 

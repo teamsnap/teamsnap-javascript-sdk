@@ -40,3 +40,12 @@ exports.deleteBroadcastAlert = (broadcastAlert, callback) ->
       must be provided'
 
   @deleteItem broadcastAlert, callback
+
+exports.bulkDeleteBroadcastAlerts = (broadcastAlertIds, callback) ->
+  unless (Array.isArray(broadcastAlertIds))
+    throw new TSArgsError 'teamsnap.broadcastAlertIds',
+      'You must provide an array of broadcastAlert IDs'
+
+  @collections.broadcastAlerts.exec(
+    'bulkDelete', id: broadcastAlertIds, callback
+  )
