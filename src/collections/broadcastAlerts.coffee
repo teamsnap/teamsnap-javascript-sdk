@@ -18,8 +18,14 @@ exports.saveBroadcastAlert = (broadcastAlert, callback) ->
   unless @isItem broadcastAlert, 'broadcastAlert'
     throw new TSArgsError 'teamsnap.saveBroadcastAlert', "`type` must
       be 'broadcastAlert'"
-  unless broadcastAlert.teamId
-    return @reject 'You must provide a team id.', 'teamId', callback
+
+  if broadcastAlert.isLeague
+    unless broadcastAlert.divisionId
+      return reject 'You must provide a division id.', 'divisionId', callback
+  else
+    unless broadcastAlert.teamId
+      return @reject 'You must provide a team id.', 'teamId', callback
+
   unless broadcastAlert.memberId
     return @reject 'You must provide a member id.', 'memberId', callback
   unless broadcastAlert.body?.trim()
