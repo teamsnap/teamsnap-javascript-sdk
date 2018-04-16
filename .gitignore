@@ -1,3 +1,6 @@
 node_modules
 .project
 .DS_Store
+
+# Ignore RubyMine (IDE) files
+.idea/
