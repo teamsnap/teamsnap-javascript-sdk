@@ -2,13 +2,14 @@
 
 ## Methods
 
-- [createPartnerUserPreference](#createPartnerUserPreference)
-- [savePartnerUserPreference](#savePartnerUserPreference)
+- [createPartnerUserPreferences](#createPartnerUserPreferences)
+- [savePartnerUserPreferences](#savePartnerUserPreferences)
+
 
 ---
-<a id="createPartnerUserPreference"></a> 
-## `createPartnerUserPreference(data)` 
-Creates a new `PartnerUserPreference` item.
+<a id="createPartnerUserPreferences"></a> 
+## `createPartnerUserPreferences(data)` 
+Creates a new `PartnerUserPreferences` item.
 
 ### Params
 * `data`: [object, null] - data object to apply to the newly created object.
@@ -17,12 +18,15 @@ Creates a new `PartnerUserPreference` item.
 ```javascript
 // ~~~~~
 // Creates a new `partnerUserPreferences` item with `userId: 1, teamId: 1, partnerPreferenceId: 1, optionValue: 'partner-option-value'`.
-var partner_user_preference = teamsnap.createPartnerUserPreference({userId: 1, teamId: 1, partnerPreferenceId: 1, optionValue: 'partner-option-value'});
+var partner_user_preference = teamsnap.createPartnerUserPreferences({userId: 1, teamId: 1, partnerPreferenceId: 1, optionValue: 'partner-option-value'});
 ```
 
+
 ---
-<a id="savePartnerUserPreference"></a>
-## `savePartnerUserPreference(partnerUserPreference, callback)`
+
+
+<a id="savePartnerUserPreferences"></a>
+## `savePartnerUserPreferences(partnerUserPreference, callback)`
 Saves a `partnerUserPreference` item.
 
 ### Params
@@ -33,17 +37,16 @@ Saves a `partnerUserPreference` item.
 ```javascript
 // ~~~~~
 // Saves partnerUserPreference item.
-teamsnap.savePartnerUserPreference(partnerUserPreference);
+teamsnap.savePartnerUserPreferences(partnerUserPreference);
 
 // ~~~~~
 // Creates a new partnerUserPreference then saves it.
-var partnerUserPreference = teamsnap.createPartnerUserPreference({
+var partnerUserPreference = teamsnap.createPartnerUserPreferences({
   userId: 1,
   teamId: 1,
   partnerPreferenceId: 1,
   optionValue: 1
 });
 
-teamsnap.savePartnerUserPreference(partnerUserPreference);
+teamsnap.savePartnerUserPreferences(partnerUserPreference);
 ```
-

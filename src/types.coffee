@@ -58,6 +58,7 @@ types = [
   'opponent'
   'opponentResults'
   'partnerPreferences'
+  'partnerUserPreferences'
   'paymentNote'
   'plan'
   'registrationForm'
