@@ -121,6 +121,7 @@ pluralLookup =
   customDatum: 'customData'
   leagueCustomDatum: 'leagueCustomData'
   smsGateway: 'smsGateways'
+  partnerUserPreferences: 'partnersUserPreferences'
 
 for type in types
   plural = pluralLookup[type] or switch type.slice -1
