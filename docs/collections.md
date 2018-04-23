@@ -46,6 +46,7 @@ An APIv3 endpoint’s name is generally derived from its `Collection+JSON` colle
 - [Opponents](./collections/opponents.md)
 - [Opponents Results](./collections/opponents_results.md)
 - [Partners Preferences](./collections/partners_preferences.md)
+- [Partner User Preferences](./collections/partner_user_preferences.md)
 - [Payment Notes](./collections/payment_notes.md)
 - [Plans](./collections/plans.md)
 - [Registration Form Line Items](./collections/registration_form_line_items.md)
