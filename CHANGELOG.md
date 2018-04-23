@@ -1,6 +1,6 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
-### April 16, 2018 // Version 1.57.0
+### April 23, 2018 // Version 1.57.0
 - Add `createPartnerUserPreferences` method.
 - Add `savePartnerUserPreferences` method.
 
