@@ -18,8 +18,14 @@ exports.saveBroadcastAlert = (broadcastAlert, callback) ->
   unless @isItem broadcastAlert, 'broadcastAlert'
     throw new TSArgsError 'teamsnap.saveBroadcastAlert', "`type` must
       be 'broadcastAlert'"
-  unless broadcastAlert.teamId
-    return @reject 'You must provide a team id.', 'teamId', callback
+
+  if broadcastAlert.isLeague
+    unless broadcastAlert.divisionId
+      return reject 'You must provide a division id.', 'divisionId', callback
+  else
+    unless broadcastAlert.teamId
+      return @reject 'You must provide a team id.', 'teamId', callback
+
   unless broadcastAlert.memberId
     return @reject 'You must provide a member id.', 'memberId', callback
   unless broadcastAlert.body?.trim()
@@ -34,3 +40,12 @@ exports.deleteBroadcastAlert = (broadcastAlert, callback) ->
       must be provided'
 
   @deleteItem broadcastAlert, callback
+
+exports.bulkDeleteBroadcastAlerts = (broadcastAlertIds, callback) ->
+  unless (Array.isArray(broadcastAlertIds))
+    throw new TSArgsError 'teamsnap.broadcastAlertIds',
+      'You must provide an array of broadcastAlert IDs'
+
+  @collections.broadcastAlerts.exec(
+    'bulkDelete', id: broadcastAlertIds, callback
+  )

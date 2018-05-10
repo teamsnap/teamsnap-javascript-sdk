@@ -71,3 +71,7 @@ describe 'Broadcast Alerts', ->
       expect(err).to.be.null
       done()
 
+  it 'should be able to bulk delete broadcast alert', (done) ->
+    teamsnap.bulkDeleteBroadcastAlerts [alert.id], (err, result) ->
+      expect(err).to.be.null
+      done()
