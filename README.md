@@ -15,10 +15,6 @@ it on your page. Note: it will not work on IE8 or IE9 because of cross domain
 incompatabilities. A proxy will need to be set up on your own domain (nginx
 example below).
 
-For use with node.js:
-
-```
-npm install --save teamsnap.js
-```
+NOTE: We do not recommend using this library on node.js at this time.
 
 Check the [Quick start guide](https://github.com/teamsnap/teamsnap-javascript-sdk/wiki/Quick-Start) in the [wiki](https://github.com/teamsnap/teamsnap-javascript-sdk/wiki) for more details or read through the [Collections](./docs/collections.md) documentation for a complete list of SDK methods.
