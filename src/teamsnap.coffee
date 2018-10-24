@@ -11,7 +11,8 @@ class TeamSnap
   Item: Item
 
   constructor: (@apiUrl = 'https://apiv3.teamsnap.com',
-    @authUrl = 'https://auth.teamsnap.com') ->
+    @authUrl = 'https://auth.teamsnap.com',
+    @accountsUrl = 'https://accounts.teamsnap.com') ->
 
   # -- BETA -- #
   # Subject to change, and not
