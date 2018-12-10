@@ -27,6 +27,7 @@ types = [
   'divisionMemberEmailAddress'
   'divisionMemberPhoneNumber'
   'divisionMemberPreferences'
+  'divisionStore'
   'divisionTeamStanding'
   'divisionPreferences'
   'division'

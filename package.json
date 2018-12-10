@@ -1,6 +1,6 @@
 {
   "name": "teamsnap.js",
-  "version": "1.58.0",
+  "version": "1.59.0",
   "engines": {
     "node": ">=7.0.0",
     "npm": ">=3.0.0"
@@ -8,16 +8,14 @@
   "description": "A JavaScript library for using the TeamSnap API.",
   "author": "Jacob Wright with TeamSnap (http://www.teamsnap.com)",
   "homepage": "https://github.com/teamsnap/teamsnap-javascript-sdk",
-  "keywords": [
-    "teamsnap",
-    "sdk"
-  ],
+  "keywords": ["teamsnap", "sdk"],
   "repository": {
     "type": "git",
     "url": "git@github.com:teamsnap/teamsnap-javascript-sdk.git"
   },
   "scripts": {
-    "build": "coffee -bc -o lib/ src/ && brunch build && brunch build --production",
+    "build":
+      "coffee -bc -o lib/ src/ && brunch build && brunch build --production",
     "test": "open 'http://localhost:8000/' && brunch watch -s"
   },
   "main": "lib/teamsnap",
