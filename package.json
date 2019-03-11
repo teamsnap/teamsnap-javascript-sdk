@@ -8,14 +8,16 @@
   "description": "A JavaScript library for using the TeamSnap API.",
   "author": "Jacob Wright with TeamSnap (http://www.teamsnap.com)",
   "homepage": "https://github.com/teamsnap/teamsnap-javascript-sdk",
-  "keywords": ["teamsnap", "sdk"],
+  "keywords": [
+    "teamsnap",
+    "sdk"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:teamsnap/teamsnap-javascript-sdk.git"
   },
   "scripts": {
-    "build":
-      "coffee -bc -o lib/ src/ && brunch build && brunch build --production",
+    "build": "coffee -bc -o lib/ src/ && brunch build && brunch build --production",
     "test": "open 'http://localhost:8000/' && brunch watch -s"
   },
   "main": "lib/teamsnap",
@@ -24,11 +26,11 @@
     "form-data": "1.0.0-rc3"
   },
   "devDependencies": {
-    "brunch": "2.9.1",
-    "library-brunch": "1.2.0",
-    "javascript-brunch": "2.0.0",
+    "brunch": "^2.10.17",
     "coffee-script-brunch": "2.1.0",
-    "uglify-js-brunch": "2.0.1",
-    "coffeelint-brunch": "1.7.1"
+    "coffeelint-brunch": "1.7.1",
+    "javascript-brunch": "2.0.0",
+    "library-brunch": "1.2.0",
+    "uglify-js-brunch": "2.0.1"
   }
 }
