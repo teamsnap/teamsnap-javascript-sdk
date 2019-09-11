@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "brunch": "^2.10.17",
-    "coffee-script-brunch": "2.1.0",
+    "coffee-script-brunch": "3.0.0",
     "coffeelint-brunch": "1.7.1",
     "javascript-brunch": "2.0.0",
     "library-brunch": "1.2.0",
