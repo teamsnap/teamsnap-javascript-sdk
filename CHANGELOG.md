@@ -1,5 +1,12 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### September 18, 2019 // Version 1.60.0
+
+- Adds `actionLogs` collection.
+- Adds `teamImportCompleted` method.
+
+--
+
 ### October 31, 2018 // Version 1.59.0
 
 - Adds support for `divisionStore` collection.

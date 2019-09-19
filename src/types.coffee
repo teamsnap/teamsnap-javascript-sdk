@@ -2,6 +2,7 @@ teamsnap = exports
 
 types = [
   'user'
+  'actionLog'
   'advertisement'
   'assignment'
   'availability'

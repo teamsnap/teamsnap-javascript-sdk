@@ -5,6 +5,7 @@ An APIv3 endpoint’s name is generally derived from its `Collection+JSON` colle
 ---
 
 ## Methods By Collection
+- [ActionLogs](./collections/action_logs.md)
 - [Assignments](./collections/assignments.md)
 - [Availabilities](./collections/availabilities.md)
 - [Batch Invoices](./collections/batch_invoices.md)
