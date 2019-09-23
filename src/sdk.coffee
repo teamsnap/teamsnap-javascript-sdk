@@ -166,6 +166,7 @@ TeamSnap::unlinkItems = linking.unlinkItems
 
 add require './persistence'
 add require './collections/teams'
+add require './collections/actionLogs'
 add require './collections/advertisements'
 add require './collections/assignments'
 add require './collections/availabilities'

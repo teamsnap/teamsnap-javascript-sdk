@@ -98,6 +98,7 @@ teamTypes.remove = (type) ->
   this
 
 teamTypes
+  .remove('actionLog')
   .remove('user')
   .remove('plan')
   .remove('smsGateway')

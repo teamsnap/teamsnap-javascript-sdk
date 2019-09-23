@@ -3,4 +3,4 @@ exports.teamImportCompleted = (teamId, importedRostersCount, callback) ->
     throw new TSArgsError 'teamsnap.teamImportCompleted', 'teamId and importedRostersCount must be present'
 
   params = teamId: teamId, importedRostersCount: importedRostersCount
-  @collections.actionLogs.exec('teamImportCompleted', params).pop().callback callback
+  @collections.actionLogs.exec 'teamImportCompleted', params, callback
