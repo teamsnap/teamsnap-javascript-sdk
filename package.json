@@ -23,7 +23,7 @@
   "main": "lib/teamsnap",
   "dependencies": {
     "xmlhttprequest": "1.8.0",
-    "form-data": "1.0.0-rc3"
+    "form-data": "3.0.0"
   },
   "devDependencies": {
     "brunch": "^2.10.17",
