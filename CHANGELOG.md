@@ -1,5 +1,13 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### December 8, 2020 // Version 1.61.0
+
+- Update dependencies for security alerts
+
+### Version 1.60.0
+
+- Update dependencies for security alerts
+
 ### October 31, 2018 // Version 1.59.0
 
 - Adds support for `divisionStore` collection.
