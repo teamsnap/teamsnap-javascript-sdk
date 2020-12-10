@@ -1,5 +1,9 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### December 10, 2020 // Version 1.61.1
+
+- Update dependencies for security alerts
+
 ### December 8, 2020 // Version 1.61.0
 
 - Update dependencies for security alerts
