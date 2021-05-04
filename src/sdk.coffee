@@ -245,7 +245,6 @@ add require './collections/teamStores'
 add require './collections/trackedItems'
 add require './collections/trackedItemStatuses'
 add require './collections/users'
-add require './collections/usersDSPPayload'
 
 
 mergeDefaults = (properties, defaults) ->

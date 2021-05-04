@@ -30,3 +30,11 @@ exports.sendEmailValidation = (params = {}, callback) ->
       used, it must contain a teamId'
 
   @collections.users.exec('sendEmailValidation', params).pop().callback callback
+
+exports.dspPayload = (params, callback) ->
+  if @isId params
+    params = memberId: params
+  else unless params and typeof params is 'object'
+    throw new TSArgsError 'teamsnap.dspPayload', 'must provide a memberId'
+  
+  @collections.users.queryItems('dspPayload',  params, callback)
