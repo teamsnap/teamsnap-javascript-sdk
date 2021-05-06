@@ -1,5 +1,9 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### May 6, 2021 // Version 1.62.0
+
+- Adds `dspPayload` method.
+
 ### December 10, 2020 // Version 1.61.1
 
 - Update dependencies for security alerts
