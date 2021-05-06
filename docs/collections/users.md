@@ -4,6 +4,8 @@
 
 - [loadUsers](#loadUsers)
 - [saveUser](#saveUser)
+- [sendEmailValidation](#sendEmailValidation)
+- [dspPayload](#dspPayload)
 
 
 ---
@@ -91,8 +93,8 @@ teamsnap.sendEmailValidation({teamId: 1});
 
 <a id="dspPayload"></a>
 ## `dspPayload(params, callback)`
-This is a query endpoint off of user. memberId is the only required param
-zone & kuid are optional, but should always be passed in so they will be passed back in the payload
+This is a query endpoint off of user. memberId is the only required param, 
+zone & kuid are optional, but should always be passed in so they will be passed back in the payload.
 The endpoint will only return fields that have data. All null values are omitted from the response.
 All values are returned as strings (booleans values are “0” or “1")
 
