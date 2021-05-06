@@ -84,3 +84,27 @@ link provided in the email.
 // Sends email validation email to current user (and redirects to `teamId: 1`).
 teamsnap.sendEmailValidation({teamId: 1});
 ```
+
+
+---
+
+
+<a id="dspPayload"></a>
+## `dspPayload(params, callback)`
+This is a query endpoint off of user. memberId is the only required param
+zone & kuid are optional, but should always be passed in so they will be passed back in the payload
+The endpoint will only return fields that have data. All null values are omitted from the response.
+All values are returned as strings (booleans values are “0” or “1")
+
+### Params
+* `params`: [int, object] - can be either a `memberId` or an object with query parameters.
+* `callback`: [function] - callback to be executed when the operation completes.
+
+### Examples
+```javascript
+// ~~~~~
+// returns item with property `customTargetingData`, value is stringified json
+teamsnap.dspPayload(1);
+teamsnap.dspPayload({memberId: 1});
+teamsnap.dspPayload({memberId: 1, kuid: 123, zone: 1});
+```
