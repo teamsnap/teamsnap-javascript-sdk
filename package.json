@@ -1,6 +1,6 @@
 {
   "name": "teamsnap.js",
-  "version": "1.62.1",
+  "version": "1.62.0",
   "engines": {
     "node": ">=7.0.0",
     "npm": ">=3.0.0"
