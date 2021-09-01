@@ -754,10 +754,6 @@ modifySDK = (sdk) ->
           sdk.loadContacts({memberId: memberIds})
           sdk.loadContactEmailAddresses({memberId: memberIds})
           sdk.loadContactPhoneNumbers({memberId: memberIds})
-
-          unless sdk.features.combinedContactCards
-            sdk.loadMemberEmailAddresses({memberId: memberIds})
-            sdk.loadMemberPhoneNumbers({memberId: memberIds})
         ).then -> result
       ).callback callback
 
@@ -905,10 +901,6 @@ modifySDK = (sdk) ->
           sdk.loadContactPhoneNumbers({memberId: memberId})
           sdk.loadMembersPreferences({memberId: memberId})
           sdk.loadContacts({memberId: memberId})
-
-          unless sdk.features.combinedContactCards
-            sdk.loadMemberEmailAddresses({memberId: memberId})
-            sdk.loadMemberPhoneNumbers({memberId: memberId})
         ).then -> result
       ).callback callback
 
