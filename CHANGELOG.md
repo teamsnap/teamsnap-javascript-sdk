@@ -1,5 +1,9 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### Sept 1, 2021 // Version 1.62.1
+
+- Removes conditionals related to deprecated combineContactCards feature rollout
+
 ### May 6, 2021 // Version 1.62.0
 
 - Adds `dspPayload` method.
