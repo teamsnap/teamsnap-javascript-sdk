@@ -724,11 +724,6 @@ modifySDK = (sdk) ->
             sdk.loadContactEmailAddresses({memberId: memberId})
             sdk.loadContactPhoneNumbers({memberId: memberId})
             sdk.loadMembersPreferences({memberId: memberId})
-
-            # If CCC is enabled, do not reload these collections
-            unless sdk.features.combinedContactCards is true
-              sdk.loadMemberEmailAddresses({memberId: memberId})
-              sdk.loadMemberPhoneNumbers({memberId: memberId})
           ).then -> result
           #sdk.loadMemberEmailAddresses({memberId: memberId}).then -> result
         else if options.hasOwnProperty('contactId')
@@ -759,10 +754,6 @@ modifySDK = (sdk) ->
           sdk.loadContacts({memberId: memberIds})
           sdk.loadContactEmailAddresses({memberId: memberIds})
           sdk.loadContactPhoneNumbers({memberId: memberIds})
-
-          unless sdk.features.combinedContactCards
-            sdk.loadMemberEmailAddresses({memberId: memberIds})
-            sdk.loadMemberPhoneNumbers({memberId: memberIds})
         ).then -> result
       ).callback callback
 
@@ -910,10 +901,6 @@ modifySDK = (sdk) ->
           sdk.loadContactPhoneNumbers({memberId: memberId})
           sdk.loadMembersPreferences({memberId: memberId})
           sdk.loadContacts({memberId: memberId})
-
-          unless sdk.features.combinedContactCards
-            sdk.loadMemberEmailAddresses({memberId: memberId})
-            sdk.loadMemberPhoneNumbers({memberId: memberId})
         ).then -> result
       ).callback callback
 
