@@ -26,7 +26,7 @@
     "form-data": "1.0.0-rc3"
   },
   "devDependencies": {
-    "brunch": "^2.10.17",
+    "brunch": "^4.0.1",
     "coffee-script-brunch": "2.1.0",
     "coffeelint-brunch": "1.7.1",
     "javascript-brunch": "2.0.0",
