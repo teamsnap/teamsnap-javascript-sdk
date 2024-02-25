@@ -32,6 +32,8 @@ types = [
   'divisionPreferences'
   'division'
   'event'
+  'eventLineup'
+  'eventLineupEntry'
   'eventStatistic'
   'forecast'
   'forumPost'
