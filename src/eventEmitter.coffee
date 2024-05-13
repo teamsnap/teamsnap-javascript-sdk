@@ -161,7 +161,7 @@ requestResponse = (requestId, method, xhr) ->
         if eventData
           eventData.requestId = requestId
           emit(eventData, 'request-response')
-  else if data.collection.rel is 'bulk_load'
+  else if data.collection?.rel is 'bulk_load'
     # When bulk_load, group items by collection and emit
     # events for each collection
     collections = {}
