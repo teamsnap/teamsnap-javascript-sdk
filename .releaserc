@@ -1,0 +1,6 @@
+{
+  branches: [
+    {name: 'main'},
+    {name: 'test-*', prerelease: true},
+  ]
+}
