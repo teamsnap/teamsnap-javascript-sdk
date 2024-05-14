@@ -1,5 +1,9 @@
 # TeamSnap JavaScript SDK CHANGELOG
 
+### May 14, 2021 // Version 1.62.2
+
+- Protect against falsey value in collection response
+
 ### Sept 1, 2021 // Version 1.62.1
 
 - Removes conditionals related to deprecated combineContactCards feature rollout
