@@ -194,7 +194,7 @@ requestResponse = (requestId, method, xhr) ->
             emit(eventData, 'request-response')
   else
     eventData = buildEventDataFromCollection(data.collection, method, refIds)
-    collectionName = camelize(data.collection.rel)
+    collectionName = camelize(data.collection?.rel || '')
     type = types.getSingularType(collectionName)
     # is this a valid collection?
     if type and eventData
