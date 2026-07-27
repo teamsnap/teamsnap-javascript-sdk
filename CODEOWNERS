@@ -1,1 +1,4 @@
 * @teamsnap/javascript
+.teamsnap/** @teamsnap/platform @teamsnap/javascript
+.github/** @teamsnap/platform @teamsnap/quality @teamsnap/javascript
+CODEOWNERS @teamsnap/platform @teamsnap/javascript
